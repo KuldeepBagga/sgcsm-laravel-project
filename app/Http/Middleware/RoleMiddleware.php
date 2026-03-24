@@ -11,13 +11,25 @@ class RoleMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        if (auth()->user()->role != $role) {
-            abort(403);
+        $user = auth()->user();
+
+        if (! $user) {
+            return redirect()->route('login');
         }
-        return $next($request);
+
+        if ($user->role === $role) {
+            return $next($request);
+        }
+
+        return match ($user->role) {
+            'admin' => redirect()->route('admin.dashboard'),
+            'student' => redirect()->route('student.dashboard'),
+            'franchise' => redirect()->route('franchise.dashboard'),
+            default => abort(403),
+        };
     }
 }

@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboard;
+use App\Http\Controllers\Franchise\FranchiseDashboard;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\StudentDashboard;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,25 +18,18 @@ Route::get('/', function () {
     ]);
 });
 
-
-Route::middleware(['auth'])->group(function () {
-
-    Route::get('/admin/dashboard', function () {
-        return "Admin";
-    })->middleware('role:admin');
-
-    Route::get('/franchise/dashboard', function () {
-        return "Franchise";
-    })->middleware('role:franchise');
-
-    Route::get('/student/dashboard', function () {
-        return "Student";
-    })->middleware('role:student');
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    Route::get('admin/dashboard', [AdminDashboard::class, "index"])->name('dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified', 'role:student'])->group(function () {
+    Route::get('/dashboard', [StudentDashboard::class, "index"])->name('student.dashboard');
+});
+
+Route::middleware(['auth', 'verified', 'role:franchise'])->group(function () {
+    Route::get('center/dashboard', [FranchiseDashboard::class, "index"])->name('franchise.dashboard');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,4 +37,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
