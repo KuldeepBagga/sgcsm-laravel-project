@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboard;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Franchise\FranchiseDashboard;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentDashboard;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,8 +19,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
-    Route::get('admin/dashboard', [AdminDashboard::class, "index"])->name('dashboard');
+Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('dashboard', [AdminDashboard::class, "index"])->name('dashboard');
+    Route::resource('permission',PermissionController::class);
+    Route::resource('role',RoleController::class);
 });
 
 Route::middleware(['auth', 'verified', 'role:student'])->group(function () {

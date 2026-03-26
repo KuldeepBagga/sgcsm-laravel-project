@@ -1,25 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 
-export default function Toast({ message, type = "success" }) {
-    const [visible, setVisible] = useState(false);
-
+export default function Toast({ message, type = 'success' }) {
     useEffect(() => {
         if (message) {
-            setVisible(true);
-            const timer = setTimeout(() => {
-                setVisible(false);
-            }, 3000);
-
-            return () => clearTimeout(timer);
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: type,
+                title: message,
+                showConfirmButton: false,
+                timer: 3000,
+            });
         }
     }, [message]);
 
-    if (!visible) return null;
-
-    return (
-        <div className={`fixed top-5 right-5 px-4 py-3 rounded shadow-lg text-white transition-all
-            ${type === "success" ? "bg-green-600" : "bg-red-600"}`}>
-            {message}
-        </div>
-    );
+    return null;
 }
