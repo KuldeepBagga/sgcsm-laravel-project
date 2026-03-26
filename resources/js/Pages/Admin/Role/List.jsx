@@ -75,12 +75,12 @@ function List() {
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-gray-900">
                   {role?.data?.length > 0 ? (
                     role.data.map((item, index) => (
                       <tr
                         key={item.id || index}
-                        className="hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                        className="hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                       >
                         <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
                           {index + 1}
