@@ -21,6 +21,16 @@ const menuItems = [
             },
         ],
     },
+    {
+        name: "Users",
+        route: "user.index",
+        icon: "📊",
+    },
+    {
+        name: "Student",
+        route: "student.index",
+        icon: "📊",
+    },
 ];
 
 export default function NavBar() {

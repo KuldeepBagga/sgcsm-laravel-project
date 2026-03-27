@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboard;
+use App\Http\Controllers\Admin\FranchiseController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Franchise\FranchiseDashboard;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentDashboard;
@@ -22,6 +25,9 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('dashboard', [AdminDashboard::class, "index"])->name('dashboard');
     Route::resource('permission',PermissionController::class);
+    Route::resource('franchise',FranchiseController::class);
+    Route::resource('user',UserController::class);
+    Route::resource('student',StudentController::class);
     Route::resource('role',RoleController::class);
 });
 
