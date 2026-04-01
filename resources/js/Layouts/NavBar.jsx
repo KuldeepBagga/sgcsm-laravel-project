@@ -27,6 +27,11 @@ const menuItems = [
         icon: "📊",
     },
     {
+        name: "Institute",
+        route: "institute.index",
+        icon: "📊",
+    },
+    {
         name: "Student",
         route: "student.index",
         icon: "📊",

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\FranchiseController;
+use App\Http\Controllers\Admin\InstituteController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StudentController;
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->group(fu
     Route::resource('user',UserController::class);
     Route::resource('student',StudentController::class);
     Route::resource('role',RoleController::class);
+    Route::resource('institute',InstituteController::class);
 });
 
 Route::middleware(['auth', 'verified', 'role:student'])->group(function () {

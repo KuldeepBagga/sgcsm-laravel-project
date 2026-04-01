@@ -1,12 +1,29 @@
-import { Head, Link, usePage } from '@inertiajs/react'
+import { Head, Link, usePage, router } from '@inertiajs/react'
 import PrimaryButton from '@/Components/PrimaryButton';
 import Toast from '@/Components/Toast'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import DangerButton from '@/Components/DangerButton';
 import Pagination from '@/Components/Pagination';
+import Swal from 'sweetalert2';
 
 function List() {
     const { flash, user } = usePage().props;
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6366f1',
+            cancelButtonColor: '#ef4444',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('user.destroy', id));
+            }
+        });
+    };
 
     return (
         <AuthenticatedLayout
@@ -22,7 +39,7 @@ function List() {
             <Toast message={flash.error} type="error" />
 
             <div className="py-12 bg-gray-100 dark:bg-gray-900 min-h-screen">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-10xl sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6">
 
                         <div className="flex justify-between items-center mb-6">

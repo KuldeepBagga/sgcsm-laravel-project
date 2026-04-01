@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         $user = User::paginate(50);
-        return Inertia::render('Admin/User/List',compact('user'));
+        return Inertia::render('Admin/User/List', compact('user'));
     }
 
     /**
@@ -29,9 +29,12 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $validated = $request->validated();
+        User::create($validated);
+
+        return redirect(route('user.index'))->with('success', 'User created successfully');
     }
 
     /**
@@ -45,24 +48,38 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return Inertia::render('Admin/User/Form', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        $validated = $request->validated();
+
+        if (empty($validated['password'])) {
+            unset($validated['password']);
+        } else {
+            $validated['password'] = bcrypt($validated['password']);
+        }
+
+        $user->update($validated);
+        return redirect(route('user.index'))->with('success', 'User updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        if (strtolower($user->role) === 'admin') {
+            return redirect(route('user.index'))->with('error', 'User admin cannot be deleted!');
+        }
+
+        $user->delete();
+        return redirect(route('user.index'))->with('success', 'User deleted successfully');
     }
 }

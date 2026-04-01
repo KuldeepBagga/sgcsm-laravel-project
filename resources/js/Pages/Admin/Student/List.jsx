@@ -20,7 +20,7 @@ function List() {
             <Toast message={flash.error} type="error" />
 
             <div className="py-12 bg-gray-100 dark:bg-gray-900 min-h-screen">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-10xl sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6">
 
                         <div className="flex justify-between items-center mb-6">
