@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\InstituteRequest;
 use App\Models\Admin\Institute;
+use App\Services\ImageService;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -31,13 +32,14 @@ class InstituteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(InstituteRequest $request)
+    public function store(InstituteRequest $request, ImageService $imageService)
     {
         $validated = $request->validated();
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('uploads', 'public');
-            $validated['image'] = $path;
+            $validated['image'] = $imageService->uploadAndResize(
+                $request->file('image'), 'uploads', 100, 100
+            );
         }
 
         Institute::create($validated);
@@ -64,18 +66,16 @@ class InstituteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(InstituteRequest $request, $id)
+    public function update(InstituteRequest $request, Institute $institute, ImageService $imageService)
     {
 
-        $institute = Institute::findOrFail($id);
         $validated = $request->validated();
-        
+
         if ($request->hasFile('image')) {
-            if ($institute->image && Storage::disk('public')->exists($institute->image)) {
-                Storage::disk('public')->delete($institute->image);
-            }
-            $path = $request->file('image')->store('uploads', 'public');
-            $validated['image'] = $path;
+            $imageService->delete($institute->image);
+            $validated['image'] = $imageService->uploadAndResize(
+                $request->file('image'), 'uploads', 100, 100
+            );
         }
 
         $institute->update($validated);
