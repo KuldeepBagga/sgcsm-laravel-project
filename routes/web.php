@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboard;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\FranchiseController;
 use App\Http\Controllers\Admin\InstituteController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -29,8 +30,10 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->group(fu
     Route::resource('franchise',FranchiseController::class);
     Route::resource('user',UserController::class);
     Route::resource('student',StudentController::class);
+    Route::get('student/center/centername/{center_code}',[StudentController::class,"get_center_name_by_center_code"])->name('admin.center_name');
     Route::resource('role',RoleController::class);
     Route::resource('institute',InstituteController::class);
+    Route::resource('course',CourseController::class);
 });
 
 Route::middleware(['auth', 'verified', 'role:student'])->group(function () {

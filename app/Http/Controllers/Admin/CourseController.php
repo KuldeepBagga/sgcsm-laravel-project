@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Institute;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class StudentController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('Admin/Student/List');
+        return Inertia::render('Admin/Course/List');
     }
 
     /**
@@ -22,16 +21,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $institute = Institute::select('center_code')->get();
-        return Inertia::render('Admin/Student/Form', compact('institute'));
-    }
-
-    public function get_center_name_by_center_code(string $centerCode)
-    {
-        $data = Institute::where('center_code', $centerCode)->first();
-        return response()->json([
-            'data' => $data
-        ]);
+        return Inertia::render('Admin/Course/Form');
     }
 
     /**

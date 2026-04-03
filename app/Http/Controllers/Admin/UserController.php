@@ -32,6 +32,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $validated = $request->validated();
+        $validated['show_password'] = $request->password;
         User::create($validated);
 
         return redirect(route('user.index'))->with('success', 'User created successfully');
@@ -62,8 +63,10 @@ class UserController extends Controller
 
         if (empty($validated['password'])) {
             unset($validated['password']);
+            unset($validated['show_password']);
         } else {
             $validated['password'] = bcrypt($validated['password']);
+            $validated['show_password'] = $request->password;
         }
 
         $user->update($validated);

@@ -37,4 +37,22 @@ const STATES = [
     "Puducherry",
 ];
 
-export {STATES}
+const RELATION = [
+    "S/O",
+    "W/O",
+    "D/O"
+];
+
+const QUALIFICATION = [
+    "KIDS",
+    "5TH CLASS",
+    "10TH CLASS",
+    "10TH Pass",
+    "12TH PASS",
+    "8TH CLASS",
+    "8TH PASS",
+    "GRADUATE",
+    "POST GRADUATE"
+];
+
+export { STATES, RELATION, QUALIFICATION}

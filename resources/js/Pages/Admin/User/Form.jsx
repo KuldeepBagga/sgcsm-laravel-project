@@ -5,7 +5,6 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, Link, useForm, usePage } from '@inertiajs/react'
-import React from 'react'
 
 function Form() {
     const { user } = usePage().props;
@@ -29,7 +28,7 @@ function Form() {
             });
         } else {
             post(route('user.store'), {
-                onFinish: () => reset(),
+                onSuccess: () => reset(),
             });
         }
     }
@@ -114,6 +113,7 @@ function Form() {
                                         ))}
                                     </select>
                                 </div>
+
                             </div>
 
                             <div className="mt-6">
