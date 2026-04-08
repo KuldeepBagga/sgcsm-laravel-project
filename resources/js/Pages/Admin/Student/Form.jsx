@@ -6,15 +6,45 @@ import TextInput from '@/Components/TextInput';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react'
 import { RELATION, QUALIFICATION, STATES } from '@/data/RawData';
-import React from 'react'
 import axios from 'axios';
+import Select from 'react-select';
+import FileDropzone from "@/Components/FileDropzone";
+import { useEffect, useState } from 'react';
 
 function Form() {
-    const { student, institute } = usePage().props;
-    const { data, setData, post, put, processing, errors, reset } = useForm({
-        center_code: '',
-        center_name: ''
+    const { student, institute, course } = usePage().props;
+
+    const [preview, setPreview] = useState(null);
+    const { data, setData, post, put, processing, errors, reset, progress } = useForm({
+        name: student?.name || '',
+        relation: student?.relation || '',
+        father_name: student?.father_name || '',
+        mother_name: student?.mother_name || '',
+        date_joined: student?.date_joined || '',
+        date_of_birth: student?.date_of_birth || '',
+        qualification: student?.qualification || '',
+        center_code: student?.center_code || '',
+        center_name: student?.center_name || '',
+        state: student?.state || '',
+        district: student?.district || '',
+        phone: student?.phone || '',
+        aadhar_no: student?.aadhar_no || '',
+        paid: student?.paid || 'NOT PAID',
+        certificate_issued: 'NOT ISSUED',
+        course_id: student?.course_id || '',
+        scan: student?.scan || 'NOT SCANNED',
+        image: null || '',
+        session_start: student?.session_start || '',
+        session_end: student?.session_end || ''
     });
+
+    const handleFile = (files) => {
+        const file = files[0];
+        if (file) {
+            setData("image", file);
+            setPreview(URL.createObjectURL(file));
+        }
+    };
 
     const onChangeCenterCode = async (center_code) => {
         if (!center_code) {
@@ -33,7 +63,24 @@ function Form() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!data.image) {
+            delete data.image;
+        }
+        if (student) {
+            put(route('student.update', student.id));
+        } else {
+            post(route('student.store'), {
+                onSuccess: () => reset(),
+            });
+        }
     }
+
+
+    useEffect(() => {
+        if (student?.image) {
+            setPreview(`/storage/${student.image}`);
+        }
+    }, [student]);
 
     return (
         <AuthenticatedLayout
@@ -57,7 +104,7 @@ function Form() {
                         <form onSubmit={handleSubmit}>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <InputLabel htmlFor="name" value="Student Name" />
+                                    <InputLabel htmlFor="name" value="Name" />
                                     <TextInput
                                         id="name"
                                         type="text"
@@ -270,17 +317,17 @@ function Form() {
 
 
                                 <div>
-                                    <InputLabel htmlFor="certificate_issue" value="Certificate Issued" />
+                                    <InputLabel htmlFor="certificate_issued" value="Certificate Issued" />
                                     <select
-                                        value={data.certificate_issue}
-                                        onChange={(e) => setData('certificate_issue', e.target.value)}
+                                        value={data.certificate_issued}
+                                        onChange={(e) => setData('certificate_issued', e.target.value)}
                                         className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
                                     >
-                                        <option value="">SELECT CERTIFICATE ISSUE</option>
+                                        <option value="">SELECT CERTIFICATE ISSUED</option>
 
-                                        {["ISSUED", "NOT ISSUED"].map((certificate_issue) => (
-                                            <option key={certificate_issue} value={certificate_issue}>
-                                                {certificate_issue}
+                                        {["ISSUED", "NOT ISSUED"].map((certificate_issued) => (
+                                            <option key={certificate_issued} value={certificate_issued}>
+                                                {certificate_issued}
                                             </option>
                                         ))}
                                     </select>
@@ -288,23 +335,46 @@ function Form() {
                                     <InputError message={errors.certificate_issue} className="mt-2" />
                                 </div>
 
+
+
+
                                 <div>
-                                    <InputLabel htmlFor="course" value="Course" />
-                                    <select
-                                        value={data.course}
-                                        onChange={(e) => setData('course', e.target.value)}
-                                        className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
-                                    >
-                                        <option value="">SELECT CERTIFICATE ISSUE</option>
+                                    <InputLabel htmlFor="course_id" value="Course" />
+                                    <Select
+                                        options={course.map(c => ({ value: c.id, label: c.name }))}
 
-                                        {["BCA", "MCA"].map((course) => (
-                                            <option key={course} value={course}>
-                                                {course}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        value={course
+                                            .map(c => ({ value: c.id, label: c.name }))
+                                            .find(opt => opt.value === Number(data.course_id))
+                                        }
 
-                                    <InputError message={errors.course} className="mt-2" />
+                                        onChange={(selected) => setData('course_id', selected?.value)}
+
+                                        isClearable
+                                        placeholder="SELECT COURSE"
+                                        className="mt-1 block w-full"
+
+                                        classNames={{
+                                            control: () =>
+                                                "w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600",
+
+                                            valueContainer: () => "px-2 py-1",
+                                            input: () => "text-gray-900 dark:text-gray-300",
+                                            placeholder: () => "text-gray-400",
+
+                                            menu: () =>
+                                                "mt-1 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-lg",
+
+                                            option: ({ isFocused, isSelected }) =>
+                                                `px-3 py-2 cursor-pointer ${isSelected
+                                                    ? "bg-indigo-500 text-white"
+                                                    : isFocused
+                                                        ? "bg-indigo-100 dark:bg-gray-800"
+                                                        : "text-gray-900 dark:text-gray-300"
+                                                }`,
+                                        }}
+                                    />
+                                    <InputError message={errors.course_id} className="mt-2" />
                                 </div>
 
                                 <div>
@@ -325,20 +395,47 @@ function Form() {
 
                                     <InputError message={errors.scan} className="mt-2" />
                                 </div>
+                            </div>
 
+                            <div className='mt-3'>
                                 <div>
-                                    <InputLabel htmlFor="image" value="Photo" />
-                                    <TextInput
-                                        id="image"
-                                        type="text"
-                                        value={data.image}
-                                        className="mt-1 block w-full"
-                                        onChange={(e) => setData('image', e.target.value)}
-                                    />
+                                    <InputLabel htmlFor="image" value="Photo" className='mb-2' />
 
-                                    <InputError message={errors.image} className="mt-2" />
+                                    {!preview && <FileDropzone onFileSelect={handleFile} />}
+
+                                    {preview &&
+                                        <>
+                                            <img src={preview} className="w-32 mt-2 rounded" />
+                                            <DangerButton
+                                                size='sm'
+                                                className='mt-3'
+                                                onClick={() => {
+                                                    setPreview(null);
+                                                    setData('image', null);
+                                                }}
+                                            >
+                                                Remove
+                                            </DangerButton>
+                                        </>
+                                    }
+
+                                    {progress && (
+                                        <div className="w-full bg-gray-200 rounded">
+                                            <div
+                                                className="bg-indigo-600 text-xs text-white p-1 rounded"
+                                                style={{ width: `${progress.percentage}%` }}
+                                            >
+                                                {progress.percentage}%
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <InputError message={errors.image} className='mt-2' />
                                 </div>
+                            </div>
 
+
+                            <div className="grid grid-cols-2 gap-4 py-4">
                                 <div>
                                     <InputLabel htmlFor="session_start" value="Session Start" />
                                     <TextInput
@@ -364,7 +461,6 @@ function Form() {
 
                                     <InputError message={errors.session_end} className="mt-2" />
                                 </div>
-
                             </div>
 
 

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StudentRequest;
+use App\Models\Admin\Course;
 use App\Models\Admin\Institute;
-use Illuminate\Http\Request;
+use App\Models\Admin\Student;
+use App\Services\ImageService;
 use Inertia\Inertia;
 
 class StudentController extends Controller
@@ -14,7 +17,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Student/List');
+        $student = Student::with('course')->paginate(50);
+        
+        return Inertia::render('Admin/Student/List', compact('student'));
     }
 
     /**
@@ -23,23 +28,36 @@ class StudentController extends Controller
     public function create()
     {
         $institute = Institute::select('center_code')->get();
-        return Inertia::render('Admin/Student/Form', compact('institute'));
+        $course = Course::all();
+
+        return Inertia::render('Admin/Student/Form', compact('institute', 'course'));
     }
 
     public function get_center_name_by_center_code(string $centerCode)
     {
         $data = Institute::where('center_code', $centerCode)->first();
+
         return response()->json([
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StudentRequest $request, ImageService $imageService)
     {
-        //
+        $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = $imageService->uploadAndResize(
+                $request->file('image'), 'uploads', 100, 100
+            );
+        }
+
+        Student::create($validated);
+
+        return redirect(route('student.index'))->with('success', 'Student created successfully!');
     }
 
     /**
@@ -53,24 +71,38 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Student $student)
     {
-        //
+        $institute = Institute::select('center_code')->get();
+        $course = Course::all();
+        return Inertia::render('Admin/Student/Form', compact('student','institute','course'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StudentRequest $request, Student $student, ImageService $imageService)
     {
-        //
+        $validated = $request->validated();
+        if ($request->hasFile('image')) {
+            $imageService->delete($student->image);
+            $validated['image'] = $imageService->uploadAndResize(
+                $request->file('image'), 'uploads', 100, 100
+            );
+        }
+
+        $student->update($validated);
+
+        return redirect(route('student.index'))->with('success', 'Student updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Student $student)
     {
-        //
+        $student->delete();
+
+        return redirect(route('student.index'))->with('success', 'Student deleted successfully!');
     }
 }

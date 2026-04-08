@@ -11,19 +11,19 @@ function List() {
     const { flash, institute } = usePage().props;
 
     const handleDelete = (id) => {
-        // Swal.fire({
-        //     title: 'Are you sure?',
-        //     text: "You won't be able to revert this!",
-        //     icon: 'warning',
-        //     showCancelButton: true,
-        //     confirmButtonColor: '#6366f1',
-        //     cancelButtonColor: '#ef4444',
-        //     confirmButtonText: 'Yes, delete it!'
-        // }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         router.delete(route('institute.destroy', id));
-        //     }
-        // });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6366f1',
+            cancelButtonColor: '#ef4444',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('institute.destroy', id));
+            }
+        });
     };
 
 
@@ -160,7 +160,7 @@ function List() {
                                     ) : (
                                         <tr>
                                             <td
-                                                colSpan="3"
+                                                colSpan="10"
                                                 className="px-6 py-6 text-center text-gray-500 dark:text-gray-400"
                                             >
                                                 No data found
