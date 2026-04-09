@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PermissionRequest;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 
@@ -15,11 +15,10 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->role !== 'admin') {
-            abort(403);
-        }
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $permission = Permission::paginate(50);
-        return Inertia::render('Admin/Permission/List',compact('permission'));
+
+        return Inertia::render('Admin/Permission/List', compact('permission'));
     }
 
     /**
@@ -27,9 +26,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->role !== 'admin') {
-            abort(403);
-        }
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
+
         return Inertia::render('Admin/Permission/Form');
     }
 
@@ -38,9 +36,11 @@ class PermissionController extends Controller
      */
     public function store(PermissionRequest $request)
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $validated = $request->validated();
         Permission::create($validated);
-        return redirect(route('permission.index'))->with('success','Permission successfully created.');
+
+        return redirect(route('permission.index'))->with('success', 'Permission successfully created.');
     }
 
     /**
@@ -48,11 +48,10 @@ class PermissionController extends Controller
      */
     public function show(string $id)
     {
-        if (auth()->user()->role !== 'admin') {
-            abort(403);
-        }
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $permission = Permission::findOrFail($id);
-        return Inertia::render('Admin/Permission/Form',compact("permission"));
+
+        return Inertia::render('Admin/Permission/Form', compact('permission'));
     }
 
     /**
@@ -60,10 +59,9 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
-        if (auth()->user()->role !== 'admin') {
-            abort(403);
-        }
-        return Inertia::render('Admin/Permission/Form',[
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
+
+        return Inertia::render('Admin/Permission/Form', [
             'permission' => $permission,
         ]);
     }
@@ -73,12 +71,11 @@ class PermissionController extends Controller
      */
     public function update(PermissionRequest $request, Permission $permission)
     {
-        if (auth()->user()->role !== 'admin') {
-            abort(403);
-        }
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $validated = $request->validated();
         $permission->update($validated);
-        return redirect(route('permission.index'))->with('success','Permission successfully updated.');
+
+        return redirect(route('permission.index'))->with('success', 'Permission successfully updated.');
     }
 
     /**
@@ -86,11 +83,9 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        if (auth()->user()->role !== 'admin') {
-            abort(403);
-        }
-
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $permission->delete();
-        return redirect(route('permission.index'))->with('success','Permission successfully deleted.');
+
+        return redirect(route('permission.index'))->with('success', 'Permission successfully deleted.');
     }
 }

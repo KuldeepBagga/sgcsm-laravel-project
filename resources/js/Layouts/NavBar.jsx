@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/react';
 const menuItems = [
     {
         name: "Dashboard",
-        route: "dashboard",
+        route: "admin.dashboard",
         icon: "📊",
     },
     {
@@ -19,12 +19,12 @@ const menuItems = [
                 name: "Role",
                 route: "role.index",
             },
+            {
+                name: "Users",
+                route: "user.index",
+                icon: "📊",
+            },
         ],
-    },
-    {
-        name: "Users",
-        route: "user.index",
-        icon: "📊",
     },
     {
         name: "Course",

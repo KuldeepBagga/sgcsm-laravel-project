@@ -25,25 +25,24 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('dashboard', [AdminDashboard::class, "index"])->name('dashboard');
-    Route::resource('permission',PermissionController::class);
-    Route::resource('franchise',FranchiseController::class);
-    Route::resource('user',UserController::class);
-    Route::resource('student',StudentController::class);
-    Route::get('student/center/centername/{center_code}',[StudentController::class,"get_center_name_by_center_code"])->name('admin.center_name');
-    Route::resource('role',RoleController::class);
-    Route::resource('institute',InstituteController::class);
-    Route::resource('course',CourseController::class);
+    Route::get('dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
+    Route::resource('permission', PermissionController::class);
+    Route::resource('franchise', FranchiseController::class);
+    Route::resource('user', UserController::class);
+    Route::resource('student', StudentController::class);
+    Route::get('student/center/centername/{center_code}', [StudentController::class, 'get_center_name_by_center_code'])->name('admin.center_name');
+    Route::resource('role', RoleController::class);
+    Route::resource('institute', InstituteController::class);
+    Route::resource('course', CourseController::class);
 });
 
 Route::middleware(['auth', 'verified', 'role:student'])->group(function () {
-    Route::get('/dashboard', [StudentDashboard::class, "index"])->name('student.dashboard');
+    Route::get('/dashboard', [StudentDashboard::class, 'index'])->name('student.dashboard');
 });
 
 Route::middleware(['auth', 'verified', 'role:franchise'])->group(function () {
-    Route::get('center/dashboard', [FranchiseDashboard::class, "index"])->name('franchise.dashboard');
+    Route::get('center/dashboard', [FranchiseDashboard::class, 'index'])->name('franchise.dashboard');
 });
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoleRequest;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -15,6 +16,7 @@ class RoleController extends Controller
      */
     public function index()
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $role = Role::with('permissions')->paginate(50);
         return Inertia::render('Admin/Role/List', compact('role'));
     }
@@ -24,8 +26,8 @@ class RoleController extends Controller
      */
     public function create()
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $allPermissions = Permission::all();
-
         return Inertia::render('Admin/Role/Form', compact('allPermissions'));
     }
 
@@ -34,6 +36,8 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request)
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
+
         $validated = $request->validated();
 
         $role = Role::create([
@@ -64,8 +68,9 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        $role = Role::with('permissions')->findOrFail($id);
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
 
+        $role = Role::with('permissions')->findOrFail($id);
         return Inertia::render('Admin/Role/Form', [
             'role' => $role,
             'allPermissions' => Permission::select('id', 'name')->get(),
@@ -78,8 +83,9 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, string $id)
     {
-        $validated = $request->validated();
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
 
+        $validated = $request->validated();
         $role = Role::findOrFail($id);
 
         // update role name
@@ -107,8 +113,9 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
+        
         $role = Role::findOrFail($id);
-
         if (strtolower($role->name) === 'admin') {
             return redirect()->back()->with('error', 'Admin role cannot be deleted!');
         }

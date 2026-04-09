@@ -89,9 +89,15 @@ function List() {
                                                     {item.name}
                                                 </td>
 
-
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 uppercase">
                                                     {item.role}
+                                                </td>
+
+                                                
+                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 uppercase">
+                                                    <PrimaryButton size='sm'>
+                                                        Assign Permission And Role
+                                                    </PrimaryButton>
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right space-x-2">
