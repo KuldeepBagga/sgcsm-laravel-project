@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\InstituteRequest;
 use App\Models\Admin\Institute;
+use App\Models\User;
 use App\Services\ImageService;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -41,6 +43,16 @@ class InstituteController extends Controller
                 $request->file('image'), 'uploads', 100, 100
             );
         }
+
+        $user = User::create([
+            'name' => $validated['director'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['mobile']),
+            'show_password' => $validated['mobile'],
+            'role' => 'franchise'
+        ]);
+
+        $validated['user_id'] = $user->id;
 
         Institute::create($validated);
 

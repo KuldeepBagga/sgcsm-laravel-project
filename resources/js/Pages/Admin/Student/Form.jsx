@@ -19,6 +19,7 @@ function Form() {
         name: student?.name || '',
         relation: student?.relation || '',
         father_name: student?.father_name || '',
+        husband_name: student?.husband_name || '',
         mother_name: student?.mother_name || '',
         date_joined: student?.date_joined || '',
         date_of_birth: student?.date_of_birth || '',
@@ -35,7 +36,8 @@ function Form() {
         scan: student?.scan || 'NOT SCANNED',
         image: null || '',
         session_start: student?.session_start || '',
-        session_end: student?.session_end || ''
+        session_end: student?.session_end || '',
+        institute_id: student?.institute_id || ''
     });
 
     const handleFile = (files) => {
@@ -51,10 +53,10 @@ function Form() {
             setData('center_name', '');
             return;
         }
-
         try {
             const res = await axios.get(route('admin.center_name', center_code));
             setData('center_name', res.data.data.center_name || '');
+            setData('institute_id', res.data.data.id || '');
         } catch (error) {
             console.error(error);
         }
@@ -134,18 +136,35 @@ function Form() {
                                     <InputError message={errors.relation} className="mt-2" />
                                 </div>
 
+                                {data.relation === 'W/O' ?
+                                    (
+                                        <div>
+                                            <InputLabel htmlFor="husband_name" value="Husband Name" />
+                                            <TextInput
+                                                id="husband_name"
+                                                type="text"
+                                                value={data.husband_name}
+                                                className="mt-1 block w-full"
+                                                onChange={(e) => setData('husband_name', e.target.value)}
+                                            />
+                                            <InputError message={errors.husband_name} className="mt-2" />
+                                        </div>
+                                    ) :
+                                    (
 
-                                <div>
-                                    <InputLabel htmlFor="father_name" value="Father Name" />
-                                    <TextInput
-                                        id="father_name"
-                                        type="text"
-                                        value={data.father_name}
-                                        className="mt-1 block w-full"
-                                        onChange={(e) => setData('father_name', e.target.value)}
-                                    />
-                                    <InputError message={errors.father_name} className="mt-2" />
-                                </div>
+                                        <div>
+                                            <InputLabel htmlFor="father_name" value="Father Name" />
+                                            <TextInput
+                                                id="father_name"
+                                                type="text"
+                                                value={data.father_name}
+                                                className="mt-1 block w-full"
+                                                onChange={(e) => setData('father_name', e.target.value)}
+                                            />
+                                            <InputError message={errors.father_name} className="mt-2" />
+                                        </div>
+                                    )}
+
 
                                 <div>
                                     <InputLabel htmlFor="mother_name" value="Mother Name" />

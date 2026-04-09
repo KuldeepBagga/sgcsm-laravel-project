@@ -2,7 +2,7 @@
 
 namespace App\Policies\Admin;
 
-use App\Models\Admin\Course;
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

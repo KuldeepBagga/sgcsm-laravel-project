@@ -7,7 +7,9 @@ use App\Http\Requests\Admin\StudentRequest;
 use App\Models\Admin\Course;
 use App\Models\Admin\Institute;
 use App\Models\Admin\Student;
+use App\Models\User;
 use App\Services\ImageService;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class StudentController extends Controller
@@ -54,6 +56,15 @@ class StudentController extends Controller
                 $request->file('image'), 'uploads', 100, 100
             );
         }
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['phone'].time().'@gmail.com',
+            'password'=> Hash::make($validated['phone']),
+            'show_password'=> $validated['phone']
+        ]);
+
+        $validated['student_id'] = $user->id;
 
         Student::create($validated);
 

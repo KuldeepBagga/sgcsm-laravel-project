@@ -12,6 +12,7 @@ class Student extends Model
         'name',
         'relation',
         'father_name',
+        'husband_name',
         'mother_name',
         'date_joined',
         'date_of_birth',
@@ -28,12 +29,15 @@ class Student extends Model
         'image',
         'session_start',
         'session_end',
+        'center_name',
+        'institute_id',
+        'student_id'
     ];
 
-    public function getDateOfBirthAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format('d/m/Y') : null;
-    }
+    // public function getDateOfBirthAttribute($value)
+    // {
+    //     return $value ? Carbon::parse($value)->format('d/m/Y') : null;
+    // }
 
     protected static function boot()
     {

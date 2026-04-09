@@ -22,6 +22,7 @@ class Institute extends Model
         'status',
         'reference',
         'authorized',
-        'image'
+        'image',
+        'user_id'
     ];
 }

@@ -29,20 +29,31 @@ class InstituteRequest extends FormRequest
                 Rule::unique('institutes', 'center_code')->ignore($this->route('institute')),
             ],
             'center_name' => 'required',
-            'email' => 'required|email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('institutes', 'email')->ignore($this->route('institute')),
+            ],
             'address' => 'required',
             'city' => 'required',
             'state' => 'required',
             'pin' => 'required',
             'district' => 'required',
-            'mobile' => 'required',
-            'phone' => 'nullable',
+            'mobile' => [
+                'required',
+                Rule::unique('institutes', 'mobile')->ignore($this->route('institute')),
+            ],
+            'phone' => [
+                'nullable',
+                Rule::unique('institutes', 'phone')->ignore($this->route('institute')),
+            ],
             'director' => 'required',
             'authorization' => 'required',
             'status' => 'required',
             'reference' => 'nullable',
             'authorized' => 'nullable',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+            'user_id' => 'nullable'
         ];
     }
 }

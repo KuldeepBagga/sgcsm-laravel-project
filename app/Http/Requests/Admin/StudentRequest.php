@@ -25,7 +25,8 @@ class StudentRequest extends FormRequest
         return [
             'name' => 'required',
             'relation' => 'required',
-            'father_name' => 'required',
+            'husband_name' => 'required_if:relation,W/O|nullable',
+            'father_name' => 'required_if:relation,S/O,D/O|nullable',
             'mother_name' => 'required',
             'date_joined' => 'required',
             'date_of_birth' => 'required',
@@ -42,13 +43,17 @@ class StudentRequest extends FormRequest
             'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
             'session_start' => 'nullable',
             'session_end' => 'nullable',
+            'center_name' => 'required',
+            'institute_id' => 'sometimes',
         ];
     }
 
     public function messages()
     {
         return [
-            'course_id.required' => 'The course field is required.'
+            'course_id.required' => 'The course field is required.',
+            'father_name.required_if' => 'Father name is required.',
+            'husband_name.required_if' => 'Husband name is required.',
         ];
     }
 }

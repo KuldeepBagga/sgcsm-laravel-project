@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -21,8 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Vite::prefetch(concurrency: 3);
+        Gate::guessPolicyNamesUsing(function ($modelClass) {
+            return 'App\\Policies\\Admin\\'.class_basename($modelClass).'Policy';
+        });
 
+        Vite::prefetch(concurrency: 3);
         Inertia::share([
             'flash' => function () {
                 return [

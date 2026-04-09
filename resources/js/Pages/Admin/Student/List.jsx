@@ -5,6 +5,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import DangerButton from '@/Components/DangerButton'
 import Pagination from '@/Components/Pagination'
 import Swal from 'sweetalert2';
+import TextInput from '@/Components/TextInput';
 
 function List() {
     const { flash, student } = usePage().props;
@@ -53,7 +54,6 @@ function List() {
                                 </PrimaryButton>
                             </Link>
                         </div>
-
 
                         <div className="overflow-x-auto">
                             <table className="min-w-full border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden border-solid">
@@ -171,7 +171,7 @@ function List() {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan="4" className="px-6 py-6 text-center text-gray-500 dark:text-gray-400">
+                                            <td colSpan="20" className="px-6 py-6 text-center text-gray-500 dark:text-gray-400">
                                                 No data found
                                             </td>
                                         </tr>
