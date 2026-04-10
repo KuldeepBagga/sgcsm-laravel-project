@@ -13,7 +13,7 @@ class PermissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->role === 'admin' ? true : false;
+        return auth()->user()->hasRole('admin') ? true : false;
     }
 
     /**

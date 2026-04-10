@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Models\User;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -15,6 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $user = User::paginate(50);
+
         return Inertia::render('Admin/User/List', compact('user'));
     }
 
@@ -23,7 +25,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/User/Form');
+        $roles = Role::pluck('name'); 
+        return Inertia::render('Admin/User/Form', [
+            'user' => null, 
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -33,8 +39,8 @@ class UserController extends Controller
     {
         $validated = $request->validated();
         $validated['show_password'] = $request->password;
-        User::create($validated);
-
+        $user = User::create($validated);
+        $user->update($validated);
         return redirect(route('user.index'))->with('success', 'User created successfully');
     }
 
@@ -51,7 +57,18 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return Inertia::render('Admin/User/Form', compact('user'));
+        $roles = Role::all();
+        $user->load('roles');
+
+        return Inertia::render('Admin/User/Form', [
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'roles' => $user->roles->pluck('name'),
+            ],
+            'roles' => $roles->pluck('name'),
+        ]);
     }
 
     /**
@@ -68,8 +85,9 @@ class UserController extends Controller
             $validated['password'] = bcrypt($validated['password']);
             $validated['show_password'] = $request->password;
         }
-
         $user->update($validated);
+        $user->syncRoles($validated['role']);
+
         return redirect(route('user.index'))->with('success', 'User updated successfully!');
     }
 
@@ -83,6 +101,7 @@ class UserController extends Controller
         }
 
         $user->delete();
+
         return redirect(route('user.index'))->with('success', 'User deleted successfully');
     }
 }

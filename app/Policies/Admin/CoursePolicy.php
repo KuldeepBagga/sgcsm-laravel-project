@@ -2,7 +2,7 @@
 
 namespace App\Policies\Admin;
 
-use App\Models\Course;
+use App\Models\Admin\Course;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -13,7 +13,7 @@ class CoursePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->can('course.show') ?? false;
     }
 
     /**
@@ -21,7 +21,7 @@ class CoursePolicy
      */
     public function view(User $user, Course $course): bool
     {
-        return false;
+       return false;
     }
 
     /**
@@ -29,7 +29,7 @@ class CoursePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->can('course.create') ?? false;
     }
 
     /**
@@ -37,7 +37,7 @@ class CoursePolicy
      */
     public function update(User $user, Course $course): bool
     {
-        return false;
+        return $user->can('course.update');
     }
 
     /**
@@ -45,7 +45,7 @@ class CoursePolicy
      */
     public function delete(User $user, Course $course): bool
     {
-        return false;
+        return $user->can('course.delete');
     }
 
     /**

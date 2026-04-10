@@ -93,13 +93,6 @@ function List() {
                                                     {item.role}
                                                 </td>
 
-                                                
-                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 uppercase">
-                                                    <PrimaryButton size='sm'>
-                                                        Assign Permission And Role
-                                                    </PrimaryButton>
-                                                </td>
-
                                                 <td className="px-6 py-4 text-right space-x-2">
                                                     <Link href={route('user.edit', item.id)}>
                                                         <PrimaryButton size='sm'>Edit</PrimaryButton>

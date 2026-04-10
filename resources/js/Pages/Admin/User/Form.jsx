@@ -7,14 +7,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head, Link, useForm, usePage } from '@inertiajs/react'
 
 function Form() {
-    const { user } = usePage().props;
-
-    const roles = ['Student', 'Admin', 'SubAdmin'];
+    const { user, roles } = usePage().props;
 
     const { data, setData, post, put, processing, errors, reset } = useForm({
         name: user?.name || '',
         email: user?.email || '',
-        role: user?.role || 'Student',
+        role: user?.roles?.[0] || 'student',
         password: '',
         password_confirmation: ''
     });
@@ -102,11 +100,11 @@ function Form() {
                                 </div>
 
                                 <div>
-                                    <InputLabel htmlFor="user_type">User Type</InputLabel>
-                                    <select value={data.role} onChange={(e) => setData('role', e.target.value)}
+                                    <InputLabel htmlFor="role">Role</InputLabel>
+                                    <select id='role' value={data.role} onChange={(e) => setData('role', e.target.value)}
                                         className='rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full'
                                     >
-                                        {roles.map((role) => (
+                                        {roles.map(role => (
                                             <option key={role} value={role}>
                                                 {role}
                                             </option>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CourseRequest;
 use App\Models\Admin\Course;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class CourseController extends Controller
@@ -14,8 +15,9 @@ class CourseController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Course::class);
         $course = Course::paginate(50);
-        return Inertia::render('Admin/Course/List',compact('course'));
+        return Inertia::render('Admin/Course/List', compact('course'));
     }
 
     /**
@@ -23,6 +25,7 @@ class CourseController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Course::class);
         return Inertia::render('Admin/Course/Form');
     }
 
@@ -31,9 +34,11 @@ class CourseController extends Controller
      */
     public function store(CourseRequest $request)
     {
+        Gate::authorize('create', Course::class);
         $valiated = $request->validated();
         Course::create($valiated);
-        return redirect(route('course.index'))->with('success','Course successfully created!');
+
+        return redirect(route('course.index'))->with('success', 'Course successfully created!');
     }
 
     /**
@@ -49,7 +54,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return Inertia::render('Admin/Course/Form',compact('course'));
+        Gate::authorize('update', $course);
+        return Inertia::render('Admin/Course/Form', compact('course'));
     }
 
     /**
@@ -57,9 +63,10 @@ class CourseController extends Controller
      */
     public function update(CourseRequest $request, Course $course)
     {
+        Gate::authorize('update', $course);
         $validated = $request->validated();
         $course->update($validated);
-        return redirect(route('course.index'))->with('success','Course successfully updated!');
+        return redirect(route('course.index'))->with('success', 'Course successfully updated!');
     }
 
     /**
@@ -67,7 +74,8 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+        Gate::authorize('delete', $course);
         $course->delete();
-        return redirect(route('course.index'))->with('success','Course successfully deleted!');
+        return redirect(route('course.index'))->with('success', 'Course successfully deleted!');
     }
 }
