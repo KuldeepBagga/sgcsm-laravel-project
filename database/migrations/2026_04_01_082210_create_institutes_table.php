@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('reference')->nullable();
             $table->string('authorized')->nullable();
             $table->string('image')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

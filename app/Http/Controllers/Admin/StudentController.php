@@ -64,6 +64,8 @@ class StudentController extends Controller
             'show_password'=> $validated['phone']
         ]);
 
+        $user->assignRole('student');
+
         $validated['student_id'] = $user->id;
 
         Student::create($validated);

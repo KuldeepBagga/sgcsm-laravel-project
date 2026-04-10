@@ -54,6 +54,7 @@ return new class extends Migration
             $table->string('registration_no')->unique();
             $table->string('certificate_no')->unique()->nullable();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

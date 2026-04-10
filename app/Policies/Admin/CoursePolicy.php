@@ -13,7 +13,7 @@ class CoursePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('course.show') ?? false;
+        return $user->can('course.view') ?? false;
     }
 
     /**

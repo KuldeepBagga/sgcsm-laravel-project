@@ -8,7 +8,7 @@ import React from 'react'
 import Swal from 'sweetalert2';
 
 function List() {
-    const { flash, course } = usePage().props;
+    const { flash, course, auth } = usePage().props;
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -48,12 +48,12 @@ function List() {
                             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                                 Course List
                             </h2>
-
-                            <Link href={route('course.create')}>
-                                <PrimaryButton>
-                                    Create
-                                </PrimaryButton>
-                            </Link>
+                            {auth?.user?.permissions?.includes('course.create') &&
+                                <Link href={route('course.create')}>
+                                    <PrimaryButton>
+                                        Create
+                                    </PrimaryButton>
+                                </Link>}
                         </div>
 
 
@@ -95,21 +95,23 @@ function List() {
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
                                                     {item.category}
                                                 </td>
-                                                
+
                                                 <td className="px-6 py-4 text-right space-x-2">
-                                                    <Link href={route('course.edit', item.id)}>
-                                                        <PrimaryButton
-                                                            size='sm'
+                                                    {auth.user.permissions.includes('course.update') &&
+                                                        <Link href={route('course.edit', item.id)}>
+                                                            <PrimaryButton
+                                                                size='sm'
+                                                            >
+                                                                Edit
+                                                            </PrimaryButton>
+                                                        </Link>}
+                                                    {auth.user.permissions.includes('course.delete') &&
+                                                        <DangerButton
+                                                            size="sm"
+                                                            onClick={() => handleDelete(item.id)}
                                                         >
-                                                            Edit
-                                                        </PrimaryButton>
-                                                    </Link>
-                                                    <DangerButton
-                                                        size="sm"
-                                                        onClick={() => handleDelete(item.id)}
-                                                    >
-                                                        Delete
-                                                    </DangerButton>
+                                                            Delete
+                                                        </DangerButton>}
                                                 </td>
                                             </tr>
                                         ))

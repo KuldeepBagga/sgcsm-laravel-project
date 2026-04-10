@@ -102,7 +102,7 @@ function Form() {
                                     {/* LEFT BOX */}
                                     <select
                                         multiple
-                                        className="w-full h-56 rounded-md border-gray-300 dark:bg-gray-700 dark:text-white"
+                                        className="h-72 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
                                         onChange={(e) =>
                                             setLeftSelected(
                                                 Array.from(e.target.selectedOptions, o => Number(o.value))
@@ -110,7 +110,7 @@ function Form() {
                                         }
                                     >
                                         {available.map(item => (
-                                            <option key={item.id} value={item.id} className="uppercase">
+                                            <option key={item.id} value={item.id}>
                                                 {item.name}
                                             </option>
                                         ))}
@@ -138,7 +138,7 @@ function Form() {
 
                                     <select
                                         multiple
-                                        className="w-full h-56 rounded-md border-gray-300 dark:bg-gray-700 dark:text-white"
+                                        className="h-72 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
                                         onChange={(e) =>
                                             setRightSelected(
                                                 Array.from(e.target.selectedOptions, o => Number(o.value))
@@ -146,7 +146,7 @@ function Form() {
                                         }
                                     >
                                         {selected.map(item => (
-                                            <option key={item.id} value={item.id} className="uppercase">
+                                            <option key={item.id} value={item.id}>
                                                 {item.name}
                                             </option>
                                         ))}
