@@ -82,11 +82,11 @@ function List() {
                         key={item.id || index}
                         className="hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                       >
-                        <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
+                        <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 align-top">
                           {index + 1}
                         </td>
 
-                        <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
+                        <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 align-top">
                           {item.name}
                         </td>
 
@@ -105,7 +105,7 @@ function List() {
                         </td>
 
 
-                        <td className="px-6 py-4 text-right space-x-2">
+                        <td className="px-6 py-4 text-right space-x-2 w-[15%] align-top">
                           <Link href={route('role.edit', item.id)}>
                             <PrimaryButton size='sm'>Edit</PrimaryButton>
                           </Link>

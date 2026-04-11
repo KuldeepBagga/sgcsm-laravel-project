@@ -41,6 +41,11 @@ const menuItems = [
         route: "student.index",
         icon: "📊",
     },
+    {
+        name: "Franchise",
+        route: "franchise.index",
+        icon: "📊",
+    },
 ];
 
 export default function NavBar() {

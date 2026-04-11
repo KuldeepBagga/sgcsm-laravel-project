@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PermissionRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 
@@ -15,9 +16,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Permission::class);
         abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $permission = Permission::paginate(50);
-
         return Inertia::render('Admin/Permission/List', compact('permission'));
     }
 
@@ -26,8 +27,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Permission::class);
         abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
-
         return Inertia::render('Admin/Permission/Form');
     }
 
@@ -36,6 +37,7 @@ class PermissionController extends Controller
      */
     public function store(PermissionRequest $request)
     {
+        Gate::authorize('create', Permission::class);
         abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $validated = $request->validated();
         Permission::create($validated);
@@ -48,10 +50,10 @@ class PermissionController extends Controller
      */
     public function show(string $id)
     {
-        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
-        $permission = Permission::findOrFail($id);
+        // abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
+        // $permission = Permission::findOrFail($id);
 
-        return Inertia::render('Admin/Permission/Form', compact('permission'));
+        // return Inertia::render('Admin/Permission/Form', compact('permission'));
     }
 
     /**
@@ -59,8 +61,8 @@ class PermissionController extends Controller
      */
     public function edit(Permission $permission)
     {
+        Gate::authorize('update', $permission);
         abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
-
         return Inertia::render('Admin/Permission/Form', [
             'permission' => $permission,
         ]);
@@ -71,6 +73,7 @@ class PermissionController extends Controller
      */
     public function update(PermissionRequest $request, Permission $permission)
     {
+        Gate::authorize('update', $permission);
         abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $validated = $request->validated();
         $permission->update($validated);
@@ -83,6 +86,7 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
+        Gate::authorize('delete', $permission);
         abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $permission->delete();
 

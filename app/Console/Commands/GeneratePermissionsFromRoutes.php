@@ -33,7 +33,8 @@ class GeneratePermissionsFromRoutes extends Command
             'role',
             'course',
             'institute',
-            'student'
+            'student',
+            'franchise'
         ];
         $actions = ['create', 'view', 'delete', 'update'];
 

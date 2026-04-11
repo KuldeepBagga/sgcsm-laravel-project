@@ -34,6 +34,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->group(fu
     Route::resource('role', RoleController::class);
     Route::resource('institute', InstituteController::class);
     Route::resource('course', CourseController::class);
+    Route::resource('franchise', FranchiseController::class);
 });
 
 Route::middleware(['auth', 'verified', 'role:student'])->group(function () {

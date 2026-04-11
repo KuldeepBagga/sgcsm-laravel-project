@@ -86,6 +86,7 @@ function Form() {
                                 <TextInput
                                     id="name"
                                     type="text"
+                                    disabled={data.name === 'admin' ? true : false}
                                     value={data.name}
                                     className="mt-1 block w-full"
                                     onChange={(e) => setData('name', e.target.value)}

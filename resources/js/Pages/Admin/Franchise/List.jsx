@@ -6,30 +6,32 @@ import DangerButton from '@/Components/DangerButton';
 import Pagination from '@/Components/Pagination';
 import Swal from 'sweetalert2';
 
-function List() {
-    const { flash, user } = usePage().props;
 
-    const handleDelete = (id) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#6366f1',
-            cancelButtonColor: '#ef4444',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                router.delete(route('user.destroy', id));
-            }
-        });
-    };
+function List() {
+    const { flash, franchise } = usePage().props;
+
+
+     const handleDelete = (id) => {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#6366f1',
+                cancelButtonColor: '#ef4444',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    router.delete(route('franchise.destroy', id));
+                }
+            });
+        };
 
     return (
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    User
+                    Franchise
                 </h2>
             }
         >
@@ -44,10 +46,10 @@ function List() {
 
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                                User List
+                                Franchise List
                             </h2>
 
-                            <Link href={route('user.create')}>
+                            <Link href={route('franchise.create')}>
                                 <PrimaryButton>
                                     Create
                                 </PrimaryButton>
@@ -63,13 +65,16 @@ function List() {
                                             ID
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Name
+                                            Center Name
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Roles
+                                            Director
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Password
+                                            Email
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            Mobile
                                         </th>
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Actions
@@ -78,30 +83,34 @@ function List() {
                                 </thead>
 
                                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-gray-900">
-                                    {user?.data?.length > 0 ? (
-                                        user.data.map((item, index) => (
+                                    {franchise?.data?.length > 0 ? (
+                                        franchise.data.map((item, index) => (
                                             <tr
                                                 key={item.id || index}
                                                 className="hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                                             >
-                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
+                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 uppercase">
                                                     {index + 1}
                                                 </td>
 
-                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.name}
+                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 uppercase">
+                                                    {item.center_name}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 uppercase">
-                                                    {item?.roles[0]?.name ?? false}
+                                                    {item?.director}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 uppercase">
-                                                    {item?.show_password}
+                                                    {item?.email}
+                                                </td>
+
+                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 uppercase">
+                                                    {item?.mobile}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right space-x-2">
-                                                    <Link href={route('user.edit', item.id)}>
+                                                    <Link href={route('franchise.edit', item.id)}>
                                                         <PrimaryButton size='sm'>Edit</PrimaryButton>
                                                     </Link>
                                                     <DangerButton size="sm" onClick={() => handleDelete(item.id)}>
@@ -112,7 +121,7 @@ function List() {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan="3" className="px-6 py-6 text-center text-gray-500 dark:text-gray-400">
+                                            <td colSpan="13" className="px-6 py-6 text-center text-gray-500 dark:text-gray-400">
                                                 No data found
                                             </td>
                                         </tr>
@@ -121,10 +130,10 @@ function List() {
                             </table>
                         </div>
                         <Pagination
-                            links={user.links}
-                            from={user.from}
-                            to={user.to}
-                            total={user.total}
+                            links={franchise.links}
+                            from={franchise.from}
+                            to={franchise.to}
+                            total={franchise.total}
                         />
 
                     </div>

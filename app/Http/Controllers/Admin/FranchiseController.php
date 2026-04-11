@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\FranchiseRequest;
+use App\Models\Admin\Franchise;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class FranchiseController extends Controller
@@ -13,7 +15,10 @@ class FranchiseController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Franchise/List');
+        Gate::authorize('viewAny', Franchise::class);
+        $franchise = Franchise::paginate(50);
+
+        return Inertia::render('Admin/Franchise/List', compact('franchise'));
     }
 
     /**
@@ -21,21 +26,27 @@ class FranchiseController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Franchise/From');
+        Gate::authorize('create', Franchise::class);
+
+        return Inertia::render('Admin/Franchise/Form');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FranchiseRequest $request)
     {
-        //
+        Gate::authorize('create', Franchise::class);
+        $validated = $request->validated();
+        Franchise::create($validated);
+
+        return redirect(route('franchise.index'))->with('success', 'Franchise created successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Franchise $franchise)
     {
         //
     }
@@ -43,24 +54,33 @@ class FranchiseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Franchise $franchise)
     {
-        //
+        Gate::authorize('update', $franchise);
+
+        return Inertia::render('Admin/Franchise/Form', compact('franchise'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FranchiseRequest $request, Franchise $franchise)
     {
-        //
+        Gate::authorize('update', $franchise);
+        $validated = $request->validated();
+        $franchise->update($validated);
+
+        return redirect(route('franchise.index'))->with('success', 'Franchise updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Franchise $franchise)
     {
-        //
+        Gate::authorize('delete', $franchise);
+        $franchise->delete();
+
+        return redirect(route('franchise.index'))->with('success', 'Franchise deleted successfully');
     }
 }
