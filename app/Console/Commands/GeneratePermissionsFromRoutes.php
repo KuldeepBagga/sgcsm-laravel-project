@@ -26,7 +26,6 @@ class GeneratePermissionsFromRoutes extends Command
      */
     public function handle()
     {
-
         $modules = [
             'permission',
             'user',
@@ -36,11 +35,22 @@ class GeneratePermissionsFromRoutes extends Command
             'student',
             'franchise'
         ];
-        $actions = ['create', 'view', 'delete', 'update'];
+
+        $defaultActions = ['create', 'view', 'delete', 'update'];
+
+        $extraActions = [
+            'franchise' => ['approve'],
+        ];
 
         foreach ($modules as $module) {
+
+            $actions = array_merge(
+                $defaultActions,
+                $extraActions[$module] ?? []
+            );
+
             foreach ($actions as $action) {
-                $name = $module.'.'.$action;
+                $name = $module . '.' . $action;
 
                 Permission::firstOrCreate([
                     'name' => $name,

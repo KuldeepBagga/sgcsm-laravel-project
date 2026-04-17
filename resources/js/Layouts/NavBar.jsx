@@ -8,15 +8,15 @@ const menuItems = [
         icon: "📊",
     },
     {
-        name: "Role & Permission",
+        name: "Users & Roles",
         icon: "⚙️",
         children: [
+            // {
+            //     name: "Permission",
+            //     route: "permission.index",
+            // },
             {
-                name: "Permission",
-                route: "permission.index",
-            },
-            {
-                name: "Role",
+                name: "Roles",
                 route: "role.index",
             },
             {

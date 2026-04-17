@@ -8,24 +8,23 @@ import Swal from 'sweetalert2';
 
 
 function List() {
-    const { flash, franchise } = usePage().props;
+    const { flash, franchise, auth } = usePage().props;
 
-
-     const handleDelete = (id) => {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#6366f1',
-                cancelButtonColor: '#ef4444',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    router.delete(route('franchise.destroy', id));
-                }
-            });
-        };
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#6366f1',
+            cancelButtonColor: '#ef4444',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route('franchise.destroy', id));
+            }
+        });
+    };
 
     return (
         <AuthenticatedLayout
@@ -76,6 +75,9 @@ function List() {
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Mobile
                                         </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            Approved
+                                        </th>
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Actions
                                         </th>
@@ -109,7 +111,25 @@ function List() {
                                                     {item?.mobile}
                                                 </td>
 
+                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200 uppercase">
+                                                    <span
+                                                        className={`px-3 py-1 rounded-full text-xs font-semibold uppercase
+                                                            ${item?.is_approved === "APPROVED"
+                                                                ? "bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-200"
+                                                                : "bg-red-100 text-red-700 dark:bg-red-800 dark:text-red-200"
+                                                            }`}
+                                                    >
+                                                        {item?.is_approved === "APPROVED" ? "APPROVED" : "NOT APPROVED"}
+                                                    </span>
+                                                </td>
+
                                                 <td className="px-6 py-4 text-right space-x-2">
+                                                    {item.is_approved === 'NOT APPROVED' && auth.user.permissions.includes('franchise.approve') &&
+                                                        <Link href={route('franchise.approve', item.id)}>
+                                                            <PrimaryButton size='sm'>Approve</PrimaryButton>
+                                                        </Link>
+                                                    }
+
                                                     <Link href={route('franchise.edit', item.id)}>
                                                         <PrimaryButton size='sm'>Edit</PrimaryButton>
                                                     </Link>

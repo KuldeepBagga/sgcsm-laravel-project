@@ -45,7 +45,12 @@ class FranchisePolicy
      */
     public function delete(User $user, Franchise $franchise): bool
     {
-       return $user->can('franchise.delete') && $user->hasRole('admin');
+        return $user->can('franchise.delete') && $user->hasRole('admin');
+    }
+
+    public function approve(User $user, Franchise $franchise): bool
+    {
+        return $user->can('franchise.approve') && $user->hasRole('admin');
     }
 
     /**

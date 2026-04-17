@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\FranchiseRequest;
 use App\Models\Admin\Franchise;
+use App\Models\Admin\Institute;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class FranchiseController extends Controller
@@ -82,5 +85,42 @@ class FranchiseController extends Controller
         $franchise->delete();
 
         return redirect(route('franchise.index'))->with('success', 'Franchise deleted successfully');
+    }
+
+    public function approve(Franchise $franchise)
+    {
+        Gate::authorize('approve', $franchise);
+
+        //when approved user created
+        $user = User::create([
+            'name' => $franchise->director,
+            'email' => $franchise->email,
+            'password' => Hash::make($franchise->email),
+            'show_password' => $franchise->email
+        ]);
+
+        $user->assignRole('franchise');
+
+        Institute::create([
+            'center_name' => $franchise->center_name,
+            'director' => $franchise->director,
+            'state' => $franchise->state,
+            'city' => $franchise->city,
+            'district' => $franchise->district,
+            'pin' => $franchise->pin,
+            'email' => $franchise->email,
+            'phone' => $franchise->phone,
+            'mobile' => $franchise->mobile,
+            'user_id' => $user->id,
+            'authorization' => 'NOT ISSUED',
+            'status' => 'ACTIVE',
+            'authorized' => 0
+        ]);
+
+        $franchise->update([
+            'is_approved' => 'APPROVED'
+        ]);
+
+        return redirect(route('franchise.index'))->with('success', 'Franchise approved successfully');
     }
 }

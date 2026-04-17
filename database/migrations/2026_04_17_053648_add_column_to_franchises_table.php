@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('franchises', function (Blueprint $table) {
-            $table->enum('is_approved',['Approved','Not Approved'])->default('Not Approved');
+            $table->string('is_approved')->default('NOT APPROVED');
         });
     }
 

@@ -19,5 +19,6 @@ class Franchise extends Model
         'email',
         'phone',
         'mobile',
+        'is_approved'
     ];
 }

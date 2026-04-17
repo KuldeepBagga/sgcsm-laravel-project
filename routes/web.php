@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->group(fu
     Route::get('dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
     Route::resource('permission', PermissionController::class);
     Route::resource('franchise', FranchiseController::class);
+    Route::get('franchise/{franchise}/approve/',[FranchiseController::class, 'approve'])->name('franchise.approve');
     Route::resource('user', UserController::class);
     Route::resource('student', StudentController::class);
     Route::get('student/center/centername/{center_code}', [StudentController::class, 'get_center_name_by_center_code'])->name('admin.center_name');
