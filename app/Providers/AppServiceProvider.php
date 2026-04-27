@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Policies\CenterAffiliationPolicy;
 use App\Policies\PermissionPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
@@ -28,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
         //     return 'App\\Policies\\Admin\\'.class_basename($modelClass).'Policy';
         // });
         Gate::policy(Permission::class, PermissionPolicy::class);
+        Gate::policy(Permission::class, CenterAffiliationPolicy::class);
         
         Vite::prefetch(concurrency: 3);
         Inertia::share([
