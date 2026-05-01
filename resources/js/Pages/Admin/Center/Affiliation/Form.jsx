@@ -10,6 +10,7 @@ import FileDropzone from "@/Components/FileDropzone";
 
 export default function Form() {
     const { affiliation } = usePage().props;
+    const STATUS = ["ACTIVE", "DEACTIVE", "SUSPENDED", "CANCELLED"];
     
     const { data, setData, post, put, processing, errors, reset, progress } =
         useForm({
@@ -29,7 +30,7 @@ export default function Form() {
             put(route("center_affiliation.update", affiliation.id));
         } else {
             post(route("center_affiliation.store"), {
-                onFinish: () => reset(),
+                onSuccess: () => reset(),
             });
         }
     };
@@ -209,12 +210,7 @@ export default function Form() {
                                     >
                                         <option value="">Select Status</option>
 
-                                        {[
-                                            "Active",
-                                            "DeActive",
-                                            "SusPended",
-                                            "Cancelled",
-                                        ].map((status) => (
+                                        {STATUS.map((status) => (
                                             <option key={status} value={status}>
                                                 {status}
                                             </option>

@@ -138,8 +138,6 @@ function List() {
                                                     {item.authorization}
                                                 </td>
 
-
-
                                                 <td className="px-6 py-4 text-right space-x-2">
                                                     <Link href={route('institute.edit', item.id)}>
                                                         <PrimaryButton

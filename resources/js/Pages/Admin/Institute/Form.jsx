@@ -12,7 +12,7 @@ import FileDropzone from "@/Components/FileDropzone";
 export default function Form() {
     const AUTHORIZATION = ["ISSUED", "NOT ISSUED", "CLOSED", "NOT WORKING"];
     const STATUS = ["ACTIVE", "BLACKLISTED", "DELETED"];
-    const AUTHORIZED = ["Authorized", "Unauthorized"];
+    const AUTHORIZED = ["AUTHORIZED", "UNAUTHORIZED"];
     const [preview, setPreview] = useState(null);
     const { institute } = usePage().props;
 
@@ -234,7 +234,7 @@ export default function Form() {
                                         onChange={(e) => setData('authorization', e.target.value)}
                                         className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
                                     >
-                                        <option value="">Select Authorization</option>
+                                        <option value="">SELECT AUTHORIZATION</option>
 
                                         {AUTHORIZATION.map((authorization, index) => (
                                             <option key={authorization} value={authorization}>
@@ -253,7 +253,7 @@ export default function Form() {
                                         onChange={(e) => setData('status', e.target.value)}
                                         className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
                                     >
-                                        <option value="">Select Status</option>
+                                        <option value="">SELECT STATUS</option>
 
                                         {STATUS.map((status, index) => (
                                             <option key={status} value={status}>
@@ -285,7 +285,7 @@ export default function Form() {
                                         onChange={(e) => setData('authorized', e.target.value)}
                                         className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
                                     >
-                                        <option value="">Select Authorized</option>
+                                        <option value="">SELECT AUTHORIZED</option>
 
                                         {AUTHORIZED.map((authorized, index) => (
                                             <option key={authorized} value={index}>

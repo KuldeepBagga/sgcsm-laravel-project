@@ -10,12 +10,19 @@ import { STATES } from "@/data/RawData";
 import FileDropzone from "@/Components/FileDropzone";
 
 export default function Form() {
+    const { ourteam } = usePage().props;
     const STATUS = ["ACTIVE", "BLOCKED"];
     const [preview, setPreview] = useState(null);
-    const { ourteam } = usePage().props;
 
     const { data, setData, post, put, processing, errors, reset, progress } =
-        useForm({});
+        useForm({
+            name: ourteam?.name || "",
+            designation: ourteam?.designation || "",
+            phone: ourteam?.phone || "",
+            status: ourteam?.status || "",
+            email: ourteam?.email || "",
+            image: "",
+        });
 
     const handleFile = (files) => {
         const file = files[0];
@@ -35,7 +42,7 @@ export default function Form() {
         } else {
             post(route("ourteam.store"), {
                 forceFormData: true,
-                onFinish: () => reset("name"),
+                onSuccess: () => reset(),
             });
         }
     };
@@ -66,20 +73,14 @@ export default function Form() {
                         <form onSubmit={handleSubmit}>
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <InputLabel
-                                        htmlFor="name"
-                                        value="Name"
-                                    />
+                                    <InputLabel htmlFor="name" value="Name" />
                                     <TextInput
                                         id="name"
                                         type="text"
                                         value={data.name}
                                         className="mt-1 block w-full"
                                         onChange={(e) =>
-                                            setData(
-                                                "name",
-                                                e.target.value,
-                                            )
+                                            setData("name", e.target.value)
                                         }
                                     />
                                     <InputError
@@ -92,6 +93,63 @@ export default function Form() {
                                     <InputLabel
                                         htmlFor="designation"
                                         value="Designation"
+                                    />
+                                    <TextInput
+                                        id="designation"
+                                        type="text"
+                                        value={data.designation}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData(
+                                                "designation",
+                                                e.target.value,
+                                            )
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.designation}
+                                        className="mt-2"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="email" value="Email" />
+                                    <TextInput
+                                        id="email"
+                                        type="email"
+                                        value={data.email}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData("email", e.target.value)
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.email}
+                                        className="mt-2"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="phone" value="Phone" />
+                                    <TextInput
+                                        id="phone"
+                                        type="number"
+                                        value={data.phone}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData("phone", e.target.value)
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.phone}
+                                        className="mt-2"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        htmlFor="status"
+                                        value="Status"
                                     />
                                     <select
                                         value={data.status}
@@ -114,7 +172,9 @@ export default function Form() {
                                         className="mt-2"
                                     />
                                 </div>
+                            </div>
 
+                            <div className="mt-3">
                                 <div>
                                     <InputLabel
                                         htmlFor="image"
@@ -166,7 +226,6 @@ export default function Form() {
                                     />
                                 </div>
                             </div>
-
                             <div className="mt-6">
                                 <PrimaryButton disabled={processing} size="md">
                                     {ourteam ? "Update" : "Save"}

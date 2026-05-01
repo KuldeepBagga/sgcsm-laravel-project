@@ -3,8 +3,11 @@
 namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OurTeam extends Model
 {
-    protected $fillable = ['name', 'designation', 'photo', 'status', 'email', 'phone'];
+    use SoftDeletes;
+    
+    protected $fillable = ['name', 'designation', 'image', 'status', 'email', 'phone'];
 }

@@ -6,7 +6,9 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,18 +23,25 @@ class DatabaseSeeder extends Seeder
         Role::create(['name' => 'student', 'guard_name' => 'web']);
         Role::create(['name' => 'franchise', 'guard_name' => 'web']);
 
+
+        Artisan::call('permission:generate');
+
         $admin =  User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make("1234")
+            'password' => Hash::make("1234"),
+            'show_password' => '1234'        
         ]);
 
-       $admin->assignRole('admin');
+        $admin->assignRole('admin');
+        $admin = Role::findByName('admin');
+        $admin->givePermissionTo(Permission::all());
 
         $student =  User::factory()->create([
             'name' => 'student',
             'email' => 'student@gmail.com',
-            'password' => Hash::make("1234")
+            'password' => Hash::make("1234"),
+            'show_password' => '1234'
         ]);
         
         $student->assignRole('student');
@@ -40,7 +49,8 @@ class DatabaseSeeder extends Seeder
         $franchise =    User::factory()->create([
             'name' => 'franchise',
             'email' => 'franchise@gmail.com',
-            'password' => Hash::make("1234")
+            'password' => Hash::make("1234"),
+            'show_password' => '1234'
         ]);
 
         $franchise->assignRole('franchise');

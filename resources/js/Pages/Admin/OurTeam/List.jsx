@@ -1,31 +1,31 @@
-import DangerButton from '@/Components/DangerButton'
-import Pagination from '@/Components/Pagination'
-import PrimaryButton from '@/Components/PrimaryButton'
-import Toast from '@/Components/Toast'
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { Head, Link, router, usePage } from '@inertiajs/react'
-import React from 'react'
-import Swal from 'sweetalert2';
+import DangerButton from "@/Components/DangerButton";
+import Pagination from "@/Components/Pagination";
+import PrimaryButton from "@/Components/PrimaryButton";
+import Toast from "@/Components/Toast";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link, router, usePage } from "@inertiajs/react";
+import React from "react";
+import Swal from "sweetalert2";
+import TextInput from "@/Components/TextInput";
 
 function List() {
     const { flash, ourteam } = usePage().props;
 
     const handleDelete = (id) => {
         Swal.fire({
-            title: 'Are you sure?',
+            title: "Are you sure?",
             text: "You won't be able to revert this!",
-            icon: 'warning',
+            icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: '#6366f1',
-            cancelButtonColor: '#ef4444',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonColor: "#6366f1",
+            cancelButtonColor: "#ef4444",
+            confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(route('ourteam.destroy', id));
+                router.delete(route("ourteam.destroy", id));
             }
         });
     };
-
 
     return (
         <AuthenticatedLayout
@@ -43,19 +43,15 @@ function List() {
             <div className="py-12 bg-gray-100 dark:bg-gray-900 min-h-screen">
                 <div className="mx-auto max-w-10xl sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6">
-
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                                 Our Team List
                             </h2>
 
-                            <Link href={route('ourteam.create')}>
-                                <PrimaryButton>
-                                    Create
-                                </PrimaryButton>
+                            <Link href={route("ourteam.create")}>
+                                <PrimaryButton>Create</PrimaryButton>
                             </Link>
                         </div>
-
 
                         <div className="overflow-x-auto">
                             <table className="min-w-full border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden border-solid">
@@ -65,28 +61,13 @@ function List() {
                                             ID
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Center Code
+                                            Name
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Center Name
+                                            Email
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Director
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            State
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            City
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            PinCode
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Disctrict
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Authorization
+                                            Status
                                         </th>
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Actions
@@ -95,7 +76,6 @@ function List() {
                                 </thead>
 
                                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-gray-900">
-
                                     {ourteam?.data?.length > 0 ? (
                                         ourteam.data.map((item, index) => (
                                             <tr
@@ -107,50 +87,44 @@ function List() {
                                                 </td>
 
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.center_code}
+                                                    {item.name}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.center_name}
+                                                    {item.email}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.director}
+                                                    <span
+                                                        className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                                            item.status ===
+                                                            "ACTIVE"
+                                                                ? "bg-green-100 text-green-700"
+                                                                : "bg-red-100 text-red-700"
+                                                        }`}
+                                                    >
+                                                        {item.status}
+                                                    </span>
                                                 </td>
-
-                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.state}
-                                                </td>
-
-                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.city}
-                                                </td>
-
-                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.pin}
-                                                </td>
-
-                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.district}
-                                                </td>
-
-                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.authorization}
-                                                </td>
-
-
 
                                                 <td className="px-6 py-4 text-right space-x-2">
-                                                    <Link href={route('ourteam.edit', item.id)}>
-                                                        <PrimaryButton
-                                                            size='sm'
-                                                        >
+                                                    <Link
+                                                        href={route(
+                                                            "ourteam.edit",
+                                                            item.id,
+                                                        )}
+                                                    >
+                                                        <PrimaryButton size="sm">
                                                             Edit
                                                         </PrimaryButton>
                                                     </Link>
                                                     <DangerButton
                                                         size="sm"
-                                                        onClick={() => handleDelete(item.id)}
+                                                        onClick={() =>
+                                                            handleDelete(
+                                                                item.id,
+                                                            )
+                                                        }
                                                     >
                                                         Delete
                                                     </DangerButton>
@@ -167,23 +141,20 @@ function List() {
                                             </td>
                                         </tr>
                                     )}
-
-
                                 </tbody>
                             </table>
                         </div>
-                        {/* <Pagination
+                        <Pagination
                             links={ourteam.links}
                             from={ourteam.from}
                             to={ourteam.to}
                             total={ourteam.total}
-                        /> */}
+                        />
                     </div>
                 </div>
             </div>
-
-        </AuthenticatedLayout >
-    )
+        </AuthenticatedLayout>
+    );
 }
 
-export default List
+export default List;

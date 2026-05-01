@@ -40,7 +40,10 @@ class InstituteController extends Controller
 
         if ($request->hasFile('image')) {
             $validated['image'] = $imageService->uploadAndResize(
-                $request->file('image'), 'uploads', 100, 100
+                $request->file('image'),
+                env('IMAGE_UPLOAD_PATH') ?? 'uploads',
+                env('IMAGE_WIDTH') ?? 100,
+                env('IMAGE_HEIGHT') ?? 100
             );
         }
 
@@ -86,7 +89,10 @@ class InstituteController extends Controller
         if ($request->hasFile('image')) {
             $imageService->delete($institute->image);
             $validated['image'] = $imageService->uploadAndResize(
-                $request->file('image'), 'uploads', 100, 100
+                $request->file('image'),
+                env('IMAGE_UPLOAD_PATH') ?? 'uploads',
+                env('IMAGE_WIDTH') ?? 100,
+                env('IMAGE_HEIGHT') ?? 100
             );
         }
 

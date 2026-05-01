@@ -53,7 +53,10 @@ class StudentController extends Controller
 
         if ($request->hasFile('image')) {
             $validated['image'] = $imageService->uploadAndResize(
-                $request->file('image'), 'uploads', 100, 100
+                $request->file('image'), 
+                env('IMAGE_UPLOAD_PATH') ?? 'uploads', 
+                env('IMAGE_WIDTH') ?? 100,
+                env('IMAGE_HEIGHT') ?? 100
             );
         }
 
@@ -100,7 +103,10 @@ class StudentController extends Controller
         if ($request->hasFile('image')) {
             $imageService->delete($student->image);
             $validated['image'] = $imageService->uploadAndResize(
-                $request->file('image'), 'uploads', 100, 100
+                $request->file('image'), 
+                env('IMAGE_UPLOAD_PATH') ?? 'uploads', 
+                env('IMAGE_WIDTH') ?? 100,
+                env('IMAGE_HEIGHT') ?? 100
             );
         }
 
@@ -115,7 +121,6 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-
         return redirect(route('student.index'))->with('success', 'Student deleted successfully!');
     }
 }

@@ -13,7 +13,7 @@ class OurTeamPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->can('ourteam.view');
     }
 
     /**
@@ -21,7 +21,7 @@ class OurTeamPolicy
      */
     public function view(User $user, OurTeam $ourTeam): bool
     {
-        return false;
+        return $user->can('ourteam.view');
     }
 
     /**
@@ -29,7 +29,7 @@ class OurTeamPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->can('ourteam.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class OurTeamPolicy
      */
     public function update(User $user, OurTeam $ourTeam): bool
     {
-        return false;
+        return $user->can('ourteam.update');
     }
 
     /**
@@ -45,7 +45,7 @@ class OurTeamPolicy
      */
     public function delete(User $user, OurTeam $ourTeam): bool
     {
-        return false;
+        return $user->can('ourteam.delete');
     }
 
     /**
