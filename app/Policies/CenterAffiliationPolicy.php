@@ -21,7 +21,7 @@ class CenterAffiliationPolicy
      */
     public function view(User $user, CenterAffiliation $centerAffiliations): bool
     {
-        return false;
+        return $user->can('center_affiliation.view');
     }
 
     /**
@@ -53,7 +53,7 @@ class CenterAffiliationPolicy
      */
     public function restore(User $user, CenterAffiliation $centerAffiliations): bool
     {
-        return false;
+       return $user->can('center_affiliation.restore');
     }
 
     /**
@@ -61,6 +61,6 @@ class CenterAffiliationPolicy
      */
     public function forceDelete(User $user, CenterAffiliation $centerAffiliations): bool
     {
-        return false;
+       return $user->can('center_affiliation.forceDelete');
     }
 }
