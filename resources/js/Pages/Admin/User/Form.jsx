@@ -21,11 +21,11 @@ function Form() {
         e.preventDefault();
 
         if (user) {
-            put(route('user.update', user.id), {
+            put(route('admin.user.update', user.id), {
                 onFinish: () => reset(),
             });
         } else {
-            post(route('user.store'), {
+            post(route('admin.user.store'), {
                 onSuccess: () => reset(),
             });
         }
@@ -118,7 +118,7 @@ function Form() {
                                 <PrimaryButton disabled={processing} size='md'>
                                     {user ? 'Update' : 'Save'}
                                 </PrimaryButton>
-                                <Link href={route('user.index')}>
+                                <Link href={route('admin.user.index')}>
                                     <DangerButton className='mx-3' size='md'>
                                         Cancel
                                     </DangerButton>

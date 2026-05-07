@@ -26,11 +26,11 @@ function Form() {
         e.preventDefault();
 
         if (franchise) {
-            put(route('franchise.update', franchise.id), {
+            put(route('admin.franchise.update', franchise.id), {
                 onFinish: () => reset(),
             });
         } else {
-            post(route('franchise.store'), {
+            post(route('admin.franchise.store'), {
                 onSuccess: () => reset(),
             });
         }
@@ -177,7 +177,7 @@ function Form() {
                                 <PrimaryButton disabled={processing} size='md'>
                                     {franchise ? 'Update' : 'Save'}
                                 </PrimaryButton>
-                                <Link href={route('franchise.index')}>
+                                <Link href={route('admin.franchise.index')}>
                                     <DangerButton className='mx-3' size='md'>
                                         Cancel
                                     </DangerButton>

@@ -20,7 +20,7 @@ function List() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        router.delete(route('role.destroy', id));
+        router.delete(route('admin.role.destroy', id));
       }
     });
   };
@@ -48,7 +48,7 @@ function List() {
                 Role List
               </h2>
 
-              <Link href={route('role.create')}>
+              <Link href={route('admin.role.create')}>
                 <PrimaryButton>
                   Create
                 </PrimaryButton>
@@ -106,7 +106,7 @@ function List() {
 
 
                         <td className="px-6 py-4 text-right space-x-2 w-[15%] align-top">
-                          <Link href={route('role.edit', item.id)}>
+                          <Link href={route('admin.role.edit', item.id)}>
                             <PrimaryButton size='sm'>Edit</PrimaryButton>
                           </Link>
                           <DangerButton size="sm" onClick={() => handleDelete(item.id)}>

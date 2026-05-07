@@ -8,6 +8,8 @@ use App\Models\Admin\Institute;
 use App\Models\User;
 use App\Services\ImageService;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -16,9 +18,44 @@ class InstituteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $institute = Institute::paginate(50);
+        Gate::authorize('viewAny',Institute::class);
+        $query = Institute::query();
+
+         if ($request->filled('center_code')) {
+            $query->where('center_code', 'like', '%' . $request->center_code . '%');
+        }
+
+        if ($request->filled('center_name')) {
+            $query->where('center_name', $request->center_name);
+        }
+
+        if ($request->filled('director')) {
+            $query->where('director', $request->director);
+        }
+
+        if ($request->filled('state')) {
+            $query->where('state', $request->state);
+        }
+
+        if ($request->filled('city')) {
+            $query->where('city', $request->city);
+        }
+
+        if ($request->filled('pincode')) {
+            $query->where('pincode', $request->pincode);
+        }
+
+        if ($request->filled('district')) {
+            $query->where('district', $request->district);
+        }
+        
+        if ($request->filled('authorization')) {
+            $query->where('authorization', $request->authorization);
+        }
+
+        $institute = $query->latest()->paginate(50)->withQueryString();
 
         return Inertia::render('Admin/Institute/List', compact('institute'));
     }
@@ -28,6 +65,7 @@ class InstituteController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create',Institute::class);
         return Inertia::render('Admin/Institute/Form');
     }
 
@@ -36,8 +74,8 @@ class InstituteController extends Controller
      */
     public function store(InstituteRequest $request, ImageService $imageService)
     {
+        Gate::authorize('create',Institute::class);
         $validated = $request->validated();
-
         if ($request->hasFile('image')) {
             $validated['image'] = $imageService->uploadAndResize(
                 $request->file('image'),
@@ -59,7 +97,7 @@ class InstituteController extends Controller
 
         Institute::create($validated);
 
-        return redirect(route('institute.index'))->with('success', 'Institute successfully created');
+        return redirect(route('admin.institute.index'))->with('success', 'Institute successfully created');
     }
 
     /**
@@ -75,6 +113,7 @@ class InstituteController extends Controller
      */
     public function edit(Institute $institute)
     {
+        Gate::authorize('update',$institute);
         return Inertia::render('Admin/Institute/Form', compact('institute'));
     }
 
@@ -83,9 +122,9 @@ class InstituteController extends Controller
      */
     public function update(InstituteRequest $request, Institute $institute, ImageService $imageService)
     {
-
+        Gate::authorize('update',$institute);
+        
         $validated = $request->validated();
-
         if ($request->hasFile('image')) {
             $imageService->delete($institute->image);
             $validated['image'] = $imageService->uploadAndResize(
@@ -98,7 +137,7 @@ class InstituteController extends Controller
 
         $institute->update($validated);
 
-        return redirect(route('institute.index'))
+        return redirect(route('admin.institute.index'))
             ->with('success', 'Institute updated successfully');
     }
 
@@ -107,8 +146,8 @@ class InstituteController extends Controller
      */
     public function destroy(Institute $institute)
     {
+        Gate::authorize('delete',$institute);
         $institute->delete();
-
-        return redirect(route('institute.index'))->with('success', 'Institute deleted successfully');
+        return redirect(route('admin.institute.index'))->with('success', 'Institute deleted successfully');
     }
 }

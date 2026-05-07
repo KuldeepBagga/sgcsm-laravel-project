@@ -40,8 +40,9 @@ class UserController extends Controller
         $validated = $request->validated();
         $validated['show_password'] = $request->password;
         $user = User::create($validated);
-        $user->update($validated);
-        return redirect(route('user.index'))->with('success', 'User created successfully');
+        $user->syncRoles($validated['role']);
+        // $user->update($validated);
+        return redirect(route('admin.user.index'))->with('success', 'User created successfully');
     }
 
     /**
@@ -88,7 +89,7 @@ class UserController extends Controller
         $user->update($validated);
         $user->syncRoles($validated['role']);
 
-        return redirect(route('user.index'))->with('success', 'User updated successfully!');
+        return redirect(route('admin.user.index'))->with('success', 'User updated successfully!');
     }
 
     /**
@@ -97,11 +98,11 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if (strtolower($user->role) === 'admin') {
-            return redirect(route('user.index'))->with('error', 'User admin cannot be deleted!');
+            return redirect(route('admin.user.index'))->with('error', 'User admin cannot be deleted!');
         }
 
         $user->delete();
 
-        return redirect(route('user.index'))->with('success', 'User deleted successfully');
+        return redirect(route('admin.user.index'))->with('success', 'User deleted successfully');
     }
 }

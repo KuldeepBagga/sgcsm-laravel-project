@@ -21,7 +21,7 @@ function List() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(route('permission.destroy', id));
+                router.delete(route('admin.permission.destroy', id));
             }
         });
     };
@@ -49,7 +49,7 @@ function List() {
                                 Permission List
                             </h2>
 
-                            <Link href={route('permission.create')}>
+                            <Link href={route('admin.permission.create')}>
                                 <PrimaryButton>
                                     Create
                                 </PrimaryButton>
@@ -90,7 +90,7 @@ function List() {
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right space-x-2">
-                                                    <Link href={route('permission.edit', item.id)}>
+                                                    <Link href={route('admin.permission.edit', item.id)}>
                                                         <PrimaryButton
                                                             size='sm'
                                                         >

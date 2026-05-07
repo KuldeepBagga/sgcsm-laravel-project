@@ -49,7 +49,7 @@ class OurTeamController extends Controller
 
         OurTeam::create($validated);
 
-        return redirect()->route('ourteam.index')
+        return redirect()->route('admin.ourteam.index')
             ->with('success', 'Our team created successfully!');
     }
 
@@ -89,7 +89,7 @@ class OurTeamController extends Controller
 
         $ourteam->update($validated);
 
-        return redirect()->route('ourteam.index')->with('success','Our team successfully updated!');
+        return redirect()->route('admin.ourteam.index')->with('success','Our team successfully updated!');
     }
 
     /**
@@ -100,6 +100,6 @@ class OurTeamController extends Controller
         Gate::authorize('delete',$ourteam);
         $ourteam->delete();
         $imageService->delete($ourteam->image);
-        return redirect()->route('ourteam.index')->with('success','Deleted successfully!');
+        return redirect()->route('admin.ourteam.index')->with('success','Deleted successfully!');
     }
 }

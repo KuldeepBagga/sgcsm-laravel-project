@@ -38,7 +38,7 @@ class CenterAffiliactionController extends Controller
         Gate::authorize('create',CenterAffiliation::class);
         $validated = $request->validated();
         CenterAffiliation::create($validated);
-        return redirect()->route('center_affiliation.index')
+        return redirect()->route('admin.center_affiliation.index')
                 ->with('success',"Center affiliation created successfully!");
     }
 
@@ -67,7 +67,7 @@ class CenterAffiliactionController extends Controller
         Gate::authorize('update',$affiliation);
         $validated = $request->validated();
         $affiliation->update($validated);
-        return redirect()->route('center_affiliation.index')
+        return redirect()->route('admin.center_affiliation.index')
                 ->with('success',"Center affiliation updated successfully!");
     }
 
@@ -78,7 +78,7 @@ class CenterAffiliactionController extends Controller
     {
         Gate::authorize('delete',$affiliation);
         $affiliation->delete();
-        return redirect()->route('center_affiliation.index')
+        return redirect()->route('admin.center_affiliation.index')
                 ->with('success',"Center affiliation deleted successfully!");
     }
 }

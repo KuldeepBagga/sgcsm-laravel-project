@@ -20,7 +20,7 @@ function List() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(route('user.destroy', id));
+                router.delete(route('admin.user.destroy', id));
             }
         });
     };
@@ -47,7 +47,7 @@ function List() {
                                 User List
                             </h2>
 
-                            <Link href={route('user.create')}>
+                            <Link href={route('admin.user.create')}>
                                 <PrimaryButton>
                                     Create
                                 </PrimaryButton>
@@ -101,7 +101,7 @@ function List() {
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right space-x-2">
-                                                    <Link href={route('user.edit', item.id)}>
+                                                    <Link href={route('admin.user.edit', item.id)}>
                                                         <PrimaryButton size='sm'>Edit</PrimaryButton>
                                                     </Link>
                                                     <DangerButton size="sm" onClick={() => handleDelete(item.id)}>

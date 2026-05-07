@@ -38,9 +38,9 @@ export default function Form() {
             delete data.image;
         }
         if (ourteam) {
-            put(route("ourteam.update", ourteam.id));
+            put(route("admin.ourteam.update", ourteam.id));
         } else {
-            post(route("ourteam.store"), {
+            post(route("admin.ourteam.store"), {
                 forceFormData: true,
                 onSuccess: () => reset(),
             });
@@ -230,7 +230,7 @@ export default function Form() {
                                 <PrimaryButton disabled={processing} size="md">
                                     {ourteam ? "Update" : "Save"}
                                 </PrimaryButton>
-                                <Link href={route("ourteam.index")}>
+                                <Link href={route("admin.ourteam.index")}>
                                     <DangerButton className="mx-3" size="md">
                                         Cancel
                                     </DangerButton>

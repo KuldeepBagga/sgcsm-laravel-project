@@ -1,14 +1,42 @@
-import { Head, Link, usePage, router } from '@inertiajs/react'
+import { Head, Link, usePage, router, useForm } from '@inertiajs/react'
 import PrimaryButton from '@/Components/PrimaryButton';
 import Toast from '@/Components/Toast'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import DangerButton from '@/Components/DangerButton';
 import Pagination from '@/Components/Pagination';
 import Swal from 'sweetalert2';
+import TextInput from '@/Components/TextInput'
+import { useEffect } from 'react';
 
 
 function List() {
     const { flash, franchise, auth } = usePage().props;
+
+    const { data, setData, processing } = useForm({
+        center_name: '',
+        director: '',
+        email: '',
+        mobile: '',
+    })
+
+    useEffect(() => {
+        const hasFilters = Object.values(data).some(value => value);
+        if (!hasFilters) return;
+
+        const timeout = setTimeout(() => {
+            router.get(route('admin.franchise.index'), {
+                center_name: data?.center_name,
+                director: data?.director,
+                email: data?.email,
+                mobile: data?.mobile,
+            }, {
+                preserveState: true,
+                replace: true
+            })
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+    }, [data]);
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -21,7 +49,7 @@ function List() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(route('franchise.destroy', id));
+                router.delete(route('admin.franchise.destroy', id));
             }
         });
     };
@@ -48,7 +76,7 @@ function List() {
                                 Franchise List
                             </h2>
 
-                            <Link href={route('franchise.create')}>
+                            <Link href={route('admin.franchise.create')}>
                                 <PrimaryButton>
                                     Create
                                 </PrimaryButton>
@@ -81,6 +109,39 @@ function List() {
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Actions
                                         </th>
+                                    </tr>
+                                    <tr>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300"></th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                name='center_name'
+                                                value={data.center_name}
+                                                onChange={(e) => setData('center_name', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                name='director'
+                                                value={data.director}
+                                                onChange={(e) => setData('director', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                name='email'
+                                                value={data.email}
+                                                onChange={(e) => setData('email', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                name='mobile'
+                                                value={data.mobile}
+                                                onChange={(e) => setData('mobile', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300"></th>
+                                        <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                     </tr>
                                 </thead>
 
@@ -125,12 +186,12 @@ function List() {
 
                                                 <td className="px-6 py-4 text-right space-x-2">
                                                     {item.is_approved === 'NOT APPROVED' && auth.user.permissions.includes('franchise.approve') &&
-                                                        <Link href={route('franchise.approve', item.id)}>
+                                                        <Link href={route('admin.franchise.approve', item.id)}>
                                                             <PrimaryButton size='sm'>Approve</PrimaryButton>
                                                         </Link>
                                                     }
 
-                                                    <Link href={route('franchise.edit', item.id)}>
+                                                    <Link href={route('admin.franchise.edit', item.id)}>
                                                         <PrimaryButton size='sm'>Edit</PrimaryButton>
                                                     </Link>
                                                     <DangerButton size="sm" onClick={() => handleDelete(item.id)}>

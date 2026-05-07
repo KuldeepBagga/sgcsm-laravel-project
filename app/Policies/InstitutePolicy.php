@@ -2,26 +2,26 @@
 
 namespace App\Policies;
 
-use App\Models\Admin\Franchise;
+use App\Models\Admin\Institute;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class FranchisePolicy
+class InstitutePolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('franchise.view');
+        return $user->can('institute.view');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Franchise $franchise): bool
+    public function view(User $user, Institute $institute): bool
     {
-        return $user->can('franchise.view');
+        return $user->can('institute.view');
     }
 
     /**
@@ -29,34 +29,29 @@ class FranchisePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('franchise.create');
+        return $user->can('institute.create');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Franchise $franchise): bool
+    public function update(User $user, Institute $institute): bool
     {
-        return $user->can('franchise.update');
+        return $user->can('institute.update');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Franchise $franchise): bool
+    public function delete(User $user, Institute $institute): bool
     {
-        return $user->can('franchise.delete');
-    }
-
-    public function approve(User $user, Franchise $franchise): bool
-    {
-        return $user->can('franchise.approve');
+        return $user->can('institute.delete');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Franchise $franchise): bool
+    public function restore(User $user, Institute $institute): bool
     {
         return false;
     }
@@ -64,7 +59,7 @@ class FranchisePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Franchise $franchise): bool
+    public function forceDelete(User $user, Institute $institute): bool
     {
         return false;
     }

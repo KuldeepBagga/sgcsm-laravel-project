@@ -56,9 +56,9 @@ function Form() {
         e.preventDefault();
 
         if (role) {
-            put(route('role.update', role.id));
+            put(route('admin.role.update', role.id));
         } else {
-            post(route('role.store'), {
+            post(route('admin.role.store'), {
                 onFinish: () => reset('name', 'permissions'),
             });
         }
@@ -161,7 +161,7 @@ function Form() {
                                     {role ? 'Update' : 'Save'}
                                 </PrimaryButton>
 
-                                <Link href={route('role.index')}>
+                                <Link href={route('admin.role.index')}>
                                     <DangerButton className='mx-3'>
                                         Cancel
                                     </DangerButton>

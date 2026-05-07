@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\FranchiseRequest;
 use App\Models\Admin\Franchise;
 use App\Models\Admin\Institute;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
@@ -16,10 +17,30 @@ class FranchiseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('viewAny', Franchise::class);
-        $franchise = Franchise::paginate(50);
+        //$franchise = Franchise::paginate(50);
+
+        $query = Franchise::query();
+
+        if ($request->filled('center_name')) {
+            $query->where('center_name', 'like' , '%' . $request->center_name . '%');
+        }
+
+        if ($request->filled('director')) {
+            $query->where('director', 'like' , '%' . $request->director . '%');
+        }
+
+        if ($request->filled('email')) {
+            $query->where('email', 'like' , '%' . $request->email . '%');
+        }
+
+        if ($request->filled('mobile')) {
+            $query->where('mobile', 'like' , '%' . $request->mobile . '%');
+        }
+
+        $franchise = $query->paginate(50)->withQueryString();
 
         return Inertia::render('Admin/Franchise/List', compact('franchise'));
     }
@@ -43,7 +64,7 @@ class FranchiseController extends Controller
         $validated = $request->validated();
         Franchise::create($validated);
 
-        return redirect(route('franchise.index'))->with('success', 'Franchise created successfully');
+        return redirect(route('admin.franchise.index'))->with('success', 'Franchise created successfully');
     }
 
     /**
@@ -73,7 +94,7 @@ class FranchiseController extends Controller
         $validated = $request->validated();
         $franchise->update($validated);
 
-        return redirect(route('franchise.index'))->with('success', 'Franchise updated successfully');
+        return redirect(route('admin.franchise.index'))->with('success', 'Franchise updated successfully');
     }
 
     /**
@@ -84,7 +105,7 @@ class FranchiseController extends Controller
         Gate::authorize('delete', $franchise);
         $franchise->delete();
 
-        return redirect(route('franchise.index'))->with('success', 'Franchise deleted successfully');
+        return redirect(route('admin.franchise.index'))->with('success', 'Franchise deleted successfully');
     }
 
     public function approve(Franchise $franchise)
@@ -121,6 +142,6 @@ class FranchiseController extends Controller
             'is_approved' => 'APPROVED'
         ]);
 
-        return redirect(route('franchise.index'))->with('success', 'Franchise approved successfully');
+        return redirect(route('admin.franchise.index'))->with('success', 'Franchise approved successfully');
     }
 }

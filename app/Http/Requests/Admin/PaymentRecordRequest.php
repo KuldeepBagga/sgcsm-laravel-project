@@ -5,14 +5,14 @@ namespace App\Http\Requests\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class RoleRequest extends FormRequest
+class PaymentRecordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->user()->hasRole('admin') ?  true : false;
+        return auth()->user()->hasRole('admin');
     }
 
     /**
@@ -23,8 +23,13 @@ class RoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required',Rule::unique('users','name')->ignore($this->route('role'))],
-            'permissions' => 'nullable|array',
+            'transaction_no' => ['required', Rule::unique('payment_records','transaction_no')->ignore($this->route('payment_record'))],
+            'transaction_date' => ['required'],
+            'amount' => ['required'],
+            'status' => ['required'],
+            'center_code' => ['required'],
+            //'center_name' => ['required'],
+            'message' => ['nullable']
         ];
     }
 }

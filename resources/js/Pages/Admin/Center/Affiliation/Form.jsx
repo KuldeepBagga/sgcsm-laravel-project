@@ -27,9 +27,9 @@ export default function Form() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (affiliation) {
-            put(route("center_affiliation.update", affiliation.id));
+            put(route("admin.center_affiliation.update", affiliation.id));
         } else {
-            post(route("center_affiliation.store"), {
+            post(route("admin.center_affiliation.store"), {
                 onSuccess: () => reset(),
             });
         }
@@ -254,7 +254,7 @@ export default function Form() {
                                 <PrimaryButton disabled={processing} size="md">
                                     {affiliation ? "Update" : "Save"}
                                 </PrimaryButton>
-                                <Link href={route("center_affiliation.index")}>
+                                <Link href={route("admin.center_affiliation.index")}>
                                     <DangerButton className="mx-3" size="md">
                                         Cancel
                                     </DangerButton>

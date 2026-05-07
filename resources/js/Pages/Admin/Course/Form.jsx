@@ -20,9 +20,9 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (course) {
-      put(route('course.update', course.id));
+      put(route('admin.course.update', course.id));
     } else {
-      post(route('course.store'), {
+      post(route('admin.course.store'), {
         onFinish: () => reset(),
       });
     }
@@ -100,7 +100,7 @@ export default function Form() {
                 <PrimaryButton disabled={processing} size='md'>
                   {course ? 'Update' : 'Save'}
                 </PrimaryButton>
-                <Link href={route('course.index')}>
+                <Link href={route('admin.course.index')}>
                   <DangerButton className='mx-3' size='md'>
                     Cancel
                   </DangerButton>

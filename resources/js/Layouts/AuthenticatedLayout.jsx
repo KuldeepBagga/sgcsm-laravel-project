@@ -87,7 +87,7 @@ export default function AuthenticatedLayout({ header, children }) {
                     )}
 
                     {/* ===== MAIN CONTENT ===== */}
-                    <main className="p-6 flex-1">
+                    <main className="p-6-deleted flex-1--deleted">
                         {children}
                     </main>
                 </div>

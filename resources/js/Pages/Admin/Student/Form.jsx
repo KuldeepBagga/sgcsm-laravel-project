@@ -54,7 +54,7 @@ function Form() {
             return;
         }
         try {
-            const res = await axios.get(route('admin.center_name', center_code));
+            const res = await axios.get(route('admin.admin.center_name', center_code));
             setData('center_name', res.data.data.center_name || '');
             setData('institute_id', res.data.data.id || '');
         } catch (error) {
@@ -69,9 +69,9 @@ function Form() {
             delete data.image;
         }
         if (student) {
-            put(route('student.update', student.id));
+            put(route('admin.student.update', student.id));
         } else {
-            post(route('student.store'), {
+            post(route('admin.student.store'), {
                 onSuccess: () => reset(),
             });
         }
@@ -487,7 +487,7 @@ function Form() {
                                 <PrimaryButton disabled={processing} size='md'>
                                     {student ? 'Update' : 'Save'}
                                 </PrimaryButton>
-                                <Link href={route('student.index')}>
+                                <Link href={route('admin.student.index')}>
                                     <DangerButton className='mx-3' size='md'>
                                         Cancel
                                     </DangerButton>

@@ -19,9 +19,9 @@ function From() {
         e.preventDefault()
 
         if (permission) {
-            put(route('permission.update', permission.id));
+            put(route('admin.permission.update', permission.id));
         } else {
-            post(route('permission.store'), {
+            post(route('admin.permission.store'), {
                 onFinish: () => reset('name'),
             });
         }
@@ -64,7 +64,7 @@ function From() {
                                 <PrimaryButton disabled={processing} size='md'>
                                     {permission ? 'Update' : 'Save'}
                                 </PrimaryButton>
-                                <Link href={route('permission.index')}>
+                                <Link href={route('admin.permission.index')}>
                                     <DangerButton className='mx-3' size='md'>
                                         Cancel
                                     </DangerButton>

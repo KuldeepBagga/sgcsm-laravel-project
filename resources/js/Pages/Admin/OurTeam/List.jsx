@@ -22,7 +22,7 @@ function List() {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(route("ourteam.destroy", id));
+                router.delete(route("admin.ourteam.destroy", id));
             }
         });
     };
@@ -48,7 +48,7 @@ function List() {
                                 Our Team List
                             </h2>
 
-                            <Link href={route("ourteam.create")}>
+                            <Link href={route("admin.ourteam.create")}>
                                 <PrimaryButton>Create</PrimaryButton>
                             </Link>
                         </div>
@@ -109,10 +109,7 @@ function List() {
 
                                                 <td className="px-6 py-4 text-right space-x-2">
                                                     <Link
-                                                        href={route(
-                                                            "ourteam.edit",
-                                                            item.id,
-                                                        )}
+                                                        href={route("admin.ourteam.edit",item.id,)}
                                                     >
                                                         <PrimaryButton size="sm">
                                                             Edit
@@ -121,9 +118,7 @@ function List() {
                                                     <DangerButton
                                                         size="sm"
                                                         onClick={() =>
-                                                            handleDelete(
-                                                                item.id,
-                                                            )
+                                                            handleDelete(item.id)
                                                         }
                                                     >
                                                         Delete

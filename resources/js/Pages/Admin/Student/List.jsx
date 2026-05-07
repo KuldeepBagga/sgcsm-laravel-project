@@ -1,4 +1,4 @@
-import { Head, Link, router, usePage } from "@inertiajs/react";
+import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Toast from "@/Components/Toast";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -6,9 +6,47 @@ import DangerButton from "@/Components/DangerButton";
 import Pagination from "@/Components/Pagination";
 import Swal from "sweetalert2";
 import TextInput from "@/Components/TextInput";
+import { useEffect } from "react";
 
 function List() {
     const { flash, student, auth } = usePage().props;
+
+    const { data, setData, processing } = useForm({
+        name: '',
+        father_name: '',
+        registration_no: '',
+        date_of_birth: '',
+        course: '',
+        scan: '',
+        center_code: '',
+        certificate_issued: '',
+        paid: '',
+        certificate_no: ''
+    });
+
+    useEffect(() => {
+        const hasFilters = Object.values(data).some(value => value);
+        if (!hasFilters) return;
+
+        const timeout = setTimeout(() => {
+            router.get(route('admin.student.index'), {
+                name: data.name,
+                father_name: data.father_name,
+                registration_no: data.registration_no,
+                date_of_birth: data.date_of_birth,
+                course: data.course,
+                scan: data.scan,
+                center_code: data.center_code,
+                certificate_issued: data.certificate_issued,
+                paid: data.paid,
+                certificate_no: data.certificate_no
+            }, {
+                preserveState: true,
+                replace: true
+            });
+        }, 1000);
+        return () => clearTimeout(timeout);
+    }, [data]);
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -21,7 +59,7 @@ function List() {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(route("student.destroy", id));
+                router.delete(route("admin.student.destroy", id));
             }
         });
     };
@@ -48,15 +86,15 @@ function List() {
                             {auth.user.permissions.includes(
                                 "student.create",
                             ) && (
-                                <Link href={route("student.create")}>
-                                    <PrimaryButton>Create</PrimaryButton>
-                                </Link>
-                            )}
+                                    <Link href={route("admin.student.create")}>
+                                        <PrimaryButton>Create</PrimaryButton>
+                                    </Link>
+                                )}
                         </div>
 
                         <div className="overflow-x-auto">
                             <table className="min-w-full border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden border-solid">
-                                <thead className="bg-gray-100 dark:bg-gray-700 text-center">
+                                <thead className="bg-gray-100 dark:bg-gray-700 text-left">
                                     <tr>
                                         <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
                                             ID
@@ -95,6 +133,120 @@ function List() {
                                             Actions
                                         </th>
                                     </tr>
+                                    <tr>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300"></th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                name="name"
+                                                type="text"
+                                                value={data.name}
+                                                className="w-full"
+                                                onChange={(e) => setData('name', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                name="father_name"
+                                                type="text"
+                                                value={data.father_name}
+                                                className="w-full"
+                                                onChange={(e) => setData('father_name', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                name="registration_no"
+                                                type="text"
+                                                value={data.registration_no}
+                                                className="w-full"
+                                                onChange={(e) => setData('registration_no', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                name="date_of_birth"
+                                                type="date"
+                                                value={data.date_of_birth}
+                                                className="w-full"
+                                                onChange={(e) => setData('date_of_birth', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <select
+                                                value={data.course}
+                                                onChange={(e) => setData('course', e.target.value)}
+                                                className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
+                                            >
+                                                <option value="">SELECT COURSE</option>
+                                                {[...new Set(student?.data.map(c => c.course))].map((course, i) => (
+                                                    <option key={i} value={course.course}>
+                                                        {course.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <select
+                                                value={data.course}
+                                                onChange={(e) => setData('course', e.target.value)}
+                                                className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
+                                            >
+                                                <option value="">SELECT COURSE</option>
+                                                {[...new Set(student?.data.map(c => c.scan))].map((scan, i) => (
+                                                    <option key={i} value={scan}>
+                                                        {scan}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                name="center_code"
+                                                type="text"
+                                                value={data.center_code}
+                                                className="w-full"
+                                                onChange={(e) => setData('center_code', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <select
+                                                value={data.course}
+                                                onChange={(e) => setData('course', e.target.value)}
+                                                className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
+                                            >
+                                                <option value="">CERTIFCATE ISSUED..</option>
+                                                {[...new Set(student?.data.map(c => c.certificate_issued))].map((certificate_issued, i) => (
+                                                    <option key={i} value={certificate_issued}>
+                                                        {certificate_issued}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <select
+                                                value={data.course}
+                                                onChange={(e) => setData('course', e.target.value)}
+                                                className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
+                                            >
+                                                <option value="">SELECT PAID</option>
+                                                {[...new Set(student?.data.map(c => c.paid))].map((paid, i) => (
+                                                    <option key={i} value={paid}>
+                                                        {paid}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                name="certificate_no"
+                                                type="text"
+                                                value={data.certificate_no}
+                                                className="w-full"
+                                                onChange={(e) => setData('certificate_no', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300"></th>
+                                    </tr>
                                 </thead>
 
                                 <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-gray-900">
@@ -102,7 +254,7 @@ function List() {
                                         student.data.map((item, index) => (
                                             <tr
                                                 key={item.id || index}
-                                                className="hover:bg-gray-50 dark:hover:bg-gray-800 transition text-center"
+                                                className="hover:bg-gray-50 dark:hover:bg-gray-800 transition"
                                             >
                                                 <td className="px-2 py-4 text-sm text-gray-700 dark:text-gray-200">
                                                     {index + 1}
@@ -131,12 +283,11 @@ function List() {
 
                                                 <td className="px-2 py-4 text-sm text-gray-700 dark:text-gray-200">
                                                     <span
-                                                        className={`px-2 py-1 text-white rounded-md text-xs ${
-                                                            item.scan ===
+                                                        className={`px-2 py-1 text-white rounded-md text-xs ${item.scan ===
                                                             "SCANNED"
-                                                                ? "bg-green-500"
-                                                                : "bg-red-500"
-                                                        }`}
+                                                            ? "bg-green-500"
+                                                            : "bg-red-500"
+                                                            }`}
                                                     >
                                                         {item.scan}
                                                     </span>
@@ -148,12 +299,11 @@ function List() {
 
                                                 <td className="px-2 py-4 text-sm text-gray-700 dark:text-gray-200">
                                                     <span
-                                                        className={`px-2 py-1 rounded-md text-white text-xs ${
-                                                            item.certificate_issued ===
+                                                        className={`px-2 py-1 rounded-md text-white text-xs ${item.certificate_issued ===
                                                             "ISSUED"
-                                                                ? "bg-green-500"
-                                                                : "bg-red-500"
-                                                        }`}
+                                                            ? "bg-green-500"
+                                                            : "bg-red-500"
+                                                            }`}
                                                     >
                                                         {
                                                             item.certificate_issued
@@ -163,11 +313,10 @@ function List() {
 
                                                 <td className="px-2 py-4 text-sm text-gray-700 dark:text-gray-200">
                                                     <span
-                                                        className={`px-2 py-1 rounded-md text-white text-xs ${
-                                                            item.paid === "PAID"
-                                                                ? "bg-green-500"
-                                                                : "bg-red-500"
-                                                        }`}
+                                                        className={`px-2 py-1 rounded-md text-white text-xs ${item.paid === "PAID"
+                                                            ? "bg-green-500"
+                                                            : "bg-red-500"
+                                                            }`}
                                                     >
                                                         {item.paid}
                                                     </span>
@@ -178,34 +327,36 @@ function List() {
                                                 </td>
 
                                                 <td className="px-2 py-2 text-right space-x-2">
-                                                    {auth.user.permissions.includes(
-                                                        "student.update",
-                                                    ) && (
-                                                        <Link
-                                                            href={route(
-                                                                "student.edit",
-                                                                item.id,
+                                                    <div className="flex justify-end gap-2">
+                                                        {auth.user.permissions.includes(
+                                                            "student.update",
+                                                        ) && (
+                                                                <Link
+                                                                    href={route(
+                                                                        "admin.student.edit",
+                                                                        item.id,
+                                                                    )}
+                                                                >
+                                                                    <PrimaryButton size="sm">
+                                                                        Edit
+                                                                    </PrimaryButton>
+                                                                </Link>
                                                             )}
-                                                        >
-                                                            <PrimaryButton size="sm">
-                                                                Edit
-                                                            </PrimaryButton>
-                                                        </Link>
-                                                    )}
-                                                    {auth.user.permissions.includes(
-                                                        "student.delete",
-                                                    ) && (
-                                                        <DangerButton
-                                                            size="sm"
-                                                            onClick={() =>
-                                                                handleDelete(
-                                                                    item.id,
-                                                                )
-                                                            }
-                                                        >
-                                                            Delete
-                                                        </DangerButton>
-                                                    )}
+                                                        {auth.user.permissions.includes(
+                                                            "student.delete",
+                                                        ) && (
+                                                                <DangerButton
+                                                                    size="sm"
+                                                                    onClick={() =>
+                                                                        handleDelete(
+                                                                            item.id,
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Delete
+                                                                </DangerButton>
+                                                            )}
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))
@@ -213,7 +364,7 @@ function List() {
                                         <tr>
                                             <td
                                                 colSpan="20"
-                                                className="px-6 py-6 text-center text-gray-500 dark:text-gray-400"
+                                                className="px-6 py-6 text-gray-500 dark:text-gray-400"
                                             >
                                                 No data found
                                             </td>

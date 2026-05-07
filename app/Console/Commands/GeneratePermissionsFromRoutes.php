@@ -35,7 +35,8 @@ class GeneratePermissionsFromRoutes extends Command
             'student',
             'franchise',
             'center_affiliation',
-            'ourteam'
+            'ourteam',
+            'payment_record'
         ];
 
         $defaultActions = ['create', 'view', 'delete', 'update'];

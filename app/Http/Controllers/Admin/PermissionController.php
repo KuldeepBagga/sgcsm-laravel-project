@@ -42,7 +42,7 @@ class PermissionController extends Controller
         $validated = $request->validated();
         Permission::create($validated);
 
-        return redirect(route('permission.index'))->with('success', 'Permission successfully created.');
+        return redirect(route('admin.permission.index'))->with('success', 'Permission successfully created.');
     }
 
     /**
@@ -78,7 +78,7 @@ class PermissionController extends Controller
         $validated = $request->validated();
         $permission->update($validated);
 
-        return redirect(route('permission.index'))->with('success', 'Permission successfully updated.');
+        return redirect(route('admin.permission.index'))->with('success', 'Permission successfully updated.');
     }
 
     /**
@@ -90,6 +90,6 @@ class PermissionController extends Controller
         abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $permission->delete();
 
-        return redirect(route('permission.index'))->with('success', 'Permission successfully deleted.');
+        return redirect(route('admin.permission.index'))->with('success', 'Permission successfully deleted.');
     }
 }

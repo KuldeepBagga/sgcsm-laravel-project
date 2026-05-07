@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\FranchiseController;
 use App\Http\Controllers\Admin\InstituteController;
 use App\Http\Controllers\Admin\OurTeamController;
+use App\Http\Controllers\Admin\PaymentRecordController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StudentController;
@@ -26,11 +27,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('dashboard', [AdminDashboard::class, 'index'])->name('admin.dashboard');
+Route::middleware(['auth', 'verified', 'role:admin|subadmin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
     Route::resource('permission', PermissionController::class);
     Route::resource('franchise', FranchiseController::class);
-    Route::get('franchise/{franchise}/approve/',[FranchiseController::class, 'approve'])->name('franchise.approve');
+    Route::get('franchise/{franchise}/approve/', [FranchiseController::class, 'approve'])->name('franchise.approve');
     Route::resource('user', UserController::class);
     Route::resource('student', StudentController::class);
     Route::get('student/center/centername/{center_code}', [StudentController::class, 'get_center_name_by_center_code'])->name('admin.center_name');
@@ -38,8 +39,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->group(fu
     Route::resource('institute', InstituteController::class);
     Route::resource('course', CourseController::class);
     Route::resource('franchise', FranchiseController::class);
-    Route::resource('/center/affiliation',CenterAffiliactionController::class)->names('center_affiliation');
-    Route::resource('/ourteam',OurTeamController::class);
+    Route::resource('center/affiliation', CenterAffiliactionController::class)->names('center_affiliation');
+    Route::resource('ourteam', OurTeamController::class);
+    Route::resource('payment/record', PaymentRecordController::class)->parameters(['record' => 'payment_record'])->names('payment_record');
 });
 
 Route::middleware(['auth', 'verified', 'role:student'])->group(function () {
@@ -56,4 +58,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

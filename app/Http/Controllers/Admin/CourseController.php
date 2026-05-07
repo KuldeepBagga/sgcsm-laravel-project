@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CourseRequest;
 use App\Models\Admin\Course;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CourseController extends Controller
@@ -13,10 +14,22 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('viewAny', Course::class);
-        $course = Course::paginate(50);
+
+        $query = Course::query();
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        $course = $query->latest()->paginate(50)->withQueryString();
+
         return Inertia::render('Admin/Course/List', compact('course'));
     }
 
@@ -38,7 +51,7 @@ class CourseController extends Controller
         $valiated = $request->validated();
         Course::create($valiated);
 
-        return redirect(route('course.index'))->with('success', 'Course successfully created!');
+        return redirect(route('admin.course.index'))->with('success', 'Course successfully created!');
     }
 
     /**
@@ -66,7 +79,7 @@ class CourseController extends Controller
         Gate::authorize('update', $course);
         $validated = $request->validated();
         $course->update($validated);
-        return redirect(route('course.index'))->with('success', 'Course successfully updated!');
+        return redirect(route('admin.course.index'))->with('success', 'Course successfully updated!');
     }
 
     /**
@@ -76,6 +89,6 @@ class CourseController extends Controller
     {
         Gate::authorize('delete', $course);
         $course->delete();
-        return redirect(route('course.index'))->with('success', 'Course successfully deleted!');
+        return redirect(route('admin.course.index'))->with('success', 'Course successfully deleted!');
     }
 }

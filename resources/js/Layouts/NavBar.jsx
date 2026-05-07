@@ -17,43 +17,48 @@ const menuItems = [
             // },
             {
                 name: "Roles",
-                route: "role.index",
+                route: "admin.role.index",
             },
             {
                 name: "Users",
-                route: "user.index",
+                route: "admin.user.index",
                 icon: "📊",
             },
         ],
     },
     {
         name: "Course",
-        route: "course.index",
+        route: "admin.course.index",
         icon: "📊",
     },
     {
         name: "Institute",
-        route: "institute.index",
+        route: "admin.institute.index",
         icon: "📊",
     },
     {
         name: "Student",
-        route: "student.index",
+        route: "admin.student.index",
         icon: "📊",
     },
     {
         name: "Franchise",
-        route: "franchise.index",
+        route: "admin.franchise.index",
         icon: "📊",
     },
     {
         name: "Center Affiliation",
-        route: "center_affiliation.index",
+        route: "admin.center_affiliation.index",
         icon: "📊",
     },
     {
         name: "Our Team",
-        route: "ourteam.index",
+        route: "admin.ourteam.index",
+        icon: "📊",
+    },
+    {
+        name: "Payment Record",
+        route: "admin.payment_record.index",
         icon: "📊",
     },
 ];

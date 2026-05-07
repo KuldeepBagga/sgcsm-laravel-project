@@ -3,12 +3,40 @@ import Pagination from '@/Components/Pagination'
 import PrimaryButton from '@/Components/PrimaryButton'
 import Toast from '@/Components/Toast'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { Head, Link, router, usePage } from '@inertiajs/react'
-import React from 'react'
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react'
+import React, { useEffect } from 'react'
 import Swal from 'sweetalert2';
+import TextInput from '@/Components/TextInput';
 
 function List() {
-    const { flash, institute } = usePage().props;
+    const { flash, institute, auth } = usePage().props;
+    const { data, setData, processing } = useForm({
+        center_code: '',
+        center_name: '',
+        director: '',
+        state: '',
+        city: '',
+        pincode: '',
+        district: '',
+        authorization: ''
+    });
+
+    useEffect(() => {
+
+        const hasFilters = Object.values(data).some(value => value);
+
+        if (!hasFilters) return;
+
+        const timeout = setTimeout(() => {
+            router.get(route('admin.institute.index'), data, {
+                preserveState: true,
+                replace: true
+            });
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+
+    }, [data]);
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -21,11 +49,10 @@ function List() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(route('institute.destroy', id));
+                router.delete(route('admin.institute.destroy', id));
             }
         });
     };
-
 
     return (
         <AuthenticatedLayout
@@ -48,12 +75,13 @@ function List() {
                             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                                 Institute List
                             </h2>
-
-                            <Link href={route('institute.create')}>
-                                <PrimaryButton>
-                                    Create
-                                </PrimaryButton>
-                            </Link>
+                            {auth?.user?.permissions?.includes('institute.create') &&
+                                <Link href={route('admin.institute.create')}>
+                                    <PrimaryButton>
+                                        Create
+                                    </PrimaryButton>
+                                </Link>
+                            }
                         </div>
 
 
@@ -91,6 +119,99 @@ function List() {
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Actions
                                         </th>
+                                    </tr>
+                                    <tr>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                id="center_code"
+                                                type="text"
+                                                value={data.center_code}
+                                                className="block w-full"
+                                                onChange={(e) => setData('center_code', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                id="center_name"
+                                                type="text"
+                                                value={data.center_name}
+                                                className="block w-full"
+                                                onChange={(e) => setData('center_name', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                id="director"
+                                                type="text"
+                                                value={data.director}
+                                                className="block w-full"
+                                                onChange={(e) => setData('director', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <select
+                                                value={data.state}
+                                                onChange={(e) => setData('state', e.target.value)}
+                                                className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
+                                            >
+                                                <option value="">STATE..</option>
+                                                {[...new Set(institute?.data?.map(c => c.state))].map((state, i) => (
+                                                    <option key={i} value={state}>
+                                                        {state}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <select
+                                                value={data.city}
+                                                onChange={(e) => setData('city', e.target.value)}
+                                                className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
+                                            >
+                                                <option value="">CITY..</option>
+                                                {[...new Set(institute?.data?.map(c => c.city))].map((city, i) => (
+                                                    <option key={i} value={city}>
+                                                        {city}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                id="pincode"
+                                                type="text"
+                                                value={data.pincode}
+                                                className="block w-full"
+                                                onChange={(e) => setData('pincode', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <TextInput
+                                                id="district"
+                                                type="text"
+                                                value={data.district}
+                                                className="block w-full"
+                                                onChange={(e) => setData('district', e.target.value)}
+                                            />
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            <select
+                                                value={data.authorization}
+                                                onChange={(e) => setData('authorization', e.target.value)}
+                                                className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
+                                            >
+                                                <option value="">AUTHORIZATION..</option>
+                                                {[...new Set(institute?.data?.map(c => c.authorization))].map((authorization, i) => (
+                                                    <option key={i} value={authorization}>
+                                                        {authorization}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </th>
+                                        <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                     </tr>
                                 </thead>
 
@@ -139,19 +260,26 @@ function List() {
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right space-x-2">
-                                                    <Link href={route('institute.edit', item.id)}>
-                                                        <PrimaryButton
-                                                            size='sm'
-                                                        >
-                                                            Edit
-                                                        </PrimaryButton>
-                                                    </Link>
-                                                    <DangerButton
-                                                        size="sm"
-                                                        onClick={() => handleDelete(item.id)}
-                                                    >
-                                                        Delete
-                                                    </DangerButton>
+                                                    <div className="flex justify-end gap-2">
+                                                        {auth?.user?.permissions?.includes('institute.update') &&
+                                                            <Link href={route('admin.institute.edit', item.id)}>
+                                                                <PrimaryButton
+                                                                    size='sm'
+                                                                    type="button"
+                                                                >
+                                                                    Edit
+                                                                </PrimaryButton>
+                                                            </Link>
+                                                        }
+                                                        {auth?.user?.permissions?.includes('institute.delete') &&
+                                                            <DangerButton
+                                                                size="sm"
+                                                                onClick={() => handleDelete(item.id)}
+                                                            >
+                                                                Delete
+                                                            </DangerButton>
+                                                        }
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))

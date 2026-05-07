@@ -3,12 +3,36 @@ import Pagination from '@/Components/Pagination'
 import PrimaryButton from '@/Components/PrimaryButton'
 import Toast from '@/Components/Toast'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { Head, Link, router, usePage } from '@inertiajs/react'
-import React from 'react'
+import { Head, Link, router, useForm, usePage } from '@inertiajs/react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
+import TextInput from '@/Components/TextInput'
 
 function List() {
     const { flash, course, auth } = usePage().props;
+
+    const { data, setData, processing } = useForm({
+        name: '',
+        category: ''
+    });
+
+    useEffect(() => {
+        const hasFilters = Object.values(data).some(value => value);
+        if (!hasFilters) return;
+        
+        const timeout = setTimeout(() => {
+            router.get(route('admin.course.index'), {
+                name: data.name,
+                category: data.category
+            }, {
+                preserveState: true,
+                replace: true
+            });
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+
+    }, [data.name, data.category]);
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -21,7 +45,7 @@ function List() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                router.delete(route('course.destroy', id));
+                router.delete(route('admin.course.destroy', id));
             }
         });
     };
@@ -49,7 +73,7 @@ function List() {
                                 Course List
                             </h2>
                             {auth?.user?.permissions?.includes('course.create') &&
-                                <Link href={route('course.create')}>
+                                <Link href={route('admin.course.create')}>
                                     <PrimaryButton>
                                         Create
                                     </PrimaryButton>
@@ -57,14 +81,14 @@ function List() {
                         </div>
 
 
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden border-solid">
+                        <div className="w-full overflow-x-auto">
+                            <table className="min-w-[700px] w-full text-sm md:text-base border border-gray-200 dark:border-gray-700 rounded-lg">
                                 <thead className="bg-gray-100 dark:bg-gray-700">
                                     <tr>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
                                             ID
                                         </th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                        <th className="px-1 py-0 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Name
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
@@ -72,6 +96,41 @@ function List() {
                                         </th>
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Actions
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <th className='px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300'>
+                                            {/* ID filter (optional) */}
+                                        </th>
+
+                                        <th className='text-left text-sm font-medium text-gray-600 dark:text-gray-300'>
+                                            <TextInput
+                                                id="name"
+                                                type="text"
+                                                value={data.name}
+                                                className="block w-full"
+                                                onChange={(e) => setData('name', e.target.value)}
+                                            />
+                                        </th>
+
+                                        <th className="px-6 py-2">
+                                            <select
+                                                value={data.category}
+                                                onChange={(e) => setData('category', e.target.value)}
+                                                className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
+                                            >
+                                                <option value="">SELECT CATEGORY</option>
+                                                {[...new Set(course?.data?.map(c => c.category))].map((cat, i) => (
+                                                    <option key={i} value={cat}>
+                                                        {cat}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </th>
+
+                                        <th className="px-6 py-2 text-right">
+
                                         </th>
                                     </tr>
                                 </thead>
@@ -98,7 +157,7 @@ function List() {
 
                                                 <td className="px-6 py-4 text-right space-x-2">
                                                     {auth.user.permissions.includes('course.update') &&
-                                                        <Link href={route('course.edit', item.id)}>
+                                                        <Link href={route('admin.course.edit', item.id)}>
                                                             <PrimaryButton
                                                                 size='sm'
                                                             >
@@ -130,12 +189,12 @@ function List() {
                                 </tbody>
                             </table>
                         </div>
-                        {/* <Pagination
+                        <Pagination
                             links={course.links}
                             from={course.from}
                             to={course.to}
                             total={course.total}
-                        /> */}
+                        />
                     </div>
                 </div>
             </div>
