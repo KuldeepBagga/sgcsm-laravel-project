@@ -61,6 +61,11 @@ const menuItems = [
         route: "admin.payment_record.index",
         icon: "📊",
     },
+    {
+        name: "Certificate",
+        route: "admin.certificate.index",
+        icon: "📊",
+    },
 ];
 
 export default function NavBar() {

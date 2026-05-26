@@ -1,3 +1,45 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.clip-path-custom {
+    clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+
+.notice-wrapper {
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+.notice-track {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: noticeScroll 8s linear infinite;
+}
+
+.notice-wrapper:hover .notice-track {
+    animation-play-state: paused;
+}
+
+@keyframes noticeScroll {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(calc(-50% - 12px));
+    }
+}

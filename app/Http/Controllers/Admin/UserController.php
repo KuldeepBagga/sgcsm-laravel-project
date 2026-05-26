@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
@@ -15,8 +16,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $user = User::with('roles')->paginate(50);
-
         return Inertia::render('Admin/User/List', compact('user'));
     }
 
@@ -25,6 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $roles = Role::pluck('name'); 
         return Inertia::render('Admin/User/Form', [
             'user' => null, 
@@ -37,6 +39,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $validated = $request->validated();
         $validated['show_password'] = $request->password;
         $user = User::create($validated);
@@ -58,9 +61,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $roles = Role::all();
         $user->load('roles');
-
         return Inertia::render('Admin/User/Form', [
             'user' => [
                 'id' => $user->id,
@@ -77,8 +80,8 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         $validated = $request->validated();
-
         if (empty($validated['password'])) {
             unset($validated['password']);
             unset($validated['show_password']);
@@ -97,12 +100,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
         if (strtolower($user->role) === 'admin') {
             return redirect(route('admin.user.index'))->with('error', 'User admin cannot be deleted!');
         }
-
         $user->delete();
-
         return redirect(route('admin.user.index'))->with('success', 'User deleted successfully');
     }
 }

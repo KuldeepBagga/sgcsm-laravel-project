@@ -10,6 +10,7 @@ use App\Models\Admin\Student;
 use App\Models\User;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
@@ -21,7 +22,7 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         //$student = Student::with('course')->paginate(50);
-
+        Gate::authorize('viewAny', Student::class);
         $query = Student::query();
 
         if ($request->filled('name')) {
@@ -76,6 +77,7 @@ class StudentController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Student::class);
         $institute = Institute::select('center_code')->get();
         $course = Course::all();
 
@@ -85,7 +87,6 @@ class StudentController extends Controller
     public function get_center_name_by_center_code(string $centerCode)
     {
         $data = Institute::where('center_code', $centerCode)->first();
-
         return response()->json([
             'data' => $data,
         ]);
@@ -96,8 +97,8 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request, ImageService $imageService)
     {
+        Gate::authorize('create', Student::class);
         $validated = $request->validated();
-
         if ($request->hasFile('image')) {
             $validated['image'] = $imageService->uploadAndResize(
                 $request->file('image'),
@@ -136,6 +137,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
+        Gate::authorize('update', Student::class);
         $institute = Institute::select('center_code')->get();
         $course = Course::all();
         return Inertia::render('Admin/Student/Form', compact('student', 'institute', 'course'));
@@ -146,6 +148,7 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, Student $student, ImageService $imageService)
     {
+        Gate::authorize('update', Student::class);
         $validated = $request->validated();
         if ($request->hasFile('image')) {
             $imageService->delete($student->image);
@@ -167,6 +170,7 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
+        Gate::authorize('delete', Student::class);
         $student->delete();
         return redirect(route('admin.student.index'))->with('success', 'Student deleted successfully!');
     }
