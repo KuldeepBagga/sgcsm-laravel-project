@@ -67,4 +67,30 @@ const COURSE_CATEGORY = [
     'ADVANCE COURSES'
 ];
 
-export { STATES, RELATION, QUALIFICATION, COURSE_CATEGORY}
+const ORIGINAL_MARKSHEET = [
+    { label: 'COMPUTER', value: 'marksheet/orignal/computer.jpeg' },
+    { label: 'ADVANCE', value: 'marksheet/orignal/advance.jpeg' },
+    { label: 'WOMEN', value: 'marksheet/orignal/women.jpeg' },
+    { label: 'YOGA', value: 'marksheet/orignal/yoga.jpeg' },
+]
+
+const DUPLICATE_MARKSHEET = [
+    { label: 'COMPUTER', value: 'marksheet/computer_header.jpg' },
+    { label: 'CHILDHOOD', value: 'marksheet/childhood_header.jpg' },
+    { label: 'SOLAR', value: 'marksheet/solar_header.jpg' },
+    { label: 'WOMEN', value: 'marksheet/women_header.jpg' },
+    { label: 'ADVANCE', value: 'marksheet/advance_header.jpg' },
+]
+
+const CERTIFICATE_TYPE = [
+    { label: 'ADVANCE DIPLOMA', value: 'diploma/advance.jpg' },
+    { label: 'CHILDHOOD DIPLOMA', value: 'diploma/childhood.jpg' },
+    { label: 'COMPUTER DIPLOMA', value: 'diploma/computer.jpg' },
+    { label: 'SOLAR DIPLOMA', value: 'diploma/solar.jpg' },
+    { label: 'WOMEN DIPLOMA', value: 'diploma/women.jpg' },
+    { label: 'YOGA DIPLOMA', value: 'diploma/yoga.jpg' },
+    { label: 'COMPUTER CERTIFICATE', value: 'certificate/computer-org.jpg' },
+]
+
+
+export { STATES, RELATION, QUALIFICATION, COURSE_CATEGORY, ORIGINAL_MARKSHEET, DUPLICATE_MARKSHEET, CERTIFICATE_TYPE }

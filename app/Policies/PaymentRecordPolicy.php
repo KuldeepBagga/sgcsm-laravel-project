@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Admin\PaymentRecord;
+use App\Models\PaymentRecord;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -37,7 +37,18 @@ class PaymentRecordPolicy
      */
     public function update(User $user, PaymentRecord $paymentRecord): bool
     {
-        return $user->can('payment_record.update');
+        if (! $user->can('payment_record.update')) {
+            return false;
+        }
+
+        // Admin can update all records
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        // Franchise can update only their own center's records
+        return $user->institute
+            && $user->institute->center_code === $paymentRecord->center_code;
     }
 
     /**
@@ -45,7 +56,15 @@ class PaymentRecordPolicy
      */
     public function delete(User $user, PaymentRecord $paymentRecord): bool
     {
-        return $user->can('payment_record.delete');
+        if (! $user->can('payment_record.delete')) {
+            return false;
+        }
+        
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        return $user->institute && $user->institute->center_code === $paymentRecord->center_code;
     }
 
     /**

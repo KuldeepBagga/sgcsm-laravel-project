@@ -1,47 +1,20 @@
 import React, { useState } from 'react'
 import MainLayout from '@/Layouts/MainLayout'
-import { Head } from '@inertiajs/react'
+import { Head, usePage } from '@inertiajs/react'
 import { X } from "lucide-react";
 
 function Gallary() {
 
+    const { gallery } = usePage().props;
+
     const [selectedImage, setSelectedImage] = useState(null);
 
-    const publications = [
-        {
-            image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1200&auto=format&fit=crop",
-            title: "Computer Education Prospectus",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop",
-            title: "Training Program Brochure",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1200&auto=format&fit=crop",
-            title: "Center Affiliation Manual",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1200&auto=format&fit=crop",
-            title: "Annual Activity Report",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1200&auto=format&fit=crop",
-            title: "Student Notice Circular",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=1200&auto=format&fit=crop",
-            title: "Skill Development Magazine",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=1200&auto=format&fit=crop",
-            title: "Examination Guidelines",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&auto=format&fit=crop",
-            title: "Digital Learning Handbook",
-        },
-    ];
-
+    const publications = gallery?.map(item => {
+        return {
+            image: `/storage/${item.image}`,
+            title: ''
+        }
+    }) || [];
 
     return (
         <MainLayout>

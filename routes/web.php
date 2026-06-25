@@ -3,28 +3,60 @@
 use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\CenterAffiliactionController;
 use App\Http\Controllers\Admin\CertificateController;
+use App\Http\Controllers\Admin\Content\BannerController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\FranchiseController;
 use App\Http\Controllers\Admin\InstituteController;
 use App\Http\Controllers\Admin\OurTeamController;
 use App\Http\Controllers\Admin\PaymentRecordController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\ResultController;
+use App\Http\Controllers\Admin\ResultDetailsController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Franchise\FranchiseDashboard;
+use App\Http\Controllers\Frontend\About\OurManagementTeamController;
+use App\Http\Controllers\Frontend\FranchiseController as FrontendFranchiseController;
+use App\Http\Controllers\Frontend\Result\ResultController as ResultResultController;
+use App\Http\Controllers\GetInTouch\AuthorizedStudyCenterController;
+use App\Http\Controllers\Admin\NoticeController;
+use App\Http\Controllers\Admin\TopInstituteController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Student\StudentDashboard;
+use App\Models\Banner;
+use App\Models\Institute;
+use App\Models\Notice;
+use App\Models\Student;
+use App\Models\Testimonial;
+use App\Models\TopInstitute;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    $banner_1 = Banner::where('type', '=', 'banner_1')->get();
+    $banner_2 = Banner::where('type', '=', 'banner_2')->get();
+    $linkage = Banner::where('type', '=', 'linkage')->get();
+    $our_gallery = Banner::where('type', '=', 'gallery')->get();
+    $testimonial = Testimonial::all();
+    $notice = Notice::all();
+    $latestStudents = Student::select('name', 'image')->latest()->take(20)->get();
+    $excellence_center = TopInstitute::with('institute')->get();
+
+
     return Inertia::render('Frontend/Home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'banner_1' => $banner_1,
+        'banner_2' => $banner_2,
+        'linkage' => $linkage,
+        'our_gallery' => $our_gallery,
+        'testimonial' => $testimonial,
+        'notice' => $notice,
+        'latest_student' => $latestStudents,
+        'excellence_center' => $excellence_center
     ]);
 })->name('home');
 
@@ -34,19 +66,25 @@ Route::inertia('/mission-and-vision', 'Frontend/About/MissionVision')->name('mis
 Route::inertia('/our-dream', 'Frontend/About/OurDream')->name('our-dream');
 Route::inertia('/advantages', 'Frontend/About/Advantages')->name('advantages');
 Route::inertia('/director-message', 'Frontend/About/DirectorMessage')->name('directors-message');
-Route::inertia('/our-management-team', 'Frontend/About/OurManagementTeam')->name('our-management-team');
+Route::get('/our-management-team', [OurManagementTeamController::class, 'our_team'])->name('our-management-team');
 Route::inertia('/courses', 'Frontend/Courses')->name('courses');
 Route::inertia('/downloads', 'Frontend/GetInTouch/Downloads')->name('downloads');
 Route::inertia('/appreciation-letters', 'Frontend/GetInTouch/AppreciationLetters')->name('appreciation-letters');
 Route::inertia('/linkage-affiliation', 'Frontend/GetInTouch/LinkageAffiliation')->name('linkage-affiliation');
 Route::inertia('/how-to-get-affiliation', 'Frontend/GetInTouch/HowToGetAffiliation')->name('how-to-get-affiliation');
-Route::inertia('/authorized-study-center', 'Frontend/GetInTouch/AuthorizedStudyCenter')->name('authorized-study-center');
+
+Route::get('/authorized-study-center', [AuthorizedStudyCenterController::class, 'index'])->name('authorized-study-center');
+Route::post('/authorized-study-center', [AuthorizedStudyCenterController::class, 'show'])->name('authorized-study-center.show');
 
 Route::inertia('/student/login', 'Frontend/Student/Login')->name('student-login');
 Route::inertia('/verify-certificate', 'Frontend/Student/VerifyCertificate')->name('verify-certificate');
 Route::inertia('/online-admit-card', 'Frontend/Student/OnlineAdmitCard')->name('online-admit-card');
 Route::inertia('/student-verification', 'Frontend/Student/StudentVerification')->name('student-verification');
-Route::inertia('/online-result', 'Frontend/Student/OnlineResult')->name('online-result');
+
+Route::get('/online-result', [ResultResultController::class, 'index'])->name('online-result');
+Route::post('/online-result', [ResultResultController::class, 'show'])->name('online-result.post');
+Route::get('/online-result/show/result/{result_id}', [ResultResultController::class, 'display_online_result'])->name('display-online-result.get');
+
 Route::inertia('/online-advance-result', 'Frontend/Student/OnlineAdvanceResult')->name('online-advance-result');
 Route::inertia('/examination-system', 'Frontend/Student/ExaminationSystem')->name('examination-system');
 
@@ -55,19 +93,31 @@ Route::inertia('/our-account', 'Frontend/CenterSection/OurAccount')->name('our-a
 Route::inertia('/business-support', 'Frontend/CenterSection/BusinessSupport')->name('business-support');
 Route::inertia('/sgcsm-rules', 'Frontend/CenterSection/SGCSMRules')->name('sgcsm-rules');
 
-Route::inertia('/franchise/register', 'Frontend/Franchise/Register')->name('franchise-register');
+Route::resource('/franchise/register', FrontendFranchiseController::class)->only(['index', 'store'])->names(['index' => 'franchise-register', 'store' => 'franchise-store',]);
+
 Route::inertia('/franchise/public-notice', 'Frontend/Franchise/PublicNotice')->name('public-notice');
 
-Route::inertia('/more/our-publication', 'Frontend/More/OurPublication')->name('our-publication');
-Route::inertia('/more/gallary', 'Frontend/More/Gallary')->name('gallary');
+Route::get(
+    '/more/our-publication',
+    function () {
+        $our_publication = Banner::where('type', '=', 'publication')->get();
+        return Inertia::render('Frontend/More/OurPublication', compact('our_publication'));
+    }
+)->name('our-publication');
+
+Route::get('/more/gallary', function () {
+    $gallery = Banner::where('type', '=', 'gallery')->get();
+    return Inertia::render('Frontend/More/Gallary', compact('gallery'));
+})->name('gallary');
 Route::inertia('/more/placement-cell', 'Frontend/More/PlacementCell')->name('placement-cell');
 Route::inertia('/more/news-events', 'Frontend/More/NewsEvents')->name('news-events');
 Route::inertia('/more/media-coverage', 'Frontend/More/MediaCoverage')->name('media-coverage');
 Route::inertia('/more/our-study-materials', 'Frontend/More/OurStudyMaterials')->name('our-study-materials');
 
 Route::inertia('/contact', 'Frontend/Contact')->name('contact');
+Route::inertia('/fake-sgcsm', 'Frontend/Fake/Fake')->name('fake-sgcsm');
 
- Route::middleware(['auth', 'verified', 'role:admin|subadmin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin|subadmin|franchise'])->prefix('panel')->name('admin.')->group(function () {
     Route::get('dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
     Route::resource('permission', PermissionController::class);
     Route::resource('franchise', FranchiseController::class);
@@ -82,15 +132,19 @@ Route::inertia('/contact', 'Frontend/Contact')->name('contact');
     Route::resource('center/affiliation', CenterAffiliactionController::class)->names('center_affiliation');
     Route::resource('ourteam', OurTeamController::class);
     Route::resource('payment/record', PaymentRecordController::class)->parameters(['record' => 'payment_record'])->names('payment_record');
-    Route::resource('certificate',CertificateController::class);
-});
 
-Route::middleware(['auth', 'verified', 'role:student'])->group(function () {
-    Route::get('/dashboard', [StudentDashboard::class, 'index'])->name('student.dashboard');
-});
+    Route::resource('certificate', CertificateController::class);
+    Route::get('certificate/show/certificate/{id}', [CertificateController::class, 'generate_certificate'])->name('certificate.generate');
 
-Route::middleware(['auth', 'verified', 'role:franchise'])->group(function () {
-    Route::get('center/dashboard', [FranchiseDashboard::class, 'index'])->name('franchise.dashboard');
+    Route::resource('testimonial', TestimonialController::class);
+    Route::resource('result/details', ResultDetailsController::class)->parameters(['details' => 'result_details'])->names('result_details');
+    Route::resource('result', ResultController::class);
+    Route::get('result/show/{result_details}', [ResultDetailsController::class, 'display_result'])->name('duplicate_online_result.show');
+    Route::get('result/marksheet/display/{result_details}', [ResultDetailsController::class, 'genereate_marksheet'])->name('marksheet.generate');
+    Route::get('student/generate/qr/{student}', [StudentController::class, 'generate_qr_code'])->name('genereate.qr_code');
+    Route::resource('banner', BannerController::class);
+    Route::resource('notice', NoticeController::class);
+    Route::resource('top/institute', TopInstituteController::class)->parameter('institute', 'topInstitute')->names('top_institute');
 });
 
 Route::middleware('auth')->group(function () {

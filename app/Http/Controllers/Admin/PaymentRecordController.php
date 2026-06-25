@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PaymentRecordRequest;
-use App\Models\Admin\PaymentRecord;
+use App\Models\PaymentRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -16,10 +16,14 @@ class PaymentRecordController extends Controller
      */
     public function index(Request $request)
     {
-        
         Gate::authorize('viewAny', PaymentRecord::class);
 
         $query = PaymentRecord::query();
+
+        if (auth()->user()->hasRole('franchise')) {
+            $centerCode = auth()->user()->institute?->center_code;
+            $query->where('center_code', $centerCode);
+        }
 
         if ($request->filled('transaction_no')) {
             $query->where('transaction_no', 'like', '%' . $request->transaction_no . '%');
@@ -44,7 +48,14 @@ class PaymentRecordController extends Controller
     public function create()
     {
         Gate::authorize('create', PaymentRecord::class);
-        return Inertia::render('Admin/Payment/Record/Form');
+
+        $centerCode = null;
+
+        if (auth()->user()->hasRole('franchise')) {
+            $centerCode = auth()->user()->institute?->center_code;
+        }
+
+        return Inertia::render('Admin/Payment/Record/Form', compact('centerCode'));
     }
 
     /**

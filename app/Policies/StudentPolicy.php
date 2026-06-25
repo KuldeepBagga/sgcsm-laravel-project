@@ -2,9 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Admin\Student;
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use SebastianBergmann\CodeCoverage\StaticAnalysis\FileAnalyser;
 
 class StudentPolicy
 {
@@ -21,7 +22,15 @@ class StudentPolicy
      */
     public function view(User $user, Student $student): bool
     {
-        return $user->can('student.view');
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        if ($user->hasRole('franchise')) {
+            return $user->can('student.view')   &&  $student->institute_id === optional($user->institute)->id;
+        }
+
+        return false;
     }
 
     /**
@@ -37,7 +46,15 @@ class StudentPolicy
      */
     public function update(User $user, Student $student): bool
     {
-        return $user->can('student.update');
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        if ($user->hasRole('franchise')) {
+            return $user->can('student.update')  && $student->institute_id === optional($user->institute)->id;
+        }
+
+        return false;
     }
 
     /**
@@ -45,7 +62,15 @@ class StudentPolicy
      */
     public function delete(User $user, Student $student): bool
     {
-        return $user->can('student.delete');
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        if ($user->hasRole('franchise')) {
+            return $user->can('student.delete')  && $student->institute_id === optional($user->institute)->id;
+        }
+
+        return false;
     }
 
     /**

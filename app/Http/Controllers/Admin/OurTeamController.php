@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\OurTeamRequest;
-use App\Models\Admin\OurTeam;
+use App\Models\OurTeam;
 use Illuminate\Http\Request;
 use App\Services\ImageService;
 use Illuminate\Support\Facades\Gate;

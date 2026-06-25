@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\InstituteRequest;
-use App\Models\Admin\Institute;
+use App\Models\Institute;
 use App\Models\User;
 use App\Services\ImageService;
 use Illuminate\Support\Facades\Hash;

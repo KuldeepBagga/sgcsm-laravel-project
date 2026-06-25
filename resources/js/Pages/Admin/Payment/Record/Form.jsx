@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import FileDropzone from "@/Components/FileDropzone";
 
 export default function Form() {
-    const { payment_record } = usePage().props;
+    const { payment_record, centerCode } = usePage().props;
     const STATUS = ["ACTIVE", "BLOCKED"];
     const [preview, setPreview] = useState(null);
     const PAYMENT_RECORD_STATUS = ["WATING FOR APPROVAL", "PAYMENT NOT RECIEVED", "PENDING", "APPROVED"];
@@ -18,7 +18,7 @@ export default function Form() {
         transaction_date: payment_record?.transaction_date || '',
         amount: payment_record?.amount || '',
         status: payment_record?.status || '',
-        center_code: payment_record?.center_code || '',
+        center_code: payment_record?.center_code || centerCode || '',
        // center_name: payment_record?.center_name || '',
         message: payment_record?.message || ''
     });

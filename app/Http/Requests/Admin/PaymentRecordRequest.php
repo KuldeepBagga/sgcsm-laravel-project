@@ -12,7 +12,7 @@ class PaymentRecordRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->hasRole('admin');
+        return true;
     }
 
     /**

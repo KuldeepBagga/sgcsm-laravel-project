@@ -5,81 +5,47 @@ import ImageSlider from '@/Components/ImageSlider';
 import HeroSlider from '@/Components/HeroSlider';
 import SuccessStorySlider from '@/Components/SuccessStorySlider';
 import MainLayout from '../../Layouts/MainLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 
-const notices = [
-    {
-        title: 'स्वर्णिम अवसर',
-        description:
-            'राष्ट्रीय स्तर की संस्था से जुड़ने का एक स्वर्णिम अवसर।',
-    },
-    {
-        title: 'नई सूचना',
-        description:
-            'सभी विद्यार्थियों के लिए नए कोर्स उपलब्ध हैं।',
-    },
-];
-
-const slides = [
-    'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1974&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1497486751825-1233686d5d80?q=80&w=2070&auto=format&fit=crop',
-];
-
-const ourGallery = [
-    'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200',
-    'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200',
-    'https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200',
-    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1200',
-    'https://images.unsplash.com/photo-1505236858219-8359eb29e329?q=80&w=1200',
-    'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1200',
-    'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200',
-    'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200',
-    'https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200',
-    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1200',
-    'https://images.unsplash.com/photo-1505236858219-8359eb29e329?q=80&w=1200',
-    'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1200',
-];
-
-const Linkage = [
-    'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200',
-    'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200',
-    'https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200',
-    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1200',
-    'https://images.unsplash.com/photo-1505236858219-8359eb29e329?q=80&w=1200',
-    'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1200',
-    'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200',
-    'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200',
-    'https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200',
-    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1200',
-    'https://images.unsplash.com/photo-1505236858219-8359eb29e329?q=80&w=1200',
-    'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=1200',
-];
-
-
-const testimonials = [
-    {
-        image: 'https://randomuser.me/api/portraits/men/32.jpg',
-        name: 'SHANTANU SINGH',
-        message:
-            'I am able to live my life smoothly because of SGCSM. SGCSM helped me grow my future and achieve my goals. Thanks to SGCSM for the support and guidance.',
-    },
-    {
-        image: 'https://randomuser.me/api/portraits/women/45.jpg',
-        name: 'PRIYA SHARMA',
-        message:
-            'SGCSM changed my career completely. The teachers and support system are truly amazing and helpful.',
-    },
-    {
-        image: 'https://randomuser.me/api/portraits/men/55.jpg',
-        name: 'ROHIT KUMAR',
-        message:
-            'The courses are practical and industry focused. I got confidence and skills after joining SGCSM.',
-    },
-];
 
 export default function Home() {
+    const { banner_1, banner_2, linkage, our_gallery, testimonial, notice, latest_student, excellence_center } = usePage().props;
+
+    const slides = banner_1?.map(item => `/storage/${item.image}`) || [];
+    const BEST_FRANCHISE_BANNER = banner_2?.map(item => `/storage/${item.image}`) || [];
+    const ourGallery = our_gallery?.map(item => `/storage/${item.image}`) || [];
+    const Linkage = linkage?.map(item => `/storage/${item.image}`) || [];
+
+    const testimonials = testimonial?.map(item => {
+        return {
+            image: `/storage/${item.image}`,
+            name: item.name,
+            message: item.message
+        };
+    }) || [];
+
+    const notices = notice?.map(item => {
+        return {
+            title: item.name,
+            description: item.message
+        }
+    }) || [];
+
+    const recent_joined_student = latest_student?.map(item => {
+        return {
+            image: item.image,
+            name: item.name
+        }
+    }) || [];
+
+    const all_latest_institute = excellence_center?.map(item => {
+        return {
+            image: item.institute.image,
+            center_name: item.institute.center_name,
+            rank: item.rank
+        }
+    }) || [];
+
 
     return (
         <>
@@ -297,51 +263,16 @@ export default function Home() {
                                     <div className="h-[520px] overflow-hidden relative">
 
                                         <div className="animate-marquee py-6 space-y-8 px-5">
-
-                                            <div className="bg-white rounded-3xl p-5 shadow-lg hover:-translate-y-1 transition duration-300">
-
-                                                <img src="https://randomuser.me/api/portraits/women/65.jpg"
-                                                    className="w-28 h-36 object-cover rounded-2xl mx-auto border-4 border-pink-100 shadow-md" />
-
-                                                <h3 className="mt-4 text-xl font-bold text-gray-800 text-center">
-                                                    MANISHA SAINI
-                                                </h3>
-
-                                                <p className="text-center text-pink-600 text-sm mt-1">
-                                                    Web Designing Student
-                                                </p>
-
-                                            </div>
-
-                                            <div className="bg-white rounded-3xl p-5 shadow-lg hover:-translate-y-1 transition duration-300">
-
-                                                <img src="https://randomuser.me/api/portraits/women/45.jpg"
-                                                    className="w-28 h-36 object-cover rounded-2xl mx-auto border-4 border-blue-100 shadow-md" />
-
-                                                <h3 className="mt-4 text-xl font-bold text-gray-800 text-center">
-                                                    PRIYA SHARMA
-                                                </h3>
-
-                                                <p className="text-center text-blue-600 text-sm mt-1">
-                                                    Tally Prime Student
-                                                </p>
-
-                                            </div>
-
-                                            <div className="bg-white rounded-3xl p-5 shadow-lg hover:-translate-y-1 transition duration-300">
-
-                                                <img src="https://randomuser.me/api/portraits/men/32.jpg"
-                                                    className="w-28 h-36 object-cover rounded-2xl mx-auto border-4 border-purple-100 shadow-md" />
-
-                                                <h3 className="mt-4 text-xl font-bold text-gray-800 text-center">
-                                                    ROHIT KUMAR
-                                                </h3>
-
-                                                <p className="text-center text-purple-600 text-sm mt-1">
-                                                    Graphic Designing
-                                                </p>
-
-                                            </div>
+                                            {recent_joined_student.map(
+                                                (item, index) =>
+                                                    <div className="bg-white rounded-3xl p-5 shadow-lg hover:-translate-y-1 transition duration-300" key={index}>
+                                                        <img src={`/storage/${item.image}`}
+                                                            className="w-28 h-36 object-cover rounded-2xl mx-auto border-4 border-pink-100 shadow-md" />
+                                                        <h3 className="mt-4 text-xl font-bold text-gray-800 text-center">
+                                                            {item.name}
+                                                        </h3>
+                                                    </div>
+                                            )}
 
                                         </div>
 
@@ -355,12 +286,7 @@ export default function Home() {
 
                                 <div className="relative overflow-hidden rounded-[35px] shadow-2xl border-4 border-white h-[590px]">
 
-                                    <HeroSlider slides={[
-                                        'https://images.unsplash.com/photo-1504384308090-c894fdcc538d',
-                                        'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
-                                        'https://images.unsplash.com/photo-1516321318423-f06f85e504b3',
-                                        'https://images.unsplash.com/photo-1552664730-d307ca884978',
-                                    ]} height="h-[590px]" />
+                                    <HeroSlider slides={BEST_FRANCHISE_BANNER} height="h-[590px]" />
                                 </div>
 
                             </div>
@@ -381,50 +307,18 @@ export default function Home() {
 
                                         <div className="animate-marquee py-6 space-y-8 px-5">
 
-                                            <div className="bg-white rounded-3xl p-5 shadow-lg hover:-translate-y-1 transition duration-300">
-
-                                                <img src="https://randomuser.me/api/portraits/men/55.jpg"
-                                                    className="w-28 h-36 object-cover rounded-2xl mx-auto border-4 border-yellow-100 shadow-md" />
-
-                                                <h3 className="mt-4 text-lg font-bold text-gray-800 text-center">
-                                                    Mr. DHARM RAJ PRAJAPATI
-                                                </h3>
-
-                                                <p className="text-center text-yellow-600 font-semibold mt-1">
-                                                    ⭐ Rank #9 Center
-                                                </p>
-
-                                            </div>
-
-                                            <div className="bg-white rounded-3xl p-5 shadow-lg hover:-translate-y-1 transition duration-300">
-
-                                                <img src="https://randomuser.me/api/portraits/men/44.jpg"
-                                                    className="w-28 h-36 object-cover rounded-2xl mx-auto border-4 border-blue-100 shadow-md" />
-
-                                                <h3 className="mt-4 text-lg font-bold text-gray-800 text-center">
-                                                    Mr. DHIRENDRA KUMAR
-                                                </h3>
-
-                                                <p className="text-center text-blue-600 font-semibold mt-1">
-                                                    ⭐ Rank #10 Center
-                                                </p>
-
-                                            </div>
-
-                                            <div className="bg-white rounded-3xl p-5 shadow-lg hover:-translate-y-1 transition duration-300">
-
-                                                <img src="https://randomuser.me/api/portraits/men/41.jpg"
-                                                    className="w-28 h-36 object-cover rounded-2xl mx-auto border-4 border-green-100 shadow-md" />
-
-                                                <h3 className="mt-4 text-lg font-bold text-gray-800 text-center">
-                                                    Mr. AMIT SHARMA
-                                                </h3>
-
-                                                <p className="text-center text-green-600 font-semibold mt-1">
-                                                    ⭐ Rank #11 Center
-                                                </p>
-
-                                            </div>
+                                            {all_latest_institute?.map((item, index) =>
+                                                <div className="bg-white rounded-3xl p-5 shadow-lg hover:-translate-y-1 transition duration-300" key={index}>
+                                                    <img src={`/storage/${item.image}`}
+                                                        className="w-28 h-36 object-cover rounded-2xl mx-auto border-4 border-yellow-100 shadow-md" />
+                                                    <h3 className="mt-4 text-lg font-bold text-gray-800 text-center">
+                                                        {item.center_name}
+                                                    </h3>
+                                                    <p className="text-center text-yellow-600 font-semibold mt-1">
+                                                        ⭐ {item.rank}
+                                                    </p>
+                                                </div>
+                                            )}
 
                                         </div>
 
@@ -579,18 +473,19 @@ export default function Home() {
 
                             <div>
                                 <h2 className="text-4xl md:text-5xl font-extrabold text-white uppercase leading-tight">
-                                    Be Aware of Fake SgCSM
+                                    Be Aware of Fake SGCSM
                                 </h2>
 
                                 <p className="text-gray-300 text-lg mt-4">
-                                    Fake organizations are illegally using the name of SgCSM.
+                                    Fake organizations are illegally using the name of SGCSM.
                                     Please verify before taking admission or franchise.
                                 </p>
-
-                                <button
-                                    className="mt-6 bg-gray-800 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg transition duration-300 shadow-lg">
-                                    Information About Fake SgCSM
-                                </button>
+                                <Link href={route('fake-sgcsm')}>
+                                    <button
+                                        className="mt-6 bg-gray-800 hover:bg-red-600 text-white font-semibold px-6 py-3 rounded-lg transition duration-300 shadow-lg">
+                                        Information About Fake SGCSM
+                                    </button>
+                                </Link>
                             </div>
 
                             <div className="flex justify-center md:justify-end">
@@ -740,7 +635,7 @@ export default function Home() {
                                             ))}
 
                                             {/* Duplicate Items */}
-                                            {notices.map((notice, index) => (
+                                            {/* {notices.map((notice, index) => (
 
                                                 <div
                                                     key={`duplicate-${index}`}
@@ -755,7 +650,7 @@ export default function Home() {
                                                     </p>
                                                 </div>
 
-                                            ))}
+                                            ))} */}
 
                                         </div>
 

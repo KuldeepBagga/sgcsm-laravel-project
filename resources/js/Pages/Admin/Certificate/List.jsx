@@ -12,32 +12,30 @@ function List() {
     const { flash, certificate, auth } = usePage().props;
 
     const { data, setData, processing } = useForm({
-        name: '',
-        director: '',
+        certificate_number: '',
         center_code: '',
-        status: ''
+        enrollment_no: ''
     });
 
 
     useEffect(() => {
         const hasFilters = Object.values(data).some(value => value);
         if (!hasFilters) return;
-        
+
         const timeout = setTimeout(() => {
             router.get(route('admin.certificate.index'), {
-                name: data.name,
-                director: data.director,
+                certificate_number: data.certificate_number,
+                enrollment_no: data.enrollment_no,
                 center_code: data.center_code,
-                status: data.status
             }, {
                 preserveState: true,
                 replace: true
             });
         }, 1000);
-        
+
         return () => clearTimeout(timeout);
 
-    }, [data.name, data.director, data.center_code, data.status]);
+    }, [data.certificate_number, data.enrollment_no, data.center_code, data.status]);
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -93,22 +91,19 @@ function List() {
                                             ID
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Name
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Director Name
+                                            Certificate Number
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Center Code
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            Enrollment No
+                                        </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Issue Date
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Expire Date
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            Status
+                                            Type
                                         </th>
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Actions
@@ -119,20 +114,11 @@ function List() {
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
                                             <TextInput
-                                                id="name"
+                                                id="certificate_number"
                                                 type="text"
-                                                value={data.name}
+                                                value={data.certificate_number}
                                                 className="block w-full"
-                                                onChange={(e) => setData('name', e.target.value)}
-                                            />
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
-                                            <TextInput
-                                                id="director"
-                                                type="text"
-                                                value={data.director}
-                                                className="block w-full"
-                                                onChange={(e) => setData('director', e.target.value)}
+                                                onChange={(e) => setData('certificate_number', e.target.value)}
                                             />
                                         </th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
@@ -144,17 +130,17 @@ function List() {
                                                 onChange={(e) => setData('center_code', e.target.value)}
                                             />
                                         </th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300"></th>
-                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
                                             <TextInput
-                                                id="center_code"
+                                                id="enrollment_no"
                                                 type="text"
-                                                value={data.center_code}
+                                                value={data.enrollment_no}
                                                 className="block w-full"
-                                                onChange={(e) => setData('center_code', e.target.value)}
+                                                onChange={(e) => setData('enrollment_no', e.target.value)}
                                             />
                                         </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300"></th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                     </tr>
                                 </thead>
@@ -175,31 +161,30 @@ function List() {
                                                 </td>
 
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.director}
+                                                    {item.student?.center_code}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.center_code}
+                                                    {item.student?.registration_no}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.issue_date}
+                                                    {item.issued_date}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    {item.expire_date}
-                                                </td>
-
-                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
-                                                    <span
-                                                        className={`px-2 py-1 rounded-full text-xs font-medium ${item.status === "ACTIVE" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-                                                            }`}
-                                                    >
-                                                        {item.status}
-                                                    </span>
+                                                    {item.certificate_type}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right space-x-2">
+                                                    {auth.user.permissions.includes("certificate.generate") &&
+                                                        <PrimaryButton
+                                                            size="sm"
+                                                            onClick={() => window.open(route('admin.certificate.generate', item.id), "_blank")}
+                                                        >
+                                                            Generate
+                                                        </PrimaryButton>
+                                                    }
                                                     {auth.user.permissions.includes(
                                                         "certificate.update",
                                                     ) && (
@@ -244,12 +229,12 @@ function List() {
                                 </tbody>
                             </table>
                         </div>
-                        {/* <Pagination
+                        <Pagination
                             links={certificate.links}
                             from={certificate.from}
                             to={certificate.to}
                             total={certificate.total}
-                        /> */}
+                        />
                     </div>
                 </div>
             </div>

@@ -1,85 +1,57 @@
 import React, { useState } from 'react'
 import MainLayout from '@/Layouts/MainLayout'
-import { Head } from '@inertiajs/react'
+import { Head, usePage } from '@inertiajs/react'
 import { X } from "lucide-react";
 
 function OurPublication() {
-
+    const { our_publication } = usePage().props;
     const [selectedImage, setSelectedImage] = useState(null);
 
-    const publications = [
-        {
-            image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1200&auto=format&fit=crop",
-            title: "Computer Education Prospectus",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop",
-            title: "Training Program Brochure",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=1200&auto=format&fit=crop",
-            title: "Center Affiliation Manual",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1200&auto=format&fit=crop",
-            title: "Annual Activity Report",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1200&auto=format&fit=crop",
-            title: "Student Notice Circular",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=1200&auto=format&fit=crop",
-            title: "Skill Development Magazine",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=1200&auto=format&fit=crop",
-            title: "Examination Guidelines",
-        },
-        {
-            image: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=1200&auto=format&fit=crop",
-            title: "Digital Learning Handbook",
-        },
-    ];
+    const publications = our_publication?.map(item => {
+        return {
+            image: `/storage/${item.image}`,
+            //title:''
+        }
+    }) || [];
 
     return (
         <MainLayout>
             <Head title="Our Publication" />
 
-            <main class="bg-slate-50">
-                <section class="relative overflow-hidden bg-slate-950">
+            <main className="bg-slate-50">
+                <section className="relative overflow-hidden bg-slate-950">
                     <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1800&auto=format&fit=crop"
-                        alt="" class="absolute inset-0 w-full h-full object-cover opacity-30" />
-                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-blue-950/85 to-slate-900/40"></div>
+                        alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-blue-950/85 to-slate-900/40"></div>
 
-                    <div class="relative max-w-7xl mx-auto px-6 py-16 md:py-20">
-                        <div class="max-w-3xl text-white">
-                            <span class="inline-flex items-center gap-2 bg-white/15 px-4 py-2 rounded-full text-sm font-semibold">
-                                <i class="fa-solid fa-book-open"></i>
+                    <div className="relative max-w-7xl mx-auto px-6 py-16 md:py-20">
+                        <div className="max-w-3xl text-white">
+                            <span className="inline-flex items-center gap-2 bg-white/15 px-4 py-2 rounded-full text-sm font-semibold">
+                                <i className="fa-solid fa-book-open"></i>
                                 SGCSM | Publication
                             </span>
-                            <h1 class="mt-5 text-4xl md:text-6xl font-black leading-tight uppercase">Our Publication</h1>
-                            <p class="mt-5 text-lg md:text-xl text-blue-50 max-w-2xl">
+                            <h1 className="mt-5 text-4xl md:text-6xl font-black leading-tight uppercase">Our Publication</h1>
+                            <p className="mt-5 text-lg md:text-xl text-blue-50 max-w-2xl">
                                 Browse SGCSM publication previews, brochures, notices, and learning materials.
                             </p>
                         </div>
                     </div>
                 </section>
 
-                <section class="py-14 md:py-16">
-                    <div class="max-w-7xl mx-auto px-6">
-                        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                <section className="py-14 md:py-16">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
                             <div>
-                                <p class="text-sm font-bold text-blue-700 uppercase">Publication Gallery</p>
-                                <h2 class="mt-2 text-3xl md:text-4xl font-black text-slate-900">Click Any Image To Preview</h2>
+                                <p className="text-sm font-bold text-blue-700 uppercase">Publication Gallery</p>
+                                <h2 className="mt-2 text-3xl md:text-4xl font-black text-slate-900">Click Any Image To Preview</h2>
                             </div>
-                            <div class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600">
-                                <i class="fa-solid fa-magnifying-glass-plus text-blue-600"></i>
+                            <div className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600">
+                                <i className="fa-solid fa-magnifying-glass-plus text-blue-600"></i>
                                 Popup image viewer
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {publications.map((item, index) => (
                                 <button
                                     key={index}

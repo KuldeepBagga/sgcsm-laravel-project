@@ -37,22 +37,22 @@ class DatabaseSeeder extends Seeder
         $admin = Role::findByName('admin');
         $admin->givePermissionTo(Permission::all());
 
-        $student =  User::factory()->create([
-            'name' => 'student',
-            'email' => 'student@gmail.com',
-            'password' => Hash::make("1234"),
-            'show_password' => '1234'
-        ]);
+        // $student =  User::factory()->create([
+        //     'name' => 'student',
+        //     'email' => 'student@gmail.com',
+        //     'password' => Hash::make("1234"),
+        //     'show_password' => '1234'
+        // ]);
         
-        $student->assignRole('student');
+        // $student->assignRole('student');
 
-        $franchise =    User::factory()->create([
-            'name' => 'franchise',
-            'email' => 'franchise@gmail.com',
-            'password' => Hash::make("1234"),
-            'show_password' => '1234'
-        ]);
+        // $franchise =    User::factory()->create([
+        //     'name' => 'franchise',
+        //     'email' => 'franchise@gmail.com',
+        //     'password' => Hash::make("1234"),
+        //     'show_password' => '1234'
+        // ]);
 
-        $franchise->assignRole('franchise');
+        // $franchise->assignRole('franchise');
     }
 }

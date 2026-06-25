@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Admin\Institute;
+use App\Models\Institute;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

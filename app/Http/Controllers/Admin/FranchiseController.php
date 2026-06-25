@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\FranchiseRequest;
-use App\Models\Admin\Franchise;
-use App\Models\Admin\Institute;
+use App\Models\Franchise;
+use App\Models\Institute;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;

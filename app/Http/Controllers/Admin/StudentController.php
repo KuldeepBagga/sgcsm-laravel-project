@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StudentRequest;
-use App\Models\Admin\Course;
-use App\Models\Admin\Institute;
-use App\Models\Admin\Student;
+use App\Models\Course;
+use App\Models\Institute;
+use App\Models\Student;
 use App\Models\User;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class StudentController extends Controller
 {
@@ -24,6 +26,12 @@ class StudentController extends Controller
         //$student = Student::with('course')->paginate(50);
         Gate::authorize('viewAny', Student::class);
         $query = Student::query();
+
+        if (auth()->user()->hasRole('franchise')) {
+            $query->whereHas('institute', function ($q) {
+                $q->where('user_id', auth()->id());
+            });
+        }
 
         if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
@@ -78,7 +86,13 @@ class StudentController extends Controller
     public function create()
     {
         Gate::authorize('create', Student::class);
-        $institute = Institute::select('center_code')->get();
+
+        if (auth()->user()->hasRole('franchise')) {
+            $institute = Institute::where('user_id', auth()->id())->select('center_code')->get();
+        } else {
+            $institute = Institute::select('center_code')->get();
+        }
+
         $course = Course::all();
 
         return Inertia::render('Admin/Student/Form', compact('institute', 'course'));
@@ -137,8 +151,12 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        Gate::authorize('update', Student::class);
-        $institute = Institute::select('center_code')->get();
+        Gate::authorize('update', $student);
+        if (auth()->user()->hasRole('franchise')) {
+            $institute = Institute::where('user_id', auth()->id())->select('center_code')->get();
+        } else {
+            $institute = Institute::select('center_code')->get();
+        }
         $course = Course::all();
         return Inertia::render('Admin/Student/Form', compact('student', 'institute', 'course'));
     }
@@ -148,7 +166,7 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, Student $student, ImageService $imageService)
     {
-        Gate::authorize('update', Student::class);
+        Gate::authorize('update', $student);
         $validated = $request->validated();
         if ($request->hasFile('image')) {
             $imageService->delete($student->image);
@@ -170,8 +188,19 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        Gate::authorize('delete', Student::class);
+        Gate::authorize('delete', $student);
         $student->delete();
         return redirect(route('admin.student.index'))->with('success', 'Student deleted successfully!');
+    }
+
+    public function generate_qr_code(Student $student)
+    {
+        abort_unless($student, 404);
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+        $registration_no = str_replace('/', '-', $student->registration_no);
+        $student->update(['qr_code' => "uploads/qr_code/{$registration_no}.png"]);
+        $qrCode = QrCode::format('png')->size(250)->generate('hello');
+        Storage::disk('public')->put("uploads/qr_code/{$registration_no}.png", $qrCode);
+        return redirect()->route('admin.student.index')->with('success', 'QR Code Generated Successfully!');
     }
 }

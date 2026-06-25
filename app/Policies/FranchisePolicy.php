@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Admin\Franchise;
+use App\Models\Franchise;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

@@ -7,6 +7,7 @@ import Pagination from "@/Components/Pagination";
 import Swal from "sweetalert2";
 import TextInput from "@/Components/TextInput";
 import { useEffect } from "react";
+import { QrCode } from "lucide-react";
 
 function List() {
     const { flash, student, auth } = usePage().props;
@@ -129,6 +130,9 @@ function List() {
                                         <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Certificate No
                                         </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            QR Code
+                                        </th>
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Actions
                                         </th>
@@ -245,6 +249,7 @@ function List() {
                                                 onChange={(e) => setData('certificate_no', e.target.value)}
                                             />
                                         </th>
+                                        <th className="px-6 py-3 text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                     </tr>
                                 </thead>
@@ -281,12 +286,12 @@ function List() {
                                                     {item.course.name}
                                                 </td>
 
-                                                <td className="px-2 py-4 text-sm text-gray-700 dark:text-gray-200">
+                                                <td className="px-2 py-4 text-gray-700 dark:text-gray-200">
                                                     <span
-                                                        className={`px-2 py-1 text-white rounded-md text-xs ${item.scan ===
+                                                        className={`px-1 py-1 text-white rounded-md text-xs ${item.scan ===
                                                             "SCANNED"
-                                                            ? "bg-green-500"
-                                                            : "bg-red-500"
+                                                            ? "bg-green-900"
+                                                            : "bg-red-900"
                                                             }`}
                                                     >
                                                         {item.scan}
@@ -301,8 +306,8 @@ function List() {
                                                     <span
                                                         className={`px-2 py-1 rounded-md text-white text-xs ${item.certificate_issued ===
                                                             "ISSUED"
-                                                            ? "bg-green-500"
-                                                            : "bg-red-500"
+                                                            ? "bg-green-900"
+                                                            : "bg-red-900"
                                                             }`}
                                                     >
                                                         {
@@ -314,8 +319,8 @@ function List() {
                                                 <td className="px-2 py-4 text-sm text-gray-700 dark:text-gray-200">
                                                     <span
                                                         className={`px-2 py-1 rounded-md text-white text-xs ${item.paid === "PAID"
-                                                            ? "bg-green-500"
-                                                            : "bg-red-500"
+                                                            ? "bg-green-900"
+                                                            : "bg-red-900"
                                                             }`}
                                                     >
                                                         {item.paid}
@@ -324,6 +329,21 @@ function List() {
 
                                                 <td className="px-2 py-4 text-sm text-gray-700 dark:text-gray-200">
                                                     {item.certificate_no}
+                                                </td>
+
+                                                <td className="px-2 py-4 text-sm text-gray-700 dark:text-gray-200">
+                                                    {item.qr_code ?
+                                                        <QrCode
+                                                            className="w-10 h-10 text-green-500 cursor-pointer hover:text-green-700"
+                                                            onClick={() => {
+                                                                window.open(`/storage/${item.qr_code}`, '_blank', 'noopener,noreferrer');
+                                                            }}
+                                                        />
+                                                        :
+                                                        <Link href={route('admin.genereate.qr_code', item.id)}>
+                                                            <QrCode className="w-10 h-10 cursor-pointer hover:text-gray-400" />
+                                                        </Link>
+                                                    }
                                                 </td>
 
                                                 <td className="px-2 py-2 text-right space-x-2">

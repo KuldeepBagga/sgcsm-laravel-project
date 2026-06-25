@@ -204,12 +204,12 @@ function List() {
                                 </tbody>
                             </table>
                         </div>
-                        {/* <Pagination
+                        <Pagination
                             links={payment_record.links}
                             from={payment_record.from}
                             to={payment_record.to}
                             total={payment_record.total}
-                        /> */}
+                        />
                     </div>
                 </div>
             </div>

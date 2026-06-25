@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Admin\CenterAffiliation;
+use App\Models\CenterAffiliation;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

@@ -38,12 +38,18 @@ class GeneratePermissionsFromRoutes extends Command
             'ourteam',
             'payment_record',
             'certificate',
+            'testimonial',
+            'result_details',
+            'result',
+            'banner'
         ];
 
         $defaultActions = ['create', 'view', 'delete', 'update'];
 
         $extraActions = [
             'franchise' => ['approve'],
+            'certificate' => ['generate'],
+            'result' => ['marksheet.show'],
         ];
 
         foreach ($modules as $module) {
