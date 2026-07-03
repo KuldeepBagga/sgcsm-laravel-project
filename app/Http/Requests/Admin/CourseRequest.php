@@ -11,7 +11,7 @@ class CourseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->user()->hasRole('admin') || auth()->user()->can('course.create') || auth()->user()->can('course.update');
     }
 
     /**
@@ -22,9 +22,11 @@ class CourseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required',
-            'category'=>'required',
-            'duration'=>'required'
+            'name' => 'required',
+            'category' => 'required',
+            'duration' => 'required',
+            'eligibility' => 'required',
+            'short_name' => 'required',
         ];
     }
 }

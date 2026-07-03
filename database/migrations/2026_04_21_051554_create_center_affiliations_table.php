@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('expire_date')->nullable();
             $table->string('status')->nullable();
             $table->string('center_code')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -15,20 +15,19 @@ export default function Form() {
     const STATUS = ["ACTIVE", "DEACTIVE", "SUSPENDED", "CANCELLED"];
 
     const { data, setData, post, put, processing, reset, progress } = useForm({
-        certificate_number: certificate ? certificate.certificate_number : "",
-        conducted_by: certificate ? certificate.conducted_by : "",
-        duration: certificate ? certificate.duration : "",
-        grade: certificate ? certificate.grade : "",
-        registration_no: certificate ? certificate.registration_no : "",
-        issued_date: certificate ? certificate.issued_date : "",
-        certificate_type: certificate ? certificate.certificate_type : "",
-        //course_type: certificate ? certificate.course_type : "",
-        //show_marksheet: certificate ? certificate.show_marksheet : "NO",
-        typing_speed: certificate ? certificate.typing_speed : "",
-        shorthand_speed: certificate ? certificate.shorthand_speed : "",
-        accuracy: certificate ? certificate.accuracy : "",
-        certificate_image: certificate ? certificate.certificate_image : "",
-        image: certificate? certificate.image: ""
+        certificate_number: certificate?.certificate_number || "",
+        conducted_by: certificate?.conducted_by || "",
+        duration: certificate?.duration || "",
+        grade: certificate?.grade || "",
+        registration_no: certificate?.registration_no || "",
+        issued_date: certificate?.issued_date || "",
+        certificate_type: certificate?.certificate_type || "",
+        typing_speed: certificate?.typing_speed || "",
+        shorthand_speed: certificate?.shorthand_speed || "",
+        accuracy: certificate?.accuracy || "",
+        certificate_image: certificate?.certificate_image || "",
+        image: certificate?.image || "",
+        status: certificate?.status || "",
     });
 
     const handleSubmit = (e) => {
@@ -230,6 +229,33 @@ export default function Form() {
 
                                     <InputError
                                         message={errors.certificate_type}
+                                        className="mt-2"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        htmlFor="status"
+                                        value="Status"
+                                    />
+
+
+                                    <select
+                                        value={data.status}
+                                        onChange={(e) => setData('status', e.target.value)}
+                                        className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 mt-1 block w-full"
+                                    >
+                                        <option value="">SELECT STATUS</option>
+
+                                        {['ISSUED', 'NOT ISSUED'].map((item, index) => (
+                                            <option key={index} value={item}>
+                                                {item}
+                                            </option>
+                                        ))}
+                                    </select>
+
+                                    <InputError
+                                        message={errors.status}
                                         className="mt-2"
                                     />
                                 </div>

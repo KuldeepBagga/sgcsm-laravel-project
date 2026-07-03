@@ -110,6 +110,7 @@ function Form() {
                                             </option>
                                         ))}
                                     </select>
+                                    <InputError message={errors.role} className="mt-2" />
                                 </div>
 
                             </div>

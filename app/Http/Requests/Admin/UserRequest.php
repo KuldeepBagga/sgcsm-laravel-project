@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -13,7 +14,7 @@ class UserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->user()->hasRole('admin') || auth()->user()->can('user.create') || auth()->user()->can('user.update');
     }
 
     /**
@@ -25,9 +26,22 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => ['required','email',Rule::unique('users')->ignore($this->route('user')),],
+            'email' => ['required', 'email', Rule::unique('users')->ignore($this->route('user')),],
             'password' => $this->isMethod('post') ? 'required|confirmed' : 'nullable|confirmed',
-            'role'=>'required',
+            'role' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $user = $this->route('user');
+
+                    if ($value === 'admin') {
+                        $admin = User::role('admin')->first();
+
+                        if ($admin && (!$user || $admin->id !== $user->id)) {
+                            $fail('An admin user already exists.');
+                        }
+                    }
+                },
+            ],
         ];
     }
 }

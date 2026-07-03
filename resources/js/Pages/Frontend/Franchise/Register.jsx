@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import MainLayout from '@/Layouts/MainLayout'
 import { Head, Link, useForm, usePage } from '@inertiajs/react'
 import InputError from '@/Components/InputError';
 
 function FranchiseRegister() {
-    const { flash } = usePage().props;
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { flash, errors } = usePage().props;
+    const { data, setData, post, put, processing, reset, progress } = useForm({
         center_name: '',
         director: '',
         email: '',
@@ -17,14 +17,20 @@ function FranchiseRegister() {
         message: ''
     });
 
+    const inputRefs = useRef({});
+
     const handleSubmit = (e) => {
         e.preventDefault();
-
         post(route('franchise-store'), {
-            preserveState: false,
+            preserveState: true,
+            preserveScroll: false,
             onSuccess: () => {
                 reset();
             },
+            onError: (errors) => {
+                const firstError = Object.keys(errors)[0];
+                inputRefs.current[firstError]?.focus();
+            }
         });
     };
 
@@ -190,6 +196,7 @@ function FranchiseRegister() {
                                             <label className="block md:col-span-2">
                                                 <span className="text-sm font-bold text-slate-700 uppercase">Name of the Study Center</span>
                                                 <input type="text" name="center_name"
+                                                    ref={(el) => (inputRefs.current.center_name = el)}
                                                     onChange={(e) => setData('center_name', e.target.value)}
                                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 outline-none transition focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                                                     placeholder="Enter study center name" />
@@ -199,6 +206,7 @@ function FranchiseRegister() {
                                             <label className="block md:col-span-2">
                                                 <span className="text-sm font-bold text-slate-700 uppercase">Center Head / Director's Name</span>
                                                 <input type="text" name="director"
+                                                    ref={(el) => (inputRefs.current.director = el)}
                                                     onChange={(e) => setData('director', e.target.value)}
                                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 outline-none transition focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                                                     placeholder="Enter director name" />
@@ -208,6 +216,7 @@ function FranchiseRegister() {
                                             <label className="block">
                                                 <span className="text-sm font-bold text-slate-700 uppercase">State</span>
                                                 <input type="text" name="state"
+                                                    ref={(el) => (inputRefs.current.state = el)}
                                                     onChange={(e) => setData('state', e.target.value)}
                                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 outline-none transition focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                                                     placeholder="State" />
@@ -217,6 +226,7 @@ function FranchiseRegister() {
                                             <label className="block">
                                                 <span className="text-sm font-bold text-slate-700 uppercase">District</span>
                                                 <input type="text" name="district"
+                                                    ref={(el) => (inputRefs.current.district = el)}
                                                     onChange={(e) => setData('district', e.target.value)}
                                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 outline-none transition focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                                                     placeholder="District" />
@@ -226,6 +236,7 @@ function FranchiseRegister() {
                                             <label className="block">
                                                 <span className="text-sm font-bold text-slate-700 uppercase">Block</span>
                                                 <input type="text" name="block"
+                                                    ref={(el) => (inputRefs.current.block = el)}
                                                     onChange={(e) => setData('block', e.target.value)}
                                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 outline-none transition focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                                                     placeholder="Block" />
@@ -235,6 +246,7 @@ function FranchiseRegister() {
                                             <label className="block">
                                                 <span className="text-sm font-bold text-slate-700 uppercase">City</span>
                                                 <input type="text" name="city"
+                                                    ref={(el) => (inputRefs.current.city = el)}
                                                     onChange={(e) => setData('city', e.target.value)}
                                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 outline-none transition focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                                                     placeholder="City" />
@@ -244,6 +256,7 @@ function FranchiseRegister() {
                                             <label className="block">
                                                 <span className="text-sm font-bold text-slate-700 uppercase">Pin Code</span>
                                                 <input type="text" name="pin_code" inputMode="numeric"
+                                                    ref={(el) => (inputRefs.current.pin_code = el)}
                                                     onChange={(e) => setData('pin_code', e.target.value)}
                                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 outline-none transition focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                                                     placeholder="Pin code" />
@@ -253,6 +266,7 @@ function FranchiseRegister() {
                                             <label className="block">
                                                 <span className="text-sm font-bold text-slate-700 uppercase">E-mail</span>
                                                 <input type="text" name="email"
+                                                    ref={(el) => (inputRefs.current.email = el)}
                                                     onChange={(e) => setData('email', e.target.value)}
                                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 outline-none transition focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                                                     placeholder="Email address" />
@@ -262,6 +276,7 @@ function FranchiseRegister() {
                                             <label className="block md:col-span-2">
                                                 <span className="text-sm font-bold text-slate-700 uppercase">Ph./ Mobile (STD Code)</span>
                                                 <input type="tel" name="phone"
+                                                    ref={(el) => (inputRefs.current.phone = el)}
                                                     onChange={(e) => setData('phone', e.target.value)}
                                                     className="mt-2 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 outline-none transition focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                                                     placeholder="Phone or mobile number" />

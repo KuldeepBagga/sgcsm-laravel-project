@@ -4,7 +4,9 @@ use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\CenterAffiliactionController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\Content\BannerController;
+use App\Http\Controllers\Admin\CourseContentController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\CourseModuleController;
 use App\Http\Controllers\Admin\FranchiseController;
 use App\Http\Controllers\Admin\InstituteController;
 use App\Http\Controllers\Admin\OurTeamController;
@@ -22,9 +24,10 @@ use App\Http\Controllers\Frontend\Result\ResultController as ResultResultControl
 use App\Http\Controllers\GetInTouch\AuthorizedStudyCenterController;
 use App\Http\Controllers\Admin\NoticeController;
 use App\Http\Controllers\Admin\TopInstituteController;
+use App\Http\Controllers\Frontend\Course\CourseController as CourseCourseController;
+use App\Http\Controllers\Frontend\Student\VerifyCertificateController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Banner;
-use App\Models\Institute;
 use App\Models\Notice;
 use App\Models\Student;
 use App\Models\Testimonial;
@@ -46,7 +49,7 @@ Route::get('/', function () {
 
     return Inertia::render('Frontend/Home', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
+        //'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
         'banner_1' => $banner_1,
@@ -67,7 +70,11 @@ Route::inertia('/our-dream', 'Frontend/About/OurDream')->name('our-dream');
 Route::inertia('/advantages', 'Frontend/About/Advantages')->name('advantages');
 Route::inertia('/director-message', 'Frontend/About/DirectorMessage')->name('directors-message');
 Route::get('/our-management-team', [OurManagementTeamController::class, 'our_team'])->name('our-management-team');
-Route::inertia('/courses', 'Frontend/Courses')->name('courses');
+//Route::inertia('/courses', 'Frontend/Courses')->name('courses');
+Route::get('/courses', [CourseCourseController::class, 'index'])->name('courses');
+Route::get('/courses/show/{id}/{category}', [CourseCourseController::class, 'show'])->name('courses.show');
+Route::get('/courses/search', [CourseCourseController::class, 'search'])->name('courses.search');
+
 Route::inertia('/downloads', 'Frontend/GetInTouch/Downloads')->name('downloads');
 Route::inertia('/appreciation-letters', 'Frontend/GetInTouch/AppreciationLetters')->name('appreciation-letters');
 Route::inertia('/linkage-affiliation', 'Frontend/GetInTouch/LinkageAffiliation')->name('linkage-affiliation');
@@ -77,7 +84,10 @@ Route::get('/authorized-study-center', [AuthorizedStudyCenterController::class, 
 Route::post('/authorized-study-center', [AuthorizedStudyCenterController::class, 'show'])->name('authorized-study-center.show');
 
 Route::inertia('/student/login', 'Frontend/Student/Login')->name('student-login');
-Route::inertia('/verify-certificate', 'Frontend/Student/VerifyCertificate')->name('verify-certificate');
+
+//Route::inertia('/verify-certificate', 'Frontend/Student/VerifyCertificate')->name('verify-certificate');
+Route::get('/certificate/verify', [VerifyCertificateController::class, 'index'])->name('home.certificate.index');
+
 Route::inertia('/online-admit-card', 'Frontend/Student/OnlineAdmitCard')->name('online-admit-card');
 Route::inertia('/student-verification', 'Frontend/Student/StudentVerification')->name('student-verification');
 
@@ -117,7 +127,7 @@ Route::inertia('/more/our-study-materials', 'Frontend/More/OurStudyMaterials')->
 Route::inertia('/contact', 'Frontend/Contact')->name('contact');
 Route::inertia('/fake-sgcsm', 'Frontend/Fake/Fake')->name('fake-sgcsm');
 
-Route::middleware(['auth', 'verified', 'role:admin|subadmin|franchise'])->prefix('panel')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin|subadmin|franchise|student'])->prefix('panel')->name('admin.')->group(function () {
     Route::get('dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
     Route::resource('permission', PermissionController::class);
     Route::resource('franchise', FranchiseController::class);
@@ -145,6 +155,8 @@ Route::middleware(['auth', 'verified', 'role:admin|subadmin|franchise'])->prefix
     Route::resource('banner', BannerController::class);
     Route::resource('notice', NoticeController::class);
     Route::resource('top/institute', TopInstituteController::class)->parameter('institute', 'topInstitute')->names('top_institute');
+    Route::resource('course-module', CourseModuleController::class);
+    Route::resource('course-content', CourseContentController::class);
 });
 
 Route::middleware('auth')->group(function () {

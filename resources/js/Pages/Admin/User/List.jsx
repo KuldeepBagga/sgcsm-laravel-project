@@ -7,7 +7,7 @@ import Pagination from '@/Components/Pagination';
 import Swal from 'sweetalert2';
 
 function List() {
-    const { flash, user } = usePage().props;
+    const { flash, user, auth } = usePage().props;
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -46,12 +46,13 @@ function List() {
                             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                                 User List
                             </h2>
-
-                            <Link href={route('admin.user.create')}>
-                                <PrimaryButton>
-                                    Create
-                                </PrimaryButton>
-                            </Link>
+                            {auth.user.permissions.includes('user.create') &&
+                                <Link href={route('admin.user.create')}>
+                                    <PrimaryButton>
+                                        Create
+                                    </PrimaryButton>
+                                </Link>
+                            }
                         </div>
 
 
@@ -101,12 +102,16 @@ function List() {
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right space-x-2">
-                                                    <Link href={route('admin.user.edit', item.id)}>
-                                                        <PrimaryButton size='sm'>Edit</PrimaryButton>
-                                                    </Link>
-                                                    <DangerButton size="sm" onClick={() => handleDelete(item.id)}>
-                                                        Delete
-                                                    </DangerButton>
+                                                    {auth.user.permissions.includes('user.update') &&
+                                                        <Link href={route('admin.user.edit', item.id)}>
+                                                            <PrimaryButton size='sm'>Edit</PrimaryButton>
+                                                        </Link>
+                                                    }
+                                                    {auth.user.permissions.includes('user.delete') &&
+                                                        <DangerButton size="sm" onClick={() => handleDelete(item.id)}>
+                                                            Delete
+                                                        </DangerButton>
+                                                    }
                                                 </td>
                                             </tr>
                                         ))

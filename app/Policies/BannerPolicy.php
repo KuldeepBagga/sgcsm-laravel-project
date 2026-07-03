@@ -13,7 +13,7 @@ class BannerPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('banner.view');
+        return $user->can('gallery.view');
     }
 
     /**
@@ -21,7 +21,7 @@ class BannerPolicy
      */
     public function view(User $user, Banner $banner): bool
     {
-        return $user->can('banner.view');
+        return $user->can('gallery.view');
     }
 
     /**
@@ -29,7 +29,7 @@ class BannerPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('banner.create');
+        return $user->can('gallery.create');
     }
 
     /**
@@ -37,7 +37,7 @@ class BannerPolicy
      */
     public function update(User $user, Banner $banner): bool
     {
-        return $user->can('banner.update');
+        return $user->can('gallery.update');
     }
 
     /**
@@ -45,7 +45,7 @@ class BannerPolicy
      */
     public function delete(User $user, Banner $banner): bool
     {
-        return $user->can('banner.delete');
+        return $user->can('gallery.delete');
     }
 
     /**

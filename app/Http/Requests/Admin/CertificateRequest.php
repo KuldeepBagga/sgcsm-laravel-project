@@ -12,7 +12,7 @@ class CertificateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->user()->hasRole('admin') || auth()->user()->can('certificate.create') || auth()->user()->can('certificate.update');
     }
 
     /**
@@ -36,7 +36,8 @@ class CertificateRequest extends FormRequest
             'shorthand_speed' => 'nullable',
             'accuracy' => 'nullable',
             'certificate_image' => 'required',
-            'image' => 'nullable'
+            //'image' => 'nullable',
+            'status' => 'required',
         ];
     }
 }

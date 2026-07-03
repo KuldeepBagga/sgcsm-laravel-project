@@ -41,7 +41,11 @@ class GeneratePermissionsFromRoutes extends Command
             'testimonial',
             'result_details',
             'result',
-            'banner'
+            'gallery',
+            'top_institute',
+            'notice',
+            'course_content',
+            'course_module'
         ];
 
         $defaultActions = ['create', 'view', 'delete', 'update'];

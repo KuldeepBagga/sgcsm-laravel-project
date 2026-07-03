@@ -12,7 +12,7 @@ class StudentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return  auth()->user()->hasRole('admin') || auth()->user()->can('student.create') || auth()->user()->can('student.update');
     }
 
     /**
@@ -40,7 +40,7 @@ class StudentRequest extends FormRequest
             'certificate_issued' => 'nullable',
             'course_id' => 'required',
             'scan' => 'nullable',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'sometimes|extensions:jpeg,png,jpg|max:2048',
             'session_start' => 'nullable',
             'session_end' => 'nullable',
             'center_name' => 'required',

@@ -11,7 +11,7 @@ class OurTeamRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->hasRole('admin');
+        return auth()->user()->hasRole('admin') || auth()->user()->can('our_team.create') || auth()->user()->can('our_team.update');
     }
 
     /**
@@ -27,7 +27,7 @@ class OurTeamRequest extends FormRequest
             'status' => 'required',
             'email' => 'required',
             'phone' => 'required',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048'
+            'image' => 'sometimes|extensions:jpeg,png,jpg|max:2048',
         ];
     }
 }

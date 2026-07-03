@@ -7,6 +7,7 @@ use App\Models\Notice;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class NoticeController extends Controller
 {
@@ -15,6 +16,7 @@ class NoticeController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Notice::class);
         $notice = Notice::latest()->paginate(50);
         return Inertia::render('Admin/Content/Notice/List', compact('notice'));
     }
@@ -24,6 +26,7 @@ class NoticeController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Notice::class);
         return Inertia::render('Admin/Content/Notice/Form');
     }
 
@@ -32,6 +35,7 @@ class NoticeController extends Controller
      */
     public function store(NoticeRequest $request)
     {
+        Gate::authorize('create', Notice::class);
         $validated = $request->validated();
         Notice::create($validated);
         return redirect()->route('admin.notice.index')->with('success', 'Created successfully!');
@@ -50,6 +54,7 @@ class NoticeController extends Controller
      */
     public function edit(Notice $notice)
     {
+        Gate::authorize('update', $notice);
         return Inertia::render('Admin/Content/Notice/Form', compact('notice'));
     }
 
@@ -58,6 +63,7 @@ class NoticeController extends Controller
      */
     public function update(NoticeRequest $request, Notice $notice)
     {
+        Gate::authorize('update', $notice);
         $validated = $request->validated();
         $notice->update($validated);
         return redirect()->route('admin.notice.index')->with('success', 'Updated successfully!');
@@ -68,6 +74,7 @@ class NoticeController extends Controller
      */
     public function destroy(Notice $notice)
     {
+        Gate::authorize('delete', $notice);
         $notice->delete();
         return redirect()->route('admin.notice.index')->with('success', 'Deleted successfully!');
     }

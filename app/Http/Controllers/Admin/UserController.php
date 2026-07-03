@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 
@@ -16,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
+        Gate::authorize('viewAny', User::class);
         $user = User::with('roles')->paginate(50);
         return Inertia::render('Admin/User/List', compact('user'));
     }
@@ -26,10 +27,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
-        $roles = Role::pluck('name'); 
+        Gate::authorize('create', User::class);
+        $roles = Role::pluck('name');
         return Inertia::render('Admin/User/Form', [
-            'user' => null, 
+            'user' => null,
             'roles' => $roles,
         ]);
     }
@@ -39,7 +40,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
+        Gate::authorize('create', User::class);
         $validated = $request->validated();
         $validated['show_password'] = $request->password;
         $user = User::create($validated);
@@ -61,7 +62,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
+        Gate::authorize('update', $user);
         $roles = Role::all();
         $user->load('roles');
         return Inertia::render('Admin/User/Form', [
@@ -80,8 +81,9 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
+        Gate::authorize('update', $user);
         $validated = $request->validated();
+
         if (empty($validated['password'])) {
             unset($validated['password']);
             unset($validated['show_password']);
@@ -100,8 +102,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        abort_if(!Auth::user()?->hasRole('admin'), 403, 'UNAUTHORIZED');
-        if (strtolower($user->role) === 'admin') {
+        Gate::authorize('delete', $user);
+        if ($user->hasRole('admin')) {
             return redirect(route('admin.user.index'))->with('error', 'User admin cannot be deleted!');
         }
         $user->delete();

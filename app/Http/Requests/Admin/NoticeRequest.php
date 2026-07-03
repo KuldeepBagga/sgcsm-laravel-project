@@ -11,7 +11,7 @@ class NoticeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->hasRole('admin');
+        return auth()->user()->hasRole('admin') || auth()->user()->can('notice.create') || auth()->user()->can('notice.update');
     }
 
     /**

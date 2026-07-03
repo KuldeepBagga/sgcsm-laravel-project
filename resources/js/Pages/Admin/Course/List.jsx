@@ -19,7 +19,7 @@ function List() {
     useEffect(() => {
         const hasFilters = Object.values(data).some(value => value);
         if (!hasFilters) return;
-        
+
         const timeout = setTimeout(() => {
             router.get(route('admin.course.index'), {
                 name: data.name,
@@ -156,6 +156,16 @@ function List() {
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right space-x-2">
+                                                    {auth.user.permissions.includes('course_module.view') &&
+                                                        <Link href={route('admin.course-module.index', { id: item.id })}>
+                                                            <PrimaryButton
+                                                                size='sm'
+                                                            >
+                                                                Modules
+                                                            </PrimaryButton>
+                                                        </Link>
+                                                    }
+
                                                     {auth.user.permissions.includes('course.update') &&
                                                         <Link href={route('admin.course.edit', item.id)}>
                                                             <PrimaryButton
@@ -163,14 +173,16 @@ function List() {
                                                             >
                                                                 Edit
                                                             </PrimaryButton>
-                                                        </Link>}
+                                                        </Link>
+                                                    }
                                                     {auth.user.permissions.includes('course.delete') &&
                                                         <DangerButton
                                                             size="sm"
                                                             onClick={() => handleDelete(item.id)}
                                                         >
                                                             Delete
-                                                        </DangerButton>}
+                                                        </DangerButton>
+                                                    }
                                                 </td>
                                             </tr>
                                         ))

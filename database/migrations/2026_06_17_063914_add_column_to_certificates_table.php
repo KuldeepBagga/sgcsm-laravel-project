@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('certificates', function (Blueprint $table) {
             $table->string('certificate_image')->nullable();
             $table->string('image')->nullable();
+            $table->string('status');
         });
     }
 
@@ -25,6 +26,7 @@ return new class extends Migration
         Schema::table('certificates', function (Blueprint $table) {
             $table->dropColumn('certificate_image');
             $table->dropColumn('image');
+            $table->dropColumn('status');
         });
     }
 };

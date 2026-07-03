@@ -11,8 +11,6 @@ import TextInput from '@/Components/TextInput'
 function List() {
     const { flash, topInstitute, auth } = usePage().props;
 
-    console.log(topInstitute.data[0])
-
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -51,12 +49,13 @@ function List() {
                             <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                                 Top Institute List
                             </h2>
-
-                            <Link href={route('admin.top_institute.create')}>
-                                <PrimaryButton>
-                                    Create
-                                </PrimaryButton>
-                            </Link>
+                            {auth.user.permissions.includes('top_institute.create') &&
+                                <Link href={route('admin.top_institute.create')}>
+                                    <PrimaryButton>
+                                        Create
+                                    </PrimaryButton>
+                                </Link>
+                            }
                         </div>
 
 
@@ -101,19 +100,23 @@ function List() {
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right space-x-2">
-                                                    <Link href={route('admin.top_institute.edit', item.id)}>
-                                                        <PrimaryButton
-                                                            size='sm'
+                                                    {auth.user.permissions.includes('top_institute.update') &&
+                                                        <Link href={route('admin.top_institute.edit', item.id)}>
+                                                            <PrimaryButton
+                                                                size='sm'
+                                                            >
+                                                                Edit
+                                                            </PrimaryButton>
+                                                        </Link>
+                                                    }
+                                                    {auth.user.permissions.includes('top_institute.delete') &&
+                                                        <DangerButton
+                                                            size="sm"
+                                                            onClick={() => handleDelete(item.id)}
                                                         >
-                                                            Edit
-                                                        </PrimaryButton>
-                                                    </Link>
-                                                    <DangerButton
-                                                        size="sm"
-                                                        onClick={() => handleDelete(item.id)}
-                                                    >
-                                                        Delete
-                                                    </DangerButton>
+                                                            Delete
+                                                        </DangerButton>
+                                                    }
                                                 </td>
                                             </tr>
 

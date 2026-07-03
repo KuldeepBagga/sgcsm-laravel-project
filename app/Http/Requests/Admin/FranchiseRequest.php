@@ -13,7 +13,7 @@ class FranchiseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return  auth()->user()->hasRole('admin') || auth()->user()->can('franchise.create') || auth()->user()->can('franchise.update');
     }
 
     /**

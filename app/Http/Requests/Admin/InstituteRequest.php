@@ -13,7 +13,7 @@ class InstituteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->hasRole('admin');
+        return auth()->user()->hasRole('admin') || auth()->user()->can('institute.create') || auth()->user()->can('institute.update');
     }
 
     /**
@@ -52,7 +52,7 @@ class InstituteRequest extends FormRequest
             'status' => 'required',
             'reference' => 'nullable',
             'authorized' => 'nullable',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'sometimes|extensions:jpeg,png,jpg',
             'user_id' => 'nullable'
         ];
     }

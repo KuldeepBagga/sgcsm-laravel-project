@@ -13,7 +13,7 @@ class CenterAffiliationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth()->user()->hasRole('admin') || auth()->user()->can('center_affiliation.create') || auth()->user()->can('center_affiliation.update');
     }
 
     /**

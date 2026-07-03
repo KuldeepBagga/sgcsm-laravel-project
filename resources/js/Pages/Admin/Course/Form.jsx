@@ -14,7 +14,9 @@ export default function Form() {
   const { data, setData, post, put, processing, errors, reset, progress } = useForm({
     name: course?.name || '',
     category: course?.category || '',
-    duration: course?.duration || ''
+    duration: course?.duration || '',
+    eligibility: course?.eligibility || '',
+    short_name: course?.short_name || '',
   });
 
   const handleSubmit = (e) => {
@@ -59,6 +61,30 @@ export default function Form() {
                     onChange={(e) => setData('name', e.target.value)}
                   />
                   <InputError message={errors.name} className="mt-2" />
+                </div>
+
+                <div>
+                  <InputLabel htmlFor="eligibility" value="Eligibility" />
+                  <TextInput
+                    id="eligibility"
+                    type="text"
+                    value={data.eligibility}
+                    className="mt-1 block w-full"
+                    onChange={(e) => setData('eligibility', e.target.value)}
+                  />
+                  <InputError message={errors.eligibility} className="mt-2" />
+                </div>
+
+                <div>
+                  <InputLabel htmlFor="short_name" value="Short Name" />
+                  <TextInput
+                    id="short_name"
+                    type="text"
+                    value={data.short_name}
+                    className="mt-1 block w-full"
+                    onChange={(e) => setData('short_name', e.target.value)}
+                  />
+                  <InputError message={errors.short_name} className="mt-2" />
                 </div>
 
                 <div>

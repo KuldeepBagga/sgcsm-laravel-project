@@ -105,6 +105,9 @@ function List() {
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Type
                                         </th>
+                                        <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300">
+                                            Status
+                                        </th>
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300">
                                             Actions
                                         </th>
@@ -142,6 +145,7 @@ function List() {
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                         <th className="px-6 py-3 text-left text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                         <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300"></th>
+                                        <th className="px-6 py-3 text-right text-sm font-medium text-gray-600 dark:text-gray-300"></th>
                                     </tr>
                                 </thead>
 
@@ -174,6 +178,18 @@ function List() {
 
                                                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
                                                     {item.certificate_type}
+                                                </td>
+
+                                                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-200">
+                                                    {item.status === 'ISSUED' ? (
+                                                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            {item.status}
+                                                        </span>
+                                                    ) : (
+                                                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                            {item.status}
+                                                        </span>
+                                                    )}
                                                 </td>
 
                                                 <td className="px-6 py-4 text-right space-x-2">

@@ -47,9 +47,11 @@ function List() {
               <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                 Banner List
               </h2>
-              <Link href={route("admin.banner.create")}>
-                <PrimaryButton>Create</PrimaryButton>
-              </Link>
+              {auth.user.permissions.includes('gallery.create') &&
+                <Link href={route("admin.banner.create")}>
+                  <PrimaryButton>Create</PrimaryButton>
+                </Link>
+              }
             </div>
 
             <div className="overflow-x-auto">
@@ -100,23 +102,26 @@ function List() {
                         </td>
 
                         <td className="px-6 py-4 text-right space-x-2">
-                          <Link
-                            href={route(
-                              "admin.banner.edit",
-                              item.id,
-                            )}
-                          >
-                            <PrimaryButton size="sm">
-                              Edit
-                            </PrimaryButton>
-                          </Link>
+                          {auth.user.permissions.includes('gallery.update') &&
+                            <Link
+                              href={route(
+                                "admin.banner.edit",
+                                item.id,
+                              )}
+                            >
+                              <PrimaryButton size="sm">
+                                Edit
+                              </PrimaryButton>
+                            </Link>
+                          }
 
-                          <DangerButton size="sm"
-                            onClick={() => handleDelete(item.id,)}
-                          >
-                            Delete
-                          </DangerButton>
-
+                          {auth.user.permissions.includes('gallery.delete') &&
+                            <DangerButton size="sm"
+                              onClick={() => handleDelete(item.id,)}
+                            >
+                              Delete
+                            </DangerButton>
+                          }
                         </td>
                       </tr>
                     ))

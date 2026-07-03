@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 
 
 export default function Navbar() {
+    const user = usePage().props.auth.user;
+
     const [mobileMenu, setMobileMenu] = useState(false);
+
     const [openDropdown, setOpenDropdown] = useState(null);
 
     return (
@@ -83,15 +86,15 @@ export default function Navbar() {
                                     <span className="text-xs">▼</span>
                                 </button>
                                 <div className="absolute left-0 top-full w-60 bg-white shadow-2xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden">
-                                    <Link href={route('courses')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Computer Course</Link>
-                                    <Link href={route('courses')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Teacher Training Course</Link>
-                                    <Link href={route('courses')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">NIELIT Course</Link>
-                                    <Link href={route('courses')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Boutique Course</Link>
-                                    <Link href={route('courses')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Beauty Course</Link>
-                                    <Link href={route('courses')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">UG & PG Course</Link>
-                                    <Link href={route('courses')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Yoga Course</Link>
-                                    <Link href={route('courses')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">NDLM Course</Link>
-                                    <Link href={route('courses')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Advance Course</Link>
+                                    <Link href={route('courses', { course: 'Computer Course' })} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Computer Course</Link>
+                                    <Link href={route('courses', { course: 'Teacher Training Course' })} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Teacher Training Course</Link>
+                                    <Link href={route('courses', { course: 'NIELIT Courses' })} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">NIELIT Course</Link>
+                                    <Link href={route('courses', { course: 'Boutique Courses' })} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Boutique Course</Link>
+                                    <Link href={route('courses', { course: 'Beautician Courses' })} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Beauty Course</Link>
+                                    <Link href={route('courses', { course: 'UG AND PG COURSE' })} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">UG & PG Course</Link>
+                                    <Link href={route('courses', { course: 'Yoga Courses' })} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Yoga Course</Link>
+                                    <Link href={route('courses', { course: 'NDLM Courses' })} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">NDLM Course</Link>
+                                    <Link href={route('courses', { course: 'Advance Courses' })} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Advance Course</Link>
                                 </div>
                             </li>
 
@@ -118,7 +121,7 @@ export default function Navbar() {
                                 </button>
                                 <div className="absolute left-0 top-full w-60 bg-white shadow-2xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden">
                                     <Link href={route('student-login')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Student Login</Link>
-                                    <Link href={route('verify-certificate')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Verify Certificate</Link>
+                                    <Link href={route('home.certificate.index')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Verify Certificate</Link>
                                     <Link href={route('online-admit-card')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Online Admit Card</Link>
                                     <Link href={route('student-verification')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Student Verification</Link>
                                     <Link href={route('online-result')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Online Result</Link>
@@ -191,10 +194,19 @@ export default function Navbar() {
 
                         {/* Right Side */}
                         <div className="flex items-center gap-3">
-
-                            <button className="hidden sm:block bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transition">
-                                Login
-                            </button>
+                            {user ?
+                                <Link href={route('admin.dashboard')}>
+                                    <button className="hidden sm:block bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transition">
+                                        Dashboard
+                                    </button>
+                                </Link>
+                                :
+                                <Link href={route('login')}>
+                                    <button className="hidden sm:block bg-blue-600 text-white px-5 py-2 rounded-xl hover:bg-blue-700 transition">
+                                        Login
+                                    </button>
+                                </Link>
+                            }
 
                             {/* Mobile Button */}
                             <button

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('institute_id')->nullable();
             $table->foreign('institute_id')->references('id')->on('institutes')->nullOnDelete();
             $table->string('rank');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

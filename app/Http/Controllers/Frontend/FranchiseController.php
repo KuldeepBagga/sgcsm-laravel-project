@@ -23,6 +23,7 @@ class FranchiseController extends Controller
     public function store(FranchiseRequest $request)
     {
         $validated = $request->validated();
+
         Franchise::create([
             'center_name' => $validated['center_name'],
             'director' => $validated['director'],
@@ -35,6 +36,7 @@ class FranchiseController extends Controller
             'mobile' => $validated['phone'],
             'is_approved' => "NOT APPROVED",
         ]);
+        
         return redirect()->back()->with('success', 'Franchise registration successful!');
     }
 }

@@ -12,7 +12,7 @@ class RoleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->hasRole('admin') ?  true : false;
+        return auth()->user()->hasRole('admin') || auth()->user()->can('role.create') || auth()->user()->can('role.update');
     }
 
     /**

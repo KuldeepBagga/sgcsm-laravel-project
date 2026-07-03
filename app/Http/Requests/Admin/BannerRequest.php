@@ -11,7 +11,7 @@ class BannerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->hasRole('admin');
+        return auth()->user()->hasRole('admin') || auth()->user()->can('gallery.create') || auth()->user()->can('gallery.update');
     }
 
     /**
@@ -23,7 +23,7 @@ class BannerRequest extends FormRequest
     {
         return [
             'type' => 'required',
-            'image' => 'sometimes',
+            'image' => 'sometimes|extensions:jpeg,png,jpg',
         ];
     }
 }

@@ -12,7 +12,7 @@ class ResultDetailsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->hasRole('admin');
+        return auth()->user()->hasRole('admin') || auth()->user()->can('result_details.create') || auth()->user()->can('result_details.update');
     }
 
     /**

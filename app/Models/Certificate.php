@@ -24,10 +24,11 @@ class Certificate extends Model
         'shorthand_speed',
         'accuracy',
         'certificate_image',
-        'image'
+        'image',
+        'status',
     ];
 
-    public function student() : BelongsTo
+    public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'certificate_number', 'certificate_no');
     }

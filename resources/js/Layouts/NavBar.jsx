@@ -98,14 +98,17 @@ export default function NavBar() {
                 {
                     name: "Gallery",
                     route: "admin.banner.index",
+                    permission: 'gallery.view'
                 },
                 {
                     name: "Notice",
                     route: "admin.notice.index",
+                    permission: 'notice.view'
                 },
                 {
                     name: "Top Institute",
                     route: "admin.top_institute.index",
+                    permission: 'top_institute.view'
                 }
             ]
         }

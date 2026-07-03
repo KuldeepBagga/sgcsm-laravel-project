@@ -12,7 +12,7 @@ class TopInstituteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->hasRole('admin');
+        return auth()->user()->hasRole('admin') || auth()->user()->can('top_institute.create') || auth()->user()->can('top_institute.update');
     }
 
     /**
