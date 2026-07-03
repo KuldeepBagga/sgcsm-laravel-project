@@ -25,6 +25,7 @@ use App\Http\Controllers\GetInTouch\AuthorizedStudyCenterController;
 use App\Http\Controllers\Admin\NoticeController;
 use App\Http\Controllers\Admin\TopInstituteController;
 use App\Http\Controllers\Frontend\Course\CourseController as CourseCourseController;
+use App\Http\Controllers\Frontend\Student\StudentVerificationController;
 use App\Http\Controllers\Frontend\Student\VerifyCertificateController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Banner;
@@ -87,9 +88,12 @@ Route::inertia('/student/login', 'Frontend/Student/Login')->name('student-login'
 
 //Route::inertia('/verify-certificate', 'Frontend/Student/VerifyCertificate')->name('verify-certificate');
 Route::get('/certificate/verify', [VerifyCertificateController::class, 'index'])->name('home.certificate.index');
+Route::post('/certificate/verify', [VerifyCertificateController::class, 'verify'])->name('home.certificate.post');
 
 Route::inertia('/online-admit-card', 'Frontend/Student/OnlineAdmitCard')->name('online-admit-card');
-Route::inertia('/student-verification', 'Frontend/Student/StudentVerification')->name('student-verification');
+
+Route::get('/student-verification', [StudentVerificationController::class, 'index'])->name('student-verification');
+Route::post('/student-verification', [StudentVerificationController::class, 'verify'])->name('student-verification.post');
 
 Route::get('/online-result', [ResultResultController::class, 'index'])->name('online-result');
 Route::post('/online-result', [ResultResultController::class, 'show'])->name('online-result.post');

@@ -12,25 +12,26 @@ class VerifyCertificateController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $certificate = null;
+        return Inertia::render('Frontend/Student/VerifyCertificate');
+    }
 
-        if ($request->has('certificate_no')) {
-            $validated = $request->validate([
-                'certificate_no' => 'required|string|exists:certificates,certificate_number',
-            ]);
+    public function verify(Request $request)
+    {
+        $validated = $request->validate([
+            'certificate_no' => 'required|string|exists:certificates,certificate_number',
+        ]);
 
-            $certificate = Student::with(['course', 'institute', 'certificate'])
-                ->whereHas('certificate', function ($query) use ($validated) {
-                    $query->where('certificate_number', $validated['certificate_no']);
-                })
-                ->first();
-        }
+        $certificate = Student::with(['course', 'institute', 'certificate'])
+            ->whereHas('certificate', function ($query) use ($validated) {
+                $query->where('certificate_number', $validated['certificate_no']);
+            })
+            ->first();
 
         return Inertia::render('Frontend/Student/VerifyCertificate', [
             'certificate' => $certificate,
-            'certificate_no' => $request->input('certificate_no', ''),
+            'certificate_no' => $validated['certificate_no'],
         ]);
     }
 }
