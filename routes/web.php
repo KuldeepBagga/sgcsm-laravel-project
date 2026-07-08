@@ -24,9 +24,11 @@ use App\Http\Controllers\Frontend\Result\ResultController as ResultResultControl
 use App\Http\Controllers\GetInTouch\AuthorizedStudyCenterController;
 use App\Http\Controllers\Admin\NoticeController;
 use App\Http\Controllers\Admin\TopInstituteController;
+use App\Http\Controllers\Frontend\CenterVerification;
 use App\Http\Controllers\Frontend\Course\CourseController as CourseCourseController;
 use App\Http\Controllers\Frontend\Student\StudentVerificationController;
 use App\Http\Controllers\Frontend\Student\VerifyCertificateController;
+use App\Http\Controllers\Frontend\ValidityAuthorizationController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Banner;
 use App\Models\Notice;
@@ -110,6 +112,12 @@ Route::inertia('/sgcsm-rules', 'Frontend/CenterSection/SGCSMRules')->name('sgcsm
 Route::resource('/franchise/register', FrontendFranchiseController::class)->only(['index', 'store'])->names(['index' => 'franchise-register', 'store' => 'franchise-store',]);
 
 Route::inertia('/franchise/public-notice', 'Frontend/Franchise/PublicNotice')->name('public-notice');
+
+Route::get('validity-and-authorization',[ValidityAuthorizationController::class,'index'])->name('validity-authorization.index');
+Route::post('validity-and-authorization',[ValidityAuthorizationController::class,'verify'])->name('validity-authorization.post');
+
+Route::get('center-verification',[CenterVerification::class,'index'])->name('center-verification.index');
+Route::post('center-verification',[CenterVerification::class,'verify'])->name('center-verification.post');
 
 Route::get(
     '/more/our-publication',

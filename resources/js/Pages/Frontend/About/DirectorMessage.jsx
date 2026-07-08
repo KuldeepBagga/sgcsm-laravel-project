@@ -9,22 +9,22 @@ function DirectorMessage() {
       <Head title="Director's Message" />
 
 
-      <main class="bg-slate-50">
-        <section class="relative overflow-hidden bg-slate-950">
+      <main className="bg-slate-50">
+        <section className="relative overflow-hidden bg-slate-950">
           <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1800&auto=format&fit=crop"
-            alt="" class="absolute inset-0 w-full h-full object-cover opacity-35" />
-          <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-blue-950/85 to-slate-900/25"></div>
+            alt="" className="absolute inset-0 w-full h-full object-cover opacity-35" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-blue-950/85 to-slate-900/25"></div>
 
-          <div class="relative max-w-7xl mx-auto px-6 py-16 md:py-20">
-            <div class="grid lg:grid-cols-12 gap-10 items-end">
-              <div class="lg:col-span-8 text-white">
+          <div className="relative max-w-7xl mx-auto px-6 py-16 md:py-20">
+            <div className="grid lg:grid-cols-12 gap-10 items-end">
+              <div className="lg:col-span-8 text-white">
                 <span
-                  class="inline-flex items-center gap-2 bg-white/15 px-4 py-2 rounded-full text-sm font-semibold">
-                  <i class="fa-solid fa-building-columns"></i>
+                  className="inline-flex items-center gap-2 bg-white/15 px-4 py-2 rounded-full text-sm font-semibold">
+                  <i className="fa-solid fa-building-columns"></i>
                   SGCSM | Director's Message
                 </span>
 
-                <h1 class="mt-5 text-4xl md:text-6xl font-black leading-tight uppercase">
+                <h1 className="mt-5 text-4xl md:text-6xl font-black leading-tight uppercase">
                   Director's Message
                 </h1>
               </div>
@@ -33,10 +33,10 @@ function DirectorMessage() {
           </div>
         </section>
 
-        <section class="py-14 md:py-5 text-lg">
-          <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <section class="lg:col-span-12">
+        <section className="py-14 md:py-5 text-lg">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <section className="lg:col-span-12">
                 {/* Decorative Background */}
                 <div className="absolute top-0 right-0 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-40"></div>
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-100 rounded-full blur-2xl opacity-40"></div>

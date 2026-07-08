@@ -7,22 +7,22 @@ function HowToGetAffiliation() {
         <MainLayout>
             <Head title="How to Get Affiliation" />
 
-            <main class="bg-slate-50">
-                <section class="relative overflow-hidden bg-slate-950">
+            <main className="bg-slate-50">
+                <section className="relative overflow-hidden bg-slate-950">
                     <img src="images/photo-1522202176988-66273c2fd55f.jpeg?q=80&w=1400&auto=format&fit=crop" alt=""
-                        class="absolute inset-0 w-full h-full object-cover opacity-35" />
-                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-blue-950/85 to-slate-900/25"></div>
+                        className="absolute inset-0 w-full h-full object-cover opacity-35" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-blue-950/85 to-slate-900/25"></div>
 
-                    <div class="relative max-w-7xl mx-auto px-6 py-16 md:py-20">
-                        <div class="grid lg:grid-cols-12 gap-10 items-end">
-                            <div class="lg:col-span-8 text-white">
+                    <div className="relative max-w-7xl mx-auto px-6 py-16 md:py-20">
+                        <div className="grid lg:grid-cols-12 gap-10 items-end">
+                            <div className="lg:col-span-8 text-white">
                                 <span
-                                    class="inline-flex items-center gap-2 bg-white/15 px-4 py-2 rounded-full text-sm font-semibold">
-                                    <i class="fa-solid fa-building-columns"></i>
+                                    className="inline-flex items-center gap-2 bg-white/15 px-4 py-2 rounded-full text-sm font-semibold">
+                                    <i className="fa-solid fa-building-columns"></i>
                                     How to get affiliation
                                 </span>
 
-                                <h1 class="mt-5 text-4xl md:text-6xl font-black leading-tight uppercase">
+                                <h1 className="mt-5 text-4xl md:text-6xl font-black leading-tight uppercase">
                                     How to get affiliation
                                 </h1>
                             </div>
@@ -32,17 +32,17 @@ function HowToGetAffiliation() {
                 </section>
 
 
-                <section class="max-w-7xl mx-auto px-6 py-14">
+                <section className="max-w-7xl mx-auto px-6 py-14">
 
-                    <div class="space-y-10">
+                    <div className="space-y-10">
 
-                        <div class="bg-white rounded-3xl shadow-lg border p-8">
+                        <div className="bg-white rounded-3xl shadow-lg border p-8">
 
-                            <h2 class="text-3xl font-bold text-gray-900 mb-6">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6">
                                 How to Take a Membership
                             </h2>
 
-                            <div class="space-y-5 text-gray-700 leading-relaxed">
+                            <div className="space-y-5 text-gray-700 leading-relaxed">
 
                                 <p>
                                     On receiving this offer, a prospective study centre should apply
@@ -61,61 +61,61 @@ function HowToGetAffiliation() {
 
                         </div>
 
-                        <div class="bg-white rounded-3xl shadow-lg border p-8">
+                        <div className="bg-white rounded-3xl shadow-lg border p-8">
 
-                            <h2 class="text-3xl font-bold text-gray-900 mb-8">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-8">
                                 Eligibility Criteria For SGCSM Study Center
                             </h2>
 
-                            <div class="grid md:grid-cols-1 gap-6">
+                            <div className="grid md:grid-cols-1 gap-6">
 
-                                <div class="border rounded-2xl p-6 hover:shadow-lg transition">
+                                <div className="border rounded-2xl p-6 hover:shadow-lg transition">
 
                                     <div
-                                        class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl mb-5">
+                                        className="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl mb-5">
                                         ✓
                                     </div>
 
-                                    <h3 class="text-xl font-bold text-gray-900">
+                                    <h3 className="text-xl font-bold text-gray-900">
                                         Infrastructure Investment
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3 leading-relaxed">
+                                    <p className="text-gray-600 mt-3 leading-relaxed">
                                         Should be willing to invest required amount of money in setting
                                         up a centre with proper infrastructure and main power.
                                     </p>
 
                                 </div>
 
-                                <div class="border rounded-2xl p-6 hover:shadow-lg transition">
+                                <div className="border rounded-2xl p-6 hover:shadow-lg transition">
 
                                     <div
-                                        class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-2xl mb-5">
+                                        className="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-2xl mb-5">
                                         ✓
                                     </div>
 
-                                    <h3 class="text-xl font-bold text-gray-900">
+                                    <h3 className="text-xl font-bold text-gray-900">
                                         Quality Training
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3 leading-relaxed">
+                                    <p className="text-gray-600 mt-3 leading-relaxed">
                                         Should have commitment for providing quality training to students.
                                     </p>
 
                                 </div>
 
-                                <div class="border rounded-2xl p-6 hover:shadow-lg transition">
+                                <div className="border rounded-2xl p-6 hover:shadow-lg transition">
 
                                     <div
-                                        class="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center text-2xl mb-5">
+                                        className="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center text-2xl mb-5">
                                         ✓
                                     </div>
 
-                                    <h3 class="text-xl font-bold text-gray-900">
+                                    <h3 className="text-xl font-bold text-gray-900">
                                         SGCSM Procedures
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3 leading-relaxed">
+                                    <p className="text-gray-600 mt-3 leading-relaxed">
                                         Should be willing to be a part of the SGCSM team in accepting
                                         the terms, conditions, and procedures laid down by SGCSM.
                                     </p>
@@ -126,60 +126,60 @@ function HowToGetAffiliation() {
 
                         </div>
 
-                        <div class="bg-white rounded-3xl shadow-lg border p-8">
+                        <div className="bg-white rounded-3xl shadow-lg border p-8">
 
-                            <h2 class="text-3xl font-bold text-gray-900 mb-8">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-8">
                                 Infrastructure Requirement
                             </h2>
 
-                            <div class="overflow-x-auto">
+                            <div className="overflow-x-auto">
 
-                                <table class="w-full border border-gray-200 rounded-2xl overflow-hidden">
+                                <table className="w-full border border-gray-200 rounded-2xl overflow-hidden">
 
-                                    <thead class="bg-blue-600 text-white">
+                                    <thead className="bg-blue-600 text-white">
                                         <tr>
-                                            <th class="p-4 text-left">Specification</th>
-                                            <th class="p-4 text-center">Metro City</th>
-                                            <th class="p-4 text-center">Non Metro City</th>
-                                            <th class="p-4 text-center">Tehsil / Village</th>
+                                            <th className="p-4 text-left">Specification</th>
+                                            <th className="p-4 text-center">Metro City</th>
+                                            <th className="p-4 text-center">Non Metro City</th>
+                                            <th className="p-4 text-center">Tehsil / Village</th>
                                         </tr>
                                     </thead>
 
-                                    <tbody class="bg-white text-gray-700">
+                                    <tbody className="bg-white text-gray-700">
 
-                                        <tr class="border-b">
-                                            <td class="p-4 font-medium">Area (Sq.Ft.)</td>
-                                            <td class="p-4 text-center">800</td>
-                                            <td class="p-4 text-center">500</td>
-                                            <td class="p-4 text-center">350</td>
+                                        <tr className="border-b">
+                                            <td className="p-4 font-medium">Area (Sq.Ft.)</td>
+                                            <td className="p-4 text-center">800</td>
+                                            <td className="p-4 text-center">500</td>
+                                            <td className="p-4 text-center">350</td>
                                         </tr>
 
-                                        <tr class="border-b bg-gray-50">
-                                            <td class="p-4 font-medium">No. of Class Rooms</td>
-                                            <td class="p-4 text-center">2</td>
-                                            <td class="p-4 text-center">2</td>
-                                            <td class="p-4 text-center">2</td>
+                                        <tr className="border-b bg-gray-50">
+                                            <td className="p-4 font-medium">No. of Class Rooms</td>
+                                            <td className="p-4 text-center">2</td>
+                                            <td className="p-4 text-center">2</td>
+                                            <td className="p-4 text-center">2</td>
                                         </tr>
 
-                                        <tr class="border-b">
-                                            <td class="p-4 font-medium">Sitting Capacity Per Class</td>
-                                            <td class="p-4 text-center">20</td>
-                                            <td class="p-4 text-center">20</td>
-                                            <td class="p-4 text-center">15</td>
+                                        <tr className="border-b">
+                                            <td className="p-4 font-medium">Sitting Capacity Per Class</td>
+                                            <td className="p-4 text-center">20</td>
+                                            <td className="p-4 text-center">20</td>
+                                            <td className="p-4 text-center">15</td>
                                         </tr>
 
-                                        <tr class="border-b bg-gray-50">
-                                            <td class="p-4 font-medium">Lab Room</td>
-                                            <td class="p-4 text-center">1</td>
-                                            <td class="p-4 text-center">1</td>
-                                            <td class="p-4 text-center">1</td>
+                                        <tr className="border-b bg-gray-50">
+                                            <td className="p-4 font-medium">Lab Room</td>
+                                            <td className="p-4 text-center">1</td>
+                                            <td className="p-4 text-center">1</td>
+                                            <td className="p-4 text-center">1</td>
                                         </tr>
 
                                         <tr>
-                                            <td class="p-4 font-medium">No. of Systems</td>
-                                            <td class="p-4 text-center">10</td>
-                                            <td class="p-4 text-center">8</td>
-                                            <td class="p-4 text-center">6</td>
+                                            <td className="p-4 font-medium">No. of Systems</td>
+                                            <td className="p-4 text-center">10</td>
+                                            <td className="p-4 text-center">8</td>
+                                            <td className="p-4 text-center">6</td>
                                         </tr>
 
                                     </tbody>
@@ -190,41 +190,41 @@ function HowToGetAffiliation() {
 
                         </div>
 
-                        <div class="bg-white rounded-3xl shadow-lg border p-8">
+                        <div className="bg-white rounded-3xl shadow-lg border p-8">
 
-                            <h2 class="text-3xl font-bold text-gray-900 mb-8">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-8">
                                 Hardware Requirements
                             </h2>
 
-                            <div class="grid md:grid-cols-1 gap-6">
+                            <div className="grid md:grid-cols-1 gap-6">
 
-                                <div class="border rounded-2xl p-6">
-                                    <h3 class="text-xl font-semibold text-gray-900">
+                                <div className="border rounded-2xl p-6">
+                                    <h3 className="text-xl font-semibold text-gray-900">
                                         Server & Systems
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3">
+                                    <p className="text-gray-600 mt-3">
                                         One Pentium server with nodes connected as per SGCSM site specification.
                                     </p>
                                 </div>
 
-                                <div class="border rounded-2xl p-6">
-                                    <h3 class="text-xl font-semibold text-gray-900">
+                                <div className="border rounded-2xl p-6">
+                                    <h3 className="text-xl font-semibold text-gray-900">
                                         Printer & Internet
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3">
+                                    <p className="text-gray-600 mt-3">
                                         Necessary hardware compatibility for internet and printers
                                         (Dot Matrix / Inkjet).
                                     </p>
                                 </div>
 
-                                <div class="border rounded-2xl p-6">
-                                    <h3 class="text-xl font-semibold text-gray-900">
+                                <div className="border rounded-2xl p-6">
+                                    <h3 className="text-xl font-semibold text-gray-900">
                                         Power Backup
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3">
+                                    <p className="text-gray-600 mt-3">
                                         UPS (500 VA) or Generator backup is required.
                                     </p>
                                 </div>
@@ -233,60 +233,60 @@ function HowToGetAffiliation() {
 
                         </div>
 
-                        <div class="bg-white rounded-3xl shadow-lg border p-8">
+                        <div className="bg-white rounded-3xl shadow-lg border p-8">
 
-                            <h2 class="text-3xl font-bold text-gray-900 mb-8">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-8">
                                 Manpower Requirement
                             </h2>
 
-                            <div class="space-y-6">
+                            <div className="space-y-6">
 
-                                <div class="border rounded-2xl p-6">
-                                    <h3 class="text-xl font-bold text-gray-900">
+                                <div className="border rounded-2xl p-6">
+                                    <h3 className="text-xl font-bold text-gray-900">
                                         Administrator / Manager
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3">
+                                    <p className="text-gray-600 mt-3">
                                         Knowledge of computer software training, experience, and good management skills.
                                     </p>
                                 </div>
 
-                                <div class="border rounded-2xl p-6">
-                                    <h3 class="text-xl font-bold text-gray-900">
+                                <div className="border rounded-2xl p-6">
+                                    <h3 className="text-xl font-bold text-gray-900">
                                         Faculty
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3">
+                                    <p className="text-gray-600 mt-3">
                                         Thorough knowledge of subject, disciplined, and student problem solving capacity.
                                     </p>
                                 </div>
 
-                                <div class="border rounded-2xl p-6">
-                                    <h3 class="text-xl font-bold text-gray-900">
+                                <div className="border rounded-2xl p-6">
+                                    <h3 className="text-xl font-bold text-gray-900">
                                         Counselor / Receptionist
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3">
+                                    <p className="text-gray-600 mt-3">
                                         Pleasant personality with communication skills and course knowledge.
                                     </p>
                                 </div>
 
-                                <div class="border rounded-2xl p-6">
-                                    <h3 class="text-xl font-bold text-gray-900">
+                                <div className="border rounded-2xl p-6">
+                                    <h3 className="text-xl font-bold text-gray-900">
                                         Marketing Executive
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3">
+                                    <p className="text-gray-600 mt-3">
                                         Experienced, hardworking, and good communication skills.
                                     </p>
                                 </div>
 
-                                <div class="border rounded-2xl p-6">
-                                    <h3 class="text-xl font-bold text-gray-900">
+                                <div className="border rounded-2xl p-6">
+                                    <h3 className="text-xl font-bold text-gray-900">
                                         Office Boys
                                     </h3>
 
-                                    <p class="text-gray-600 mt-3">
+                                    <p className="text-gray-600 mt-3">
                                         Disciplined and experienced staff members.
                                     </p>
                                 </div>
@@ -295,13 +295,13 @@ function HowToGetAffiliation() {
 
                         </div>
 
-                        <div class="bg-white rounded-3xl shadow-lg border p-8">
+                        <div className="bg-white rounded-3xl shadow-lg border p-8">
 
-                            <h2 class="text-3xl font-bold text-gray-900 mb-6">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6">
                                 Profitability of Operation
                             </h2>
 
-                            <div class="space-y-5 text-gray-700 leading-relaxed">
+                            <div className="space-y-5 text-gray-700 leading-relaxed">
 
                                 <p>
                                     The granting of study centre status would be possible after careful
@@ -323,13 +323,13 @@ function HowToGetAffiliation() {
 
                         </div>
 
-                        <div class="bg-white rounded-3xl shadow-lg border p-8">
+                        <div className="bg-white rounded-3xl shadow-lg border p-8">
 
-                            <h2 class="text-3xl font-bold text-gray-900 mb-6">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6">
                                 Expectation From The Affiliated Study Centre
                             </h2>
 
-                            <div class="space-y-5 text-gray-700 leading-relaxed">
+                            <div className="space-y-5 text-gray-700 leading-relaxed">
 
                                 <p>
                                     The study centre should be located at a prime location with separate
@@ -360,13 +360,13 @@ function HowToGetAffiliation() {
 
                         </div>
 
-                        <div class="bg-white rounded-3xl shadow-lg border p-8">
+                        <div className="bg-white rounded-3xl shadow-lg border p-8">
 
-                            <h2 class="text-3xl font-bold text-gray-900 mb-6">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6">
                                 Equipment & Facilities
                             </h2>
 
-                            <div class="space-y-5 text-gray-700 leading-relaxed">
+                            <div className="space-y-5 text-gray-700 leading-relaxed">
 
                                 <p>
                                     Depending on the area potential and consultation with SGCSM,
@@ -387,35 +387,35 @@ function HowToGetAffiliation() {
 
                         </div>
 
-                        <div class="bg-white rounded-3xl shadow-lg border p-8">
+                        <div className="bg-white rounded-3xl shadow-lg border p-8">
 
-                            <h2 class="text-3xl font-bold text-gray-900 mb-8">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-8">
                                 Operations
                             </h2>
 
-                            <div class="grid md:grid-cols-2 gap-6">
+                            <div className="grid md:grid-cols-2 gap-6">
 
-                                <div class="border rounded-2xl p-5">
+                                <div className="border rounded-2xl p-5">
                                     • Internal systems and procedures
                                 </div>
 
-                                <div class="border rounded-2xl p-5">
+                                <div className="border rounded-2xl p-5">
                                     • External Interface
                                 </div>
 
-                                <div class="border rounded-2xl p-5">
+                                <div className="border rounded-2xl p-5">
                                     • Co-ordinations
                                 </div>
 
-                                <div class="border rounded-2xl p-5">
+                                <div className="border rounded-2xl p-5">
                                     • Purchase of classes and practical
                                 </div>
 
-                                <div class="border rounded-2xl p-5">
+                                <div className="border rounded-2xl p-5">
                                     • Examination procedure
                                 </div>
 
-                                <div class="border rounded-2xl p-5">
+                                <div className="border rounded-2xl p-5">
                                     • Certificate issue procedures
                                 </div>
 
@@ -423,13 +423,13 @@ function HowToGetAffiliation() {
 
                         </div>
 
-                        <div class="bg-gradient-to-r from-blue-700 to-indigo-700 rounded-3xl shadow-xl p-10 text-white">
+                        <div className="bg-gradient-to-r from-blue-700 to-indigo-700 rounded-3xl shadow-xl p-10 text-white">
 
-                            <h2 class="text-3xl font-bold mb-8">
+                            <h2 className="text-3xl font-bold mb-8">
                                 Agreement / Terms & Conditions
                             </h2>
 
-                            <div class="space-y-6 text-blue-100 leading-relaxed">
+                            <div className="space-y-6 text-blue-100 leading-relaxed">
 
                                 <p>
                                     1. Renewal of authorization for the next year will be FREE

@@ -120,7 +120,7 @@ export default function Navbar() {
                                     <span className="text-xs">▼</span>
                                 </button>
                                 <div className="absolute left-0 top-full w-60 bg-white shadow-2xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden">
-                                    <Link href={route('student-login')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Student Login</Link>
+                                    <Link href={route('login')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Student Login</Link>
                                     <Link href={route('home.certificate.index')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Verify Certificate</Link>
                                     <Link href={route('online-admit-card')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Online Admit Card</Link>
                                     <Link href={route('student-verification')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Student Verification</Link>
@@ -139,7 +139,7 @@ export default function Navbar() {
                                 </button>
                                 <div className="absolute left-0 top-full w-60 bg-white shadow-2xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 overflow-hidden">
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <Link href={route('asc-login')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">ASC Login</Link>
+                                        <Link href={route('login')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">ASC Login</Link>
                                         <Link href={route('our-account')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Our Account (Bank Details)</Link>
                                         <Link href={route('business-support')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">Business Support System</Link>
                                         <Link href={route('sgcsm-rules')} className="block px-5 py-3 hover:bg-blue-50 hover:text-blue-600">SGCSM Rules & regulation</Link>

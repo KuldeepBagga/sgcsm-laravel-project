@@ -61,7 +61,7 @@ function About() {
                       </p>
                     </div>
                     <div className="lg:col-span-4">
-                      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=400&auto=format&fit=crop"
+                      <img src="/images/about.jpg"
                         alt="Students learning on computers" loading="lazy"
                         className="w-full h-auto rounded-lg shadow-lg" />
                     </div>
@@ -72,7 +72,7 @@ function About() {
 
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     <div className="lg:col-span-4">
-                      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=400&auto=format&fit=crop"
+                      <img src="/images/our-mission.jpg"
                         alt="Students learning on computers" loading="lazy"
                         className="w-full h-auto rounded-lg shadow-lg" />
                     </div>
@@ -109,7 +109,7 @@ function About() {
                     </div>
 
                     <div className="lg:col-span-4">
-                      <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=400&auto=format&fit=crop"
+                      <img src="/images/our-vision.jpg"
                         alt="Students learning on computers" loading="lazy"
                         className="w-full h-auto rounded-lg shadow-lg" />
                     </div>

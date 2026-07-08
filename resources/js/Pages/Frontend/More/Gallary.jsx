@@ -20,37 +20,37 @@ function Gallary() {
         <MainLayout>
             <Head title="Our Gallery" />
 
-            <main class="bg-slate-50">
-                <section class="relative overflow-hidden bg-slate-950">
+            <main className="bg-slate-50">
+                <section className="relative overflow-hidden bg-slate-950">
                     <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1800&auto=format&fit=crop"
-                        alt="" class="absolute inset-0 w-full h-full object-cover opacity-30" />
-                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-blue-950/85 to-slate-900/40"></div>
+                        alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-blue-950/85 to-slate-900/40"></div>
 
-                    <div class="relative max-w-7xl mx-auto px-6 py-16 md:py-20">
-                        <div class="max-w-3xl text-white">
-                            <span class="inline-flex items-center gap-2 bg-white/15 px-4 py-2 rounded-full text-sm font-semibold">
-                                <i class="fa-solid fa-book-open"></i>
+                    <div className="relative max-w-7xl mx-auto px-6 py-16 md:py-20">
+                        <div className="max-w-3xl text-white">
+                            <span className="inline-flex items-center gap-2 bg-white/15 px-4 py-2 rounded-full text-sm font-semibold">
+                                <i className="fa-solid fa-book-open"></i>
                                 SGCSM | Gallery
                             </span>
-                            <h1 class="mt-5 text-4xl md:text-6xl font-black leading-tight uppercase">Our Gallery</h1>
+                            <h1 className="mt-5 text-4xl md:text-6xl font-black leading-tight uppercase">Our Gallery</h1>
                         </div>
                     </div>
                 </section>
 
-                <section class="py-14 md:py-16">
-                    <div class="max-w-7xl mx-auto px-6">
-                        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                <section className="py-14 md:py-16">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
                             <div>
-                                <p class="text-sm font-bold text-blue-700 uppercase">Publication Gallery</p>
-                                <h2 class="mt-2 text-3xl md:text-4xl font-black text-slate-900">Click Any Image To Preview</h2>
+                                <p className="text-sm font-bold text-blue-700 uppercase">Publication Gallery</p>
+                                <h2 className="mt-2 text-3xl md:text-4xl font-black text-slate-900">Click Any Image To Preview</h2>
                             </div>
-                            <div class="inline-flex items-center gap-2 text-sm font-semibold text-slate-600">
-                                <i class="fa-solid fa-magnifying-glass-plus text-blue-600"></i>
+                            <div className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600">
+                                <i className="fa-solid fa-magnifying-glass-plus text-blue-600"></i>
                                 Popup image viewer
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {publications.map((item, index) => (
                                 <button
                                     key={index}

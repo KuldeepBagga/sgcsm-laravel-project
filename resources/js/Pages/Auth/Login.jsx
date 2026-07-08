@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import MainLayout from '@/Layouts/MainLayout'
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -22,7 +23,7 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <>
+        <MainLayout>
             <Head title="Log in" />
 
             {status && (
@@ -33,7 +34,7 @@ export default function Login({ status, canResetPassword }) {
 
 
             <main className="bg-slate-50">
-                <div className="min-h-screen bg-gradient-to-br flex items-center justify-center">
+                <div className="min-h-screen--0 py-20 bg-gradient-to-br flex items-center justify-center">
                     <div className="w-full max-w-6xl bg-white rounded-[35px] shadow-2xl overflow-hidden">
                         <div className="grid grid-cols-1 lg:grid-cols-2">
 
@@ -264,6 +265,6 @@ export default function Login({ status, canResetPassword }) {
                     </div>
                 </div>
             </main>
-        </>
+        </MainLayout>
     );
 }

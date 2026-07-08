@@ -64,7 +64,7 @@ export default function Home() {
                                 (Reg.No.2327) from Govt. Of India N.C.T., Delhi, working in different fields of Programme & Commercial
                                 Training Organization is also certified by ISO 9001: 2015 Org..</p>
                             <p className="text-center mt-3">
-                                <a href="#" className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">Read More</a>
+                                <Link href={route('about-us')} className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">Read More</Link>
                             </p>
                         </div>
                     </div>
@@ -89,8 +89,9 @@ export default function Home() {
                                     Learn from experienced instructors with real-world knowledge.
                                 </p>
 
-                                <p className="py-5"><a href="#"
-                                    className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">Login</a></p>
+                                <p className="py-5">
+                                    <Link href={route('login')} className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">Login</Link>
+                                </p>
 
                             </div>
 
@@ -107,8 +108,9 @@ export default function Home() {
                                     Access high-quality educational content anytime anywhere.
                                 </p>
 
-                                <p className="py-5"><a href="#"
-                                    className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">Login</a></p>
+                                <p className="py-5">
+                                    <Link href={route('login')} className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">Login</Link>
+                                </p>
                             </div>
 
                             <div className="bg-white p-8 rounded-2xl shadow hover:shadow-xl transition">
@@ -124,8 +126,9 @@ export default function Home() {
                                     Study from your home with flexible and interactive learning.
                                 </p>
 
-                                <p className="py-5"><a href="franchise-registration.html"
-                                    className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">Register</a></p>
+                                <p className="py-5">
+                                    <Link href={route('franchise-register')} className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">Register</Link>
+                                </p>
 
                             </div>
 
@@ -352,87 +355,35 @@ export default function Home() {
 
                             <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
                                 <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-red-100">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png"
-                                        className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    <Link href={route('courses', { course: 'Computer Course' })}>
+                                        <img src="/images/computer-icon.jpg"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    </Link>
                                 </div>
 
                                 <h3 className="mt-5 text-xl font-bold text-gray-800">
                                     Computer Course
                                 </h3>
                             </div>
-
-                            <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
-                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-pink-100">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png"
-                                        className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
-                                </div>
-
-                                <h3 className="mt-5 text-xl font-bold text-gray-800">
-                                    Teaching
-                                </h3>
-                            </div>
-                            <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
-                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-blue-100">
-                                    <img src="https://upload.wikimedia.org/wikipedia/en/6/69/NIELIT_Logo.png"
-                                        className="w-full h-full object-contain p-4 group-hover:scale-110 transition duration-500" />
-                                </div>
-
-                                <h3 className="mt-5 text-xl font-bold text-gray-800">
-                                    NIELIT
-                                </h3>
-                            </div>
-
-                            <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
-                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-yellow-100">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
-                                        className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
-                                </div>
-
-                                <h3 className="mt-5 text-xl font-bold text-gray-800">
-                                    Beauty Course
-                                </h3>
-                            </div>
-
-                            <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
-                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-green-100">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/2830/2830284.png"
-                                        className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
-                                </div>
-
-                                <h3 className="mt-5 text-xl font-bold text-gray-800">
-                                    Banking
-                                </h3>
-                            </div>
-
-                        </div>
-
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 mt-5">
 
                             <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
                                 <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-red-100">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png"
-                                        className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
-                                </div>
-
-                                <h3 className="mt-5 text-xl font-bold text-gray-800">
-                                    Computer Course
-                                </h3>
-                            </div>
-                            <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
-                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-pink-100">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135789.png"
-                                        className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    <Link href={route('courses', { course: 'Teacher Training Course' })}>
+                                        <img src="/images/teacher-icon.jpg"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    </Link>
                                 </div>
 
                                 <h3 className="mt-5 text-xl font-bold text-gray-800">
                                     Teaching
                                 </h3>
                             </div>
-
                             <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
-                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-blue-100">
-                                    <img src="https://upload.wikimedia.org/wikipedia/en/6/69/NIELIT_Logo.png"
-                                        className="w-full h-full object-contain p-4 group-hover:scale-110 transition duration-500" />
+                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-red-100">
+                                    <Link href={route('courses', { course: 'NIELIT Courses' })}>
+                                        <img src="/images/nielit-icon.jpg"
+                                            className="w-full h-full object-contain p-4 group-hover:scale-110 transition duration-500" />
+                                    </Link>
                                 </div>
 
                                 <h3 className="mt-5 text-xl font-bold text-gray-800">
@@ -441,27 +392,101 @@ export default function Home() {
                             </div>
 
                             <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
-                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-yellow-100">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png"
-                                        className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-red-100">
+                                    <Link href={route('courses', { course: 'Boutique Courses' })}>
+                                        <img src="/images/beauty-icon.jpg"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    </Link>
                                 </div>
 
                                 <h3 className="mt-5 text-xl font-bold text-gray-800">
                                     Beauty Course
                                 </h3>
                             </div>
+
                             <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
-                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-green-100">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/2830/2830284.png"
-                                        className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-red-100">
+                                    <Link href={route('courses', { course: 'Beautician Courses' })}>
+                                        <img src="/images/beautician-icon.jpg"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    </Link>
                                 </div>
 
                                 <h3 className="mt-5 text-xl font-bold text-gray-800">
-                                    Banking
+                                    Beautician Course
                                 </h3>
                             </div>
 
+                            <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
+                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-red-100">
+                                    <Link href={route('courses', { course: 'UG AND PG COURSE' })}>
+                                        <img src="/images/ug-an-pg-icon.jpg"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    </Link>
+                                </div>
+
+                                <h3 className="mt-5 text-xl font-bold text-gray-800">
+                                    UG & PG Course
+                                </h3>
+                            </div>
+
+                            <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
+                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-red-100">
+                                    <Link href={route('courses', { course: 'Yoga Courses' })}>
+                                        <img src="/images/yoga-icon.jpg"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    </Link>
+                                </div>
+
+                                <h3 className="mt-5 text-xl font-bold text-gray-800">
+                                    Yoga Course
+                                </h3>
+                            </div>
+
+                            <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
+                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-red-100">
+                                    <Link href={route('courses', { course: 'NDLM Courses' })}>
+                                        <img src="/images/ndlm-icon.jpg"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    </Link>
+                                </div>
+
+                                <h3 className="mt-5 text-xl font-bold text-gray-800">
+                                    NDLM Course
+                                </h3>
+                            </div>
+
+                            <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
+                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-red-100">
+                                    <Link href={route('courses', { course: 'Advance Course' })}>
+                                        <img src="/images/advance-icon.jpg"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    </Link>
+                                </div>
+
+                                <h3 className="mt-5 text-xl font-bold text-gray-800">
+                                    Advance Course
+                                </h3>
+                            </div>
+
+
+                            <div className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition duration-300 p-5 text-center">
+                                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-red-100">
+                                    <Link href={route('our-account')}>
+                                        <img src="/images/bank-icon.jpg"
+                                            className="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
+                                    </Link>
+                                </div>
+
+                                <h3 className="mt-5 text-xl font-bold text-gray-800">
+                                    Bank Details
+                                </h3>
+                            </div>
+
+
                         </div>
+
+
                     </div>
                 </section>
 
@@ -531,15 +556,15 @@ export default function Home() {
 
                                         <div className="p-5 space-y-3">
 
-                                            <a href="#"
+                                            <Link href={route('our-account')}
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-blue-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     📄 Bank Details
                                                 </span>
                                                 <span className="group-hover:text-white">→</span>
-                                            </a>
+                                            </Link>
 
-                                            <a href="#"
+                                            <a href="mailto:info@sgcsmindia.org"
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-green-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     📚 Suggestions
@@ -547,7 +572,7 @@ export default function Home() {
                                                 <span className="group-hover:text-white">→</span>
                                             </a>
 
-                                            <a href="#"
+                                            <a href="mailto:info@sgcsmindia.org"
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-purple-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     🏆 Job Seekers
@@ -555,29 +580,29 @@ export default function Home() {
                                                 <span className="group-hover:text-white">→</span>
                                             </a>
 
-                                            <a href="franchise-registration.html"
+                                            <Link href={route('franchise-register')}
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-pink-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     💳 Franchise
                                                 </span>
                                                 <span className="group-hover:text-white">→</span>
-                                            </a>
+                                            </Link>
 
-                                            <a href="#"
+                                            <Link href={route('validity-authorization.index')}
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-red-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     ⚙ Validation Authorization
                                                 </span>
                                                 <span className="group-hover:text-white">→</span>
-                                            </a>
+                                            </Link>
 
-                                            <a href="#"
+                                            <Link href={route('our-account')}
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-blue-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     📄 Bank Details
                                                 </span>
                                                 <span className="group-hover:text-white">→</span>
-                                            </a>
+                                            </Link>
 
                                         </div>
 
@@ -676,45 +701,45 @@ export default function Home() {
 
                                         <div className="p-5 space-y-3">
 
-                                            <a href="#"
+                                            <Link href={route('login')}
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-blue-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     📄 Online Exam
                                                 </span>
                                                 <span className="group-hover:text-white">→</span>
-                                            </a>
+                                            </Link>
 
-                                            <a href="#"
+                                            <Link href={route('home.certificate.index')}
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-green-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     📚 Certificate Verification
                                                 </span>
                                                 <span className="group-hover:text-white">→</span>
-                                            </a>
+                                            </Link>
 
-                                            <a href="#"
+                                            <Link href={route('downloads')}
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-purple-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     🏆 Downloads
                                                 </span>
                                                 <span className="group-hover:text-white">→</span>
-                                            </a>
+                                            </Link>
 
-                                            <a href="#"
+                                            <Link href={route('center-verification.index')}
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-pink-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     💳 Center Verification
                                                 </span>
                                                 <span className="group-hover:text-white">→</span>
-                                            </a>
+                                            </Link>
 
-                                            <a href="#"
+                                            <Link href={route('login')}
                                                 className="flex items-center justify-between px-4 py-4 rounded-2xl bg-gray-50 hover:bg-blue-600 hover:text-white transition-all duration-300 group shadow-sm">
                                                 <span className="font-medium text-gray-700 group-hover:text-white">
                                                     📄 Online Exam
                                                 </span>
                                                 <span className="group-hover:text-white">→</span>
-                                            </a>
+                                            </Link>
 
                                         </div>
 
@@ -893,7 +918,7 @@ export default function Home() {
                     <ImageSlider images={Linkage} />
                 </section>
 
-
+                {/* 
                 <section className="py-20 bg-blue-600 text-white text-center">
                     <div className="max-w-4xl mx-auto px-6">
 
@@ -910,7 +935,7 @@ export default function Home() {
                         </button>
 
                     </div>
-                </section>
+                </section> */}
 
             </MainLayout>
 

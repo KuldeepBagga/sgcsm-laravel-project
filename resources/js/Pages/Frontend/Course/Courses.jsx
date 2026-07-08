@@ -4,7 +4,7 @@ import { Head, Link, router, usePage } from '@inertiajs/react'
 
 function Courses() {
     const { course, all_course, searchTerm } = usePage().props;
-    const [search, setSearch] = useState(searchTerm);
+    const [search, setSearch] = useState(searchTerm ?? '');
     const [processing, setProcessing] = useState(false);
 
     const icons = [

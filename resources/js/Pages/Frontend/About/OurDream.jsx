@@ -29,11 +29,11 @@ function OurDream() {
             </div>
           </div>
         </section>
-        <section class="py-14 md:py-5">
-          <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <section class="lg:col-span-12">
-                <p class="text-gray-700 leading-relaxed mb-4 text-lg text-justify">
+        <section className="py-14 md:py-5">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <section className="lg:col-span-12">
+                <p className="text-gray-700 leading-relaxed mb-4 text-lg text-justify">
                   Today, the computer is indispensable, and its presence has become very important and
                   necessary in our daily life, and it has become easier for us to do many operations and
                   activities.some big Institution run their computer programme in higher charges. Due to which

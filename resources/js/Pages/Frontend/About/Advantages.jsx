@@ -29,11 +29,11 @@ function Advantages() {
           </div>
         </section>
 
-        <section class="py-14 md:py-5">
-          <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <section class="lg:col-span-12 text-lg text-justify">
-                <p class="text-gray-700 leading-relaxed">
+        <section className="py-14 md:py-5">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <section className="lg:col-span-12 text-lg text-justify">
+                <p className="text-gray-700 leading-relaxed">
                   Provides IT & Computer education at every doorstep in rural areas and is committed to educating all capable and needy people to help them develop a high level of IT & Computer knowledge. The programs enable students to develop the knowledge and skills needed to build a better future.
                 </p>
                 <p>
