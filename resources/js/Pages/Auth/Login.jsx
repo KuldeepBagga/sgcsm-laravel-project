@@ -141,7 +141,7 @@ export default function Login({ status, canResetPassword }) {
                                                     name="email"
                                                     value={data.email}
                                                     autoComplete="username"
-                                                    isFocused={true}
+                                                    autoFocus
                                                     onChange={(e) => setData('email', e.target.value)}
                                                     className="w-full border border-gray-300 rounded-2xl px-5 py-4 pl-14 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                                                 />

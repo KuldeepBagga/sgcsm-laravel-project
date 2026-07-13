@@ -1,6 +1,8 @@
 import { Map } from 'lucide-react'
 import React from 'react'
 import { BiEnvelope, BiGlobe, BiPhone } from 'react-icons/bi'
+import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa'
+import { FaXTwitter } from 'react-icons/fa6'
 
 function Footer() {
     return (
@@ -128,6 +130,24 @@ function Footer() {
                         </div>
 
                     </div> */}
+
+                    <div className="flex justify-center gap-4 mt-5">
+                        <a href="https://tinyurl.com/24am9w39" target='_blank' className="hover:text-gray-200">
+                            <FaFacebook size={22} />
+                        </a>
+                        <a href="https://www.instagram.com/sgcsmskills/" target='_blank' className="hover:text-gray-200">
+                            <FaInstagram size={22} />
+                        </a>
+                        <a href="https://tinyurl.com/2hskutzh" target='_blank' className="hover:text-gray-200">
+                            <FaLinkedin size={22} />
+                        </a>
+                        <a href="https://x.com/sgcsmindia1" target='_blank' className="hover:text-gray-200">
+                            <FaXTwitter size={22} />
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCHyMh-_Vcll1FXy-n8J7X7Q" target='_blank' className="hover:text-gray-200">
+                            <FaYoutube size={22} />
+                        </a>
+                    </div>
 
 
                     <div className="text-center mt-8 text-gray-300 text-sm">

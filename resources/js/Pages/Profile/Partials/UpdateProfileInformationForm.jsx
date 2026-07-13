@@ -4,6 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Transition } from '@headlessui/react';
 import { Link, useForm, usePage } from '@inertiajs/react';
+import DangerButton from '@/Components/DangerButton';
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -106,6 +107,12 @@ export default function UpdateProfileInformation({
                             Saved.
                         </p>
                     </Transition>
+
+                    <Link href={route('admin.dashboard')}>
+                        <DangerButton>
+                            Back
+                        </DangerButton>
+                    </Link>
                 </div>
             </form>
         </section>

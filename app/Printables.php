@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Student;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 use Intervention\Image\Alignment;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\Format;
@@ -913,5 +914,13 @@ trait Printables
         );
 
         echo '<img src="' . asset("storage/uploads/marksheet/{$filename}.jpg") . '") " style="display:block;margin:0 auto;">';
+    }
+
+    public static function print_icard($registration_no)
+    {
+        abort_if(!$registration_no, 404);
+        $student = Student::with('institute','course')->where('registration_no', $registration_no)->first();
+        abort_if(!$student, 404);
+        return Inertia::render('Frontend/Card/Card', compact('student'));
     }
 }

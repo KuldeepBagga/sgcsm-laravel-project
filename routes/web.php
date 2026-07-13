@@ -164,6 +164,7 @@ Route::middleware(['auth', 'verified', 'role:admin|subadmin|franchise|student'])
     Route::get('result/show/{result_details}', [ResultDetailsController::class, 'display_result'])->name('duplicate_online_result.show');
     Route::get('result/marksheet/display/{result_details}', [ResultDetailsController::class, 'genereate_marksheet'])->name('marksheet.generate');
     Route::get('student/generate/qr/{student}', [StudentController::class, 'generate_qr_code'])->name('genereate.qr_code');
+    Route::get('student/genereate/icard/{registration_no}',[StudentController::class,'icard'])->where('registration_no', '.*')->name('print.icard');
     Route::resource('banner', BannerController::class);
     Route::resource('notice', NoticeController::class);
     Route::resource('top/institute', TopInstituteController::class)->parameter('institute', 'topInstitute')->names('top_institute');

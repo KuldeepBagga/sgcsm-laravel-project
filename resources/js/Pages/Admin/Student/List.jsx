@@ -348,6 +348,14 @@ function List() {
 
                                                 <td className="px-2 py-2 text-right space-x-2">
                                                     <div className="flex justify-end gap-2">
+                                                        {auth.user.permissions.includes('student.view') &&
+                                                            <a href={route('admin.print.icard', item.registration_no)} target="_blank">
+                                                                <PrimaryButton size={'sm'}>
+                                                                    Print
+                                                                </PrimaryButton>
+                                                            </a>
+                                                        }
+
                                                         {auth.user.permissions.includes(
                                                             "student.update",
                                                         ) && (
@@ -403,7 +411,7 @@ function List() {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayout >
     );
 }
 

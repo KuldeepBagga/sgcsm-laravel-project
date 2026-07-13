@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Institute;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -14,7 +16,15 @@ class AdminDashboard extends Controller
      */
     public function index()
     {
-        return Inertia::render('Dashboard');
+        $user = Auth::user();
+        $user_data = '';
+        if ($user->hasRole('student')) {
+            $user_data = Student::with('institute','course')->where('student_id', $user->id)->first();
+        } else {
+            $user_data = Institute::where('user_id', $user->id)->first();
+        }
+
+        return Inertia::render('Dashboard', compact('user_data'));
     }
 
     /**

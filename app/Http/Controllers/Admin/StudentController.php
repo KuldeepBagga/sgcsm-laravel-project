@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Institute;
 use App\Models\Student;
 use App\Models\User;
+use App\Printables;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -202,5 +203,10 @@ class StudentController extends Controller
         $qrCode = QrCode::format('png')->size(250)->generate('hello');
         Storage::disk('public')->put("uploads/qr_code/{$registration_no}.png", $qrCode);
         return redirect()->route('admin.student.index')->with('success', 'QR Code Generated Successfully!');
+    }
+
+    public function icard(string $registration_no)
+    {
+        return Printables::print_icard($registration_no);
     }
 }

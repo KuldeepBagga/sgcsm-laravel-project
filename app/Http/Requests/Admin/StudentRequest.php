@@ -34,7 +34,7 @@ class StudentRequest extends FormRequest
             'center_code' => 'required',
             'state' => 'required',
             'district' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|numeric|digits:10',
             'adhaar_no' => 'nullable',
             'paid' => 'nullable',
             'certificate_issued' => 'nullable',
