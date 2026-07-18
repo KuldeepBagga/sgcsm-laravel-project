@@ -48,7 +48,7 @@ export default function Dashboard() {
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 10.5L12 3l9 7.5M5 9.5V21h14V9.5" />
                                                 </svg>
 
-                                              Go  Home
+                                                Go  Home
                                             </Link>
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@ export default function Dashboard() {
                                 <div className="p-6 text-gray-900 dark:text-gray-100">
                                     <h3 className='text-2xl mb-3 px-2'>LINKS</h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                                        <a href="#" className="group bg-gradient-to-b from-slate-900 to-slate-800 text-slate border-2 border-slate-700 p-10 rounded-2xl transition duration-300 hover:border-slate-500">
+                                        <a href={route('admin.online.exam.regsiter')} className="group bg-gradient-to-b from-slate-900 to-slate-800 text-slate border-2 border-slate-700 p-10 rounded-2xl transition duration-300 hover:border-slate-500">
                                             <div className="rounded-xl bg-blue-100 flex items-center justify-center mb-5">
                                                 <img src='/images/online-exam-icon.png' className='background-transparent' />
                                             </div>

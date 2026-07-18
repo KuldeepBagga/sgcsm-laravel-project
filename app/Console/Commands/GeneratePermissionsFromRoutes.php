@@ -45,7 +45,9 @@ class GeneratePermissionsFromRoutes extends Command
             'top_institute',
             'notice',
             'course_content',
-            'course_module'
+            'course_module',
+            'online.exam.course',
+            'online-exam-questions'
         ];
 
         $defaultActions = ['create', 'view', 'delete', 'update'];

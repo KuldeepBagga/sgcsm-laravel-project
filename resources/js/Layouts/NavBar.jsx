@@ -111,7 +111,23 @@ export default function NavBar() {
                     permission: 'top_institute.view'
                 }
             ]
-        }
+        },
+        {
+            name: "Online Exam",
+            icon: "📜",
+            children: [
+                {
+                    name: "Exam",
+                    route: "admin.online-exam.course.index",
+                    permission: ''
+                },
+                {
+                    name: "Assign Exam",
+                    route: "admin.online-exam-assign.index",
+                    permission: ''
+                },
+            ]
+        },
     ];
 
     const filteredMenuItems = menuItems

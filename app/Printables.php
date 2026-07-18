@@ -450,7 +450,7 @@ trait Printables
 
     public static function generate_original_marksheet($id)
     {
-        abort_if(!$id, 404);
+        abort_if(!$id, 404, 'Invalid result id.');
 
         $students = Student::with([
             'course',
@@ -479,7 +479,23 @@ trait Printables
             return $carry + $resultDetail->result->sum('min_marks');
         }, 0);
 
-        $percentage = ($marksObtained / $maxMarks) * 100;
+        abort_if(!$students, 404, 'Student not found.');
+
+        abort_if(!$students->course, 404, 'Course not found.');
+
+        abort_if(!$students->institute, 404, 'Institute not found.');
+
+        abort_if($students->result_details->isEmpty(), 404, 'Result details not found.');
+
+        $resultDetail = $students->result_details->first();
+
+        abort_if(!$resultDetail, 404, 'Result detail not found.');
+
+        abort_if($resultDetail->result->isEmpty(), 404, 'Subjects not found.');
+
+        abort_if($maxMarks <= 0, 500, 'Maximum marks cannot be zero.');
+
+        $percentage = $maxMarks > 0 ? round(($marksObtained / $maxMarks) * 100, 2) : 0;
 
         if ($percentage >= 80) {
             $grade = 'A+';
@@ -504,7 +520,20 @@ trait Printables
 
         $manager = ImageManager::usingDriver(Driver::class);
 
+        abort_unless(
+            Storage::disk('public')->exists($resultDetail->original_marksheet),
+            404,
+            'Original marksheet image not found.'
+        );
+
         $image = $manager->decode(storage_path('app/public/' . $students->result_details[0]->original_marksheet))->scale(width: 690);
+
+
+        abort_unless(
+            Storage::disk('public')->exists($students->qr_code),
+            404,
+            'QR code image not found.'
+        );
 
         $qr_code = $manager->decode(storage_path("app/public/{$students->qr_code}"))->scale(70, 70);
         $image->insert($qr_code, 65, 50, Alignment::BOTTOM_LEFT, 1);
@@ -919,7 +948,7 @@ trait Printables
     public static function print_icard($registration_no)
     {
         abort_if(!$registration_no, 404);
-        $student = Student::with('institute','course')->where('registration_no', $registration_no)->first();
+        $student = Student::with('institute', 'course')->where('registration_no', $registration_no)->first();
         abort_if(!$student, 404);
         return Inertia::render('Frontend/Card/Card', compact('student'));
     }

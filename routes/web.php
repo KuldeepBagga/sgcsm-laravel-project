@@ -23,9 +23,13 @@ use App\Http\Controllers\Frontend\FranchiseController as FrontendFranchiseContro
 use App\Http\Controllers\Frontend\Result\ResultController as ResultResultController;
 use App\Http\Controllers\GetInTouch\AuthorizedStudyCenterController;
 use App\Http\Controllers\Admin\NoticeController;
+use App\Http\Controllers\Admin\Online\Assign\AssignExamController;
+use App\Http\Controllers\Admin\Online\Exam\ExamCourseController;
+use App\Http\Controllers\Admin\Online\Questions\QuestionsController;
 use App\Http\Controllers\Admin\TopInstituteController;
 use App\Http\Controllers\Frontend\CenterVerification;
 use App\Http\Controllers\Frontend\Course\CourseController as CourseCourseController;
+use App\Http\Controllers\Frontend\Online\Exam\ExamController;
 use App\Http\Controllers\Frontend\Student\StudentVerificationController;
 use App\Http\Controllers\Frontend\Student\VerifyCertificateController;
 use App\Http\Controllers\Frontend\ValidityAuthorizationController;
@@ -113,11 +117,11 @@ Route::resource('/franchise/register', FrontendFranchiseController::class)->only
 
 Route::inertia('/franchise/public-notice', 'Frontend/Franchise/PublicNotice')->name('public-notice');
 
-Route::get('validity-and-authorization',[ValidityAuthorizationController::class,'index'])->name('validity-authorization.index');
-Route::post('validity-and-authorization',[ValidityAuthorizationController::class,'verify'])->name('validity-authorization.post');
+Route::get('validity-and-authorization', [ValidityAuthorizationController::class, 'index'])->name('validity-authorization.index');
+Route::post('validity-and-authorization', [ValidityAuthorizationController::class, 'verify'])->name('validity-authorization.post');
 
-Route::get('center-verification',[CenterVerification::class,'index'])->name('center-verification.index');
-Route::post('center-verification',[CenterVerification::class,'verify'])->name('center-verification.post');
+Route::get('center-verification', [CenterVerification::class, 'index'])->name('center-verification.index');
+Route::post('center-verification', [CenterVerification::class, 'verify'])->name('center-verification.post');
 
 Route::get(
     '/more/our-publication',
@@ -164,12 +168,21 @@ Route::middleware(['auth', 'verified', 'role:admin|subadmin|franchise|student'])
     Route::get('result/show/{result_details}', [ResultDetailsController::class, 'display_result'])->name('duplicate_online_result.show');
     Route::get('result/marksheet/display/{result_details}', [ResultDetailsController::class, 'genereate_marksheet'])->name('marksheet.generate');
     Route::get('student/generate/qr/{student}', [StudentController::class, 'generate_qr_code'])->name('genereate.qr_code');
-    Route::get('student/genereate/icard/{registration_no}',[StudentController::class,'icard'])->where('registration_no', '.*')->name('print.icard');
+    Route::get('student/genereate/icard/{registration_no}', [StudentController::class, 'icard'])->where('registration_no', '.*')->name('print.icard');
     Route::resource('banner', BannerController::class);
     Route::resource('notice', NoticeController::class);
     Route::resource('top/institute', TopInstituteController::class)->parameter('institute', 'topInstitute')->names('top_institute');
     Route::resource('course-module', CourseModuleController::class);
     Route::resource('course-content', CourseContentController::class);
+    Route::resource('online-exam/course', ExamCourseController::class)->parameters(['course' => 'exam'])->names('online-exam.course');
+    Route::resource('online-exam/questions', QuestionsController::class)->names('online-exam-questions');
+    Route::resource('online-exam/assign-exam', AssignExamController::class)->names('online-exam-assign');
+
+    Route::get('online/exam/student/register', [ExamController::class, 'register'])->name('online.exam.regsiter');
+    Route::post('online/exam/student/register', [ExamController::class, 'register_post'])->name('online.exam.regsiter.post');
+    Route::get('online/exam/start', [ExamController::class, 'start_exam'])->name('online-exam-start');
+    Route::get('online-exam/bulk-upload', [QuestionsController::class, 'bulk_upload'])->name('online-exam-bulk-upload.index');
+    Route::post('online-exam/bulk-upload', [QuestionsController::class, 'bulk_upload_post'])->name('online-exam-bulk-upload.post');
 });
 
 Route::middleware('auth')->group(function () {
