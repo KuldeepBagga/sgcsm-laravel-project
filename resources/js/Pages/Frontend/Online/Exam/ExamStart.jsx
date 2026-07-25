@@ -1,4 +1,4 @@
-import { Head, Link, usePage } from '@inertiajs/react'
+import { Head, Link, router, usePage } from '@inertiajs/react'
 import React, { useEffect, useState } from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
@@ -13,11 +13,7 @@ function ExamStart() {
 
     const optionLabels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
 
-    console.log("assign", assign_exam);
-
     const [timeLeft, setTimeLeft] = useState(assign_exam?.exam_time * 60);
-
-    console.log(selectedAnswers);
 
     const nextQuestion = () => {
         if (currentQuestion < questions.length - 1) {
@@ -39,13 +35,28 @@ function ExamStart() {
         }));
     };
 
+    const correctCount = questions.reduce((count, question) => {
+
+        const selectedAnswer = selectedAnswers[question.id];
+
+        const correctAnswer = question.answers.find(
+            quesion => quesion.correct_answer === 1
+        );
+
+        if (correctAnswer?.id === selectedAnswer) {
+            return count + 1;
+        }
+
+        return count;
+
+    }, 0);
 
     useEffect(() => {
         const timer = setInterval(() => {
             setTimeLeft((prev) => {
                 if (prev <= 1) {
                     clearInterval(timer);
-                    // submitExam();
+                    submitExam();
                     return 0;
                 }
                 return prev - 1;
@@ -64,10 +75,13 @@ function ExamStart() {
     };
 
     const submitExam = () => {
-        // post(route("student.exam.submit"), {
-        //     answers: selectedAnswers,
-        //     exam_id: assign_exam?.exam_id,
-        // });
+        router.post(route("admin.online-exam-start.post"), {
+            // answers: selectedAnswers,
+            exam_id: assign_exam?.exam_id,
+            question_count: questions?.length,
+            correct_answer_count: correctCount,
+            user_id: auth?.user?.id
+        });
     };
 
     return (

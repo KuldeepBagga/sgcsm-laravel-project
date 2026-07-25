@@ -33,6 +33,7 @@ use App\Http\Controllers\Frontend\Online\Exam\ExamController;
 use App\Http\Controllers\Frontend\Student\StudentVerificationController;
 use App\Http\Controllers\Frontend\Student\VerifyCertificateController;
 use App\Http\Controllers\Frontend\ValidityAuthorizationController;
+use App\Http\Controllers\OnlineExamAdmitCard;
 use App\Http\Controllers\ProfileController;
 use App\Models\Banner;
 use App\Models\Notice;
@@ -96,7 +97,11 @@ Route::inertia('/student/login', 'Frontend/Student/Login')->name('student-login'
 Route::get('/certificate/verify', [VerifyCertificateController::class, 'index'])->name('home.certificate.index');
 Route::post('/certificate/verify', [VerifyCertificateController::class, 'verify'])->name('home.certificate.post');
 
-Route::inertia('/online-admit-card', 'Frontend/Student/OnlineAdmitCard')->name('online-admit-card');
+//Route::inertia('/online-admit-card', 'Frontend/Student/OnlineAdmitCard')->name('online-admit-card');
+
+Route::get('/online-admit-card', [OnlineExamAdmitCard::class, 'index'])->name('online-admit-card');
+Route::post('/online-admit-card', [OnlineExamAdmitCard::class, 'show_admit_card'])->name('online-admit-card.show');
+Route::get('/online-admit-card/display', [OnlineExamAdmitCard::class, 'display_admit_card'])->name('online-admit-card.display');
 
 Route::get('/student-verification', [StudentVerificationController::class, 'index'])->name('student-verification');
 Route::post('/student-verification', [StudentVerificationController::class, 'verify'])->name('student-verification.post');
@@ -180,7 +185,11 @@ Route::middleware(['auth', 'verified', 'role:admin|subadmin|franchise|student'])
 
     Route::get('online/exam/student/register', [ExamController::class, 'register'])->name('online.exam.regsiter');
     Route::post('online/exam/student/register', [ExamController::class, 'register_post'])->name('online.exam.regsiter.post');
+
     Route::get('online/exam/start', [ExamController::class, 'start_exam'])->name('online-exam-start');
+    Route::post('online/exam/start/submit-exam', [ExamController::class, 'submit_exam'])->name('online-exam-start.post');
+    Route::get('online/exam/result/show', [ExamController::class, 'online_exam_result_show'])->name('online-exam-result.show');
+
     Route::get('online-exam/bulk-upload', [QuestionsController::class, 'bulk_upload'])->name('online-exam-bulk-upload.index');
     Route::post('online-exam/bulk-upload', [QuestionsController::class, 'bulk_upload_post'])->name('online-exam-bulk-upload.post');
 });

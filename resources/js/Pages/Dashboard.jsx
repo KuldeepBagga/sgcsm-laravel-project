@@ -1,10 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { CardSim } from 'lucide-react';
-
+import Toast from "@/Components/Toast";
 
 export default function Dashboard() {
-    const { auth, user_data } = usePage().props;
+    const { auth, user_data, flash } = usePage().props;
 
     return (
         <AuthenticatedLayout
@@ -15,6 +15,9 @@ export default function Dashboard() {
             }
         >
             <Head title="Dashboard" />
+
+            <Toast message={flash.success} type="success" />
+            <Toast message={flash.error} type="error" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">

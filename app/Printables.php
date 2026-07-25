@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\AssignExam;
+use App\Models\ExamRegistration;
 use App\Models\Student;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -951,5 +953,83 @@ trait Printables
         $student = Student::with('institute', 'course')->where('registration_no', $registration_no)->first();
         abort_if(!$student, 404);
         return Inertia::render('Frontend/Card/Card', compact('student'));
+    }
+
+    public static function online_exam_admit_card($id)
+    {
+        $manager = ImageManager::usingDriver(Driver::class);
+        $image = $manager->decode(storage_path('app/public/admin-card.jpg'))->scale(width: 660, height: 1000);
+
+        $students = Student::with([
+            'course',
+            'institute',
+        ])
+            ->where('registration_no', $id)
+            ->first();
+
+        abort_if(!$students, 404);
+        $assign_exam = ExamRegistration::where('user_id', $students->student_id)->first();
+        //dd($assign_exam);
+        abort_if(!$assign_exam, 404);
+
+
+        if ($students->image) {
+            $studentPhoto = $manager->decode(storage_path('app/public/' . $students->image))->resize(height: 95, width: 95);
+            $image->insert($studentPhoto, 483, 190, Alignment::TOP_LEFT, 1);
+        }
+
+        $image->text($students->name, 190, 189, function (FontFactory $font) {
+            $font->size(22);
+            $font->color('BLACK');
+            $font->filename(storage_path('app/public/fonts/Spectral-semibold.ttf'));
+        });
+
+
+        $image->text($students->father_name, 175, 222, function (FontFactory $font) {
+            $font->size(22);
+            $font->color('BLACK');
+            $font->filename(storage_path('app/public/fonts/Spectral-semibold.ttf'));
+        });
+
+
+        $image->text($students->registration_no, 125, 255, function (FontFactory $font) {
+            $font->size(22);
+            $font->color('BLACK');
+            $font->filename(storage_path('app/public/fonts/Spectral-semibold.ttf'));
+        });
+
+
+        $image->text($students->date_of_birth, 90, 289, function (FontFactory $font) {
+            $font->size(22);
+            $font->color('BLACK');
+            $font->filename(storage_path('app/public/fonts/Spectral-semibold.ttf'));
+        });
+
+        $image->text('N/A', 140, 323, function (FontFactory $font) {
+            $font->size(22);
+            $font->color('BLACK');
+            $font->filename(storage_path('app/public/fonts/Spectral-semibold.ttf'));
+        });
+
+        $image->text($students->course->name, 120, 357, function (FontFactory $font) {
+            $font->size(22);
+            $font->color('BLACK');
+            $font->filename(storage_path('app/public/fonts/Spectral-semibold.ttf'));
+        });
+
+        $image->text($students->institute->center_name, 180, 397, function (FontFactory $font) {
+            $font->size(22);
+            $font->color('BLACK');
+            $font->filename(storage_path('app/public/fonts/Spectral-semibold.ttf'));
+        });
+
+        $filename = str_replace('/', '_', $students->registration_no);
+
+        Storage::disk('public')->put(
+            "uploads/{$filename}-admit-card.jpg",
+            (string) $image->encodeUsingFileExtension('jpg', quality: 90)
+        );
+
+        echo '<img src="' . asset("storage/uploads/{$filename}-admit-card.jpg") . '") " style="display:block;margin:0 auto;">';
     }
 }

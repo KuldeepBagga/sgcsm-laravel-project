@@ -1,6 +1,6 @@
 import React from 'react'
 import MainLayout from '@/Layouts/MainLayout'
-import { Head } from '@inertiajs/react'
+import { Head, Link } from '@inertiajs/react'
 
 function ExaminationSystem() {
     return (
@@ -134,8 +134,8 @@ function ExaminationSystem() {
                                     {/* Button */}
                                     <div className="mt-10">
 
-                                        <a
-                                            href="#"
+                                        <Link
+                                            href={route('login')}
                                             className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg transition"
                                         >
 
@@ -158,7 +158,7 @@ function ExaminationSystem() {
 
                                             </svg>
 
-                                        </a>
+                                        </Link>
 
                                     </div>
 
